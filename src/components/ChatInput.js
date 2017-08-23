@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-import { colors } from '../assets/styles/Common';
+import { colors, fonts } from '../assets/styles/Common';
 
 const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: '3rem',
-    textIndent: '1rem',
-    background: colors.white,
+    background: 'none',
     border: 'none',
-    borderRadius: '2px',
+    borderBottom: '1px solid',
+    borderColor: colors.white,
+    marginBottom: '2rem',
+    color: colors.white,
+    font: fonts.body,
+    fontSize: '1rem',
+
+    ':focus': {
+      outline: 'none',
+    },
   }
 });
 
@@ -47,7 +55,7 @@ class ChatInput extends Component {
           className={css(styles.input)}
           onChange={this.handleChange}
           type='text'
-          placeholder='Enter message'
+          placeholder='Talk to Summoner Expert'
           value={text}
         />
       </form>

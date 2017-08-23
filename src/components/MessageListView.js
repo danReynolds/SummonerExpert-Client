@@ -31,12 +31,10 @@ class MessageListView extends Component {
       >
         {this.props.messageList.messages.map((message, index) => (
           <MessageView
-            ref={(m) => {
-              if (index === this.props.messageList.messages.length - 1) {
-                this.lastMessage = m;
-              }
-            }}
+            key={`message-${index}`}
+            listRef={(m) => this.lastMessage = m}
             message={message}
+            avatar={this.props.avatar}
           />
         ))}
       </div>

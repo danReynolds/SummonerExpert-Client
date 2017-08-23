@@ -6,8 +6,8 @@ class MessageList {
   @observable messages = [];
 
   @action
-  add(text) {
-    const message = new Message(text);
+  add(text, type) {
+    const message = new Message(text, type);
     this.messages.push(message);
   }
 };
