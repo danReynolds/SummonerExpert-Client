@@ -6,20 +6,21 @@ import { colors, fonts } from '../assets/styles/Common';
 const styles = StyleSheet.create({
   input: {
     width: '100%',
-    height: '3rem',
     background: 'none',
-    border: 'none',
-    borderBottom: '1px solid',
-    borderColor: colors.white,
-    marginBottom: '2rem',
+    border: '3px solid',
+    borderRadius: 2,
+    borderColor: colors.blue,
     color: colors.white,
     font: fonts.body,
-    fontSize: '1rem',
+    padding: '1rem 0',
+    textIndent: '1rem',
+    fontSize: '1.5rem',
+    marginBottom: '2rem',
 
     ':focus': {
       outline: 'none',
     },
-  }
+  },
 });
 
 class ChatInput extends Component {
@@ -55,7 +56,6 @@ class ChatInput extends Component {
           className={css(styles.input)}
           onChange={this.handleChange}
           type='text'
-          placeholder='Talk to Summoner Expert'
           value={text}
         />
       </form>

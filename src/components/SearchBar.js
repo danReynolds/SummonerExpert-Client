@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: '100%',
     border: 'none',
     fontSize: '6rem',
-    color: colors.red,
+    color: colors.blue,
     background: 'none',
 
     ':focus': {

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     	marginLeft: '-10px',
     }
   },
-  userMessage: {
+  botMessage: {
     background: colors.white,
     color: colors.darkGrey,
 
@@ -47,12 +47,12 @@ const styles = StyleSheet.create({
       borderRightColor: colors.white,
     }
   },
-  botMessage: {
-    background: colors.red,
+  userMessage: {
+    background: colors.blue,
     color: colors.white,
 
     ':after': {
-      borderRightColor: colors.red,
+      borderRightColor: colors.blue,
     }
   },
   image: {

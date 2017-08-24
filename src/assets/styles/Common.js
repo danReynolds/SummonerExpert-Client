@@ -35,6 +35,7 @@ export const fonts = StyleSheet.create({
 export const colors = {
   header: '#909090',
   grey: '#e4e4e4',
+  blue: '#55baea',
   darkBlue: '#242735',
   darkGrey: '#565656',
   white: '#f5f5f5',
