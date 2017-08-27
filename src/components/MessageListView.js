@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import { observer, inject } from 'mobx-react';
-import { colors, fonts } from '../assets/styles/Common';
+import { observer, inject } from 'mobx-react'
+import PropTypes from 'prop-types';
 
+import { colors, fonts } from '../assets/styles/Common';
 import MessageView from './MessageView';
 
 const styles = StyleSheet.create({
@@ -20,13 +21,17 @@ const styles = StyleSheet.create({
   },
   noMessages: {
     ...fonts.body,
-    color: colors.white,
+    color: colors.grey,
     fontSize: '2rem',
   },
 });
 
 @inject('messageListStore') @observer
 class MessageListView extends Component {
+  static PropTypes = {
+    messageListStore: PropTypes.object,
+    avatar: PropTypes.string,
+  }
 
   componentDidUpdate() {
     this.scrollToLastMessage();

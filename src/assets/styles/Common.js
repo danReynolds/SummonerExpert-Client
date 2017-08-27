@@ -27,6 +27,7 @@ export const colors = {
   header: '#909090',
   grey: '#e4e4e4',
   blue: '#55baea',
+  midBlue: '#368cb5',
   darkBlue: '#242735',
   darkGrey: '#565656',
   white: '#f5f5f5',

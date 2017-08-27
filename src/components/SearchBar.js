@@ -1,6 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import { StyleSheet, css } from 'aphrodite';
+import Icon from 'react-icons-kit';
+import { ic_search } from 'react-icons-kit/md/ic_search';
+import PropTypes from 'prop-types';
 
 import { colors, fonts } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
@@ -18,9 +21,24 @@ const styles = StyleSheet.create({
       outline: 'none',
     },
   },
+  searchBarForm: {
+    display: 'flex',
+    alignItems: 'center',
+    color: colors.darkGrey,
+  },
+  searchIconWrapper: {
+    cursor: 'pointer',
+    ':hover': {
+      color: colors.blue,
+    },
+  },
 });
 
 class SearchBar extends Component {
+  static PropTypes = {
+    history: PropTypes.object,
+  }
+
   constructor(props) {
     super(props);
     this.state = { text: '' };
@@ -34,21 +52,24 @@ class SearchBar extends Component {
     this.setState({ text: '' });
   }
 
-  handleSubmit = (e) => {
+  submitMessage = () => {
+    this.clearText();
     const { history } = this.props;
     const { text } = this.state;
-
-    e.preventDefault();
-    this.clearText();
     sendMessage(text);
     history.push('/conversation');
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.submitMessage();
   }
 
   render() {
     const { text } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className={css(styles.searchBarForm)} onSubmit={this.handleSubmit}>
         <input
           autoFocus
           onChange={this.handleChange}
@@ -57,6 +78,9 @@ class SearchBar extends Component {
           placeholder='Ask away Summoner'
           value={text}
         />
+        <div onClick={this.submitMessage} className={css(styles.searchIconWrapper)}>
+          <Icon size={100} icon={ic_search} />
+        </div>
       </form>
     )
   }

@@ -20,6 +20,14 @@ export const championQueries = [
   {
     id: 'Caitlyn',
     query: 'Highest winrate build for Caitlyn.',
+  },
+  {
+    id: "Cho'Gath",
+    query: "How many kills does Cho'gath get Top.",
+  },
+  {
+    id: 'Sona',
+    query: 'Does Sona get a lot of assists?',
   }
 ];
 

@@ -1,8 +1,9 @@
 import { StyleSheet, css } from 'aphrodite';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 
-import CommonStyles, { colors, fonts } from '../assets/styles/Common';
+import { colors, fonts } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -42,6 +43,11 @@ const styles = StyleSheet.create({
 
 
 class RecommendationListItem extends Component {
+  static PropTypes = {
+    history: PropTypes.object,
+    item: PropTypes.object,
+  }
+
   handleClick = () => {
     const { history, item: { query } } = this.props;
     sendMessage(query);
