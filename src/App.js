@@ -2,7 +2,6 @@ import React from 'react'
 import DevTools from 'mobx-react-devtools';
 import 'normalize.css';
 import { Provider } from 'mobx-react';
-
 import {
   BrowserRouter as Router,
   Route,

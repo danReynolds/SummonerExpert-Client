@@ -26,10 +26,11 @@ export default StyleSheet.create({
 export const colors = {
   header: '#909090',
   grey: '#e4e4e4',
+  midGrey: '#cecece',
+  darkGrey: '#565656',
   blue: '#55baea',
   midBlue: '#368cb5',
   darkBlue: '#242735',
-  darkGrey: '#565656',
   white: '#f5f5f5',
   red: '#d44b4b',
 };

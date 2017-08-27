@@ -71,6 +71,7 @@ class conversationInput extends Component {
     return (
       <form className={css(styles.conversationForm)} onSubmit={this.handleSubmit}>
         <input
+          placeholder={'Type a message.'}
           autoFocus
           className={css(styles.input)}
           onChange={this.handleChange}

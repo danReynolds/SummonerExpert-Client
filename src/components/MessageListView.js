@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noMessages: {
-    ...fonts.body,
     color: colors.grey,
     fontSize: '2rem',
   },
@@ -62,7 +61,7 @@ class MessageListView extends Component {
       messageListStyle = styles.messageListEmpty;
       messageListContent = (
         <div className={css(styles.noMessages)}>
-          Not sure what to ask? Use the conversation explorer panel.
+          Not sure what to ask? Use the Conversation Explorer.
         </div>
       )
     }

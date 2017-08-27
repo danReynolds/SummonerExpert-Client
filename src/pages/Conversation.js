@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 
 import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
+import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
 import { getRandomAvatar } from '../static/avatars';
 
@@ -36,6 +37,7 @@ class Conversation extends Component {
   render() {
     return (
       <div className={css(styles.conversationPage)}>
+        <ConversationExplorer />
         <div className={css(styles.container, CommonStyles.container)}>
           <div className={css(styles.messageList)}>
             <MessageListView avatar={this.avatar} />
