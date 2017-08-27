@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import { withRouter } from 'react-router'
 import { StyleSheet, css } from 'aphrodite';
 
 import { colors, fonts } from '../assets/styles/Common';
+import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
   bar: {
+    ...fonts.body,
     width: '100%',
     border: 'none',
     fontSize: '6rem',
@@ -18,16 +21,9 @@ const styles = StyleSheet.create({
 });
 
 class SearchBar extends Component {
-  static PropTypes = {
-    onSearch: PropTypes.func,
-  }
-
   constructor(props) {
     super(props);
-
-    this.state = {
-      text: ''
-    };
+    this.state = { text: '' };
   }
 
   handleChange = (e) => {
@@ -39,12 +35,13 @@ class SearchBar extends Component {
   }
 
   handleSubmit = (e) => {
-    const { onSearch } = this.props;
+    const { history } = this.props;
     const { text } = this.state;
 
     e.preventDefault();
     this.clearText();
-    onSearch(text);
+    sendMessage(text);
+    history.push('/chat');
   }
 
   render() {
@@ -53,8 +50,9 @@ class SearchBar extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input
+          autoFocus
           onChange={this.handleChange}
-          className={css(styles.bar, fonts.header)}
+          className={css(styles.bar)}
           type='search'
           placeholder='Ask away Summoner'
           value={text}
@@ -64,4 +62,4 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
+import { colors, fonts } from '../assets/styles/Common';
 
 import MessageView from './MessageView';
 
 const styles = StyleSheet.create({
   messageList: {
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
+  messageListEmpty: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noMessages: {
+    ...fonts.body,
+    color: colors.white,
+    fontSize: '2rem',
+  },
 });
 
-@observer
+@inject('messageListStore') @observer
 class MessageListView extends Component {
 
   componentDidUpdate() {
@@ -24,19 +37,37 @@ class MessageListView extends Component {
   };
 
   render() {
-    return (
-      <div
-        ref={(messageListView) => this.messageListView = messageListView}
-        className={css(styles.messageList)}
-      >
-        {this.props.messageList.messages.map((message, index) => (
+    const { messageListStore, avatar } = this.props;
+    let messageListContent, messageListStyle;
+    const messages = messageListStore.messages;
+
+    if (messages.length > 0) {
+      messageListStyle = styles.messageList;
+      messageListContent = (
+        messages.map((message, index) => (
           <MessageView
             key={`message-${index}`}
             listRef={(m) => this.lastMessage = m}
             message={message}
-            avatar={this.props.avatar}
+            avatar={avatar}
           />
-        ))}
+        ))
+      );
+    } else {
+      messageListStyle = styles.messageListEmpty;
+      messageListContent = (
+        <div className={css(styles.noMessages)}>
+          Not sure what to ask? Use the conversation explorer panel.
+        </div>
+      )
+    }
+
+    return (
+      <div
+        ref={(messageListView) => this.messageListView = messageListView}
+        className={css(messageListStyle)}
+      >
+        {messageListContent}
       </div>
     )
   }

@@ -3,12 +3,11 @@ export const MESSAGE_TYPES = {
   bot: 'bot',
 };
 
-
-class Message {
+class MessageStore {
   constructor(text, type) {
     this.text = text;
     this.type = type;
   }
 };
 
-export default Message;
+export default MessageStore;

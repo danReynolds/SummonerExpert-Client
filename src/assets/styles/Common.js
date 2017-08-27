@@ -9,26 +9,17 @@ export default StyleSheet.create({
   container: {
     paddingTop: '4rem',
     margin: '0 auto',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
 
     [breakpoints.desktop]: {
-      width: 1080,
+      width: 1200,
     },
 
     [breakpoints.mobile]: {
       padding: '0 2rem',
       width: 'initial',
     },
-  },
-});
-
-export const avatarURL = 'https://www.lol-smurfs.com/wordpress/lol-smurfs/wp-content/uploads/2017/01';
-
-export const fonts = StyleSheet.create({
-  body: {
-    fontFamily: ['Lato', 'sans-serif']
   },
 });
 
@@ -40,4 +31,11 @@ export const colors = {
   darkGrey: '#565656',
   white: '#f5f5f5',
   red: '#d44b4b',
+};
+
+export const fonts = {
+  body: {
+    font: 'Lato',
+    color: colors.darkGrey,
+  },
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import { colors, fonts, breakpoints } from '../assets/styles/Common';
-import { MESSAGE_TYPES } from '../models/Message';
+import { MESSAGE_TYPES } from '../stores/MessageStore';
 import LogoImage from '../assets/images/logo.jpg';
 
 const styles = StyleSheet.create({
@@ -16,10 +16,11 @@ const styles = StyleSheet.create({
     },
 
     [breakpoints.desktop]: {
-      maxWidth: '40rem',
+      maxWidth: '60rem',
     },
   },
   message: {
+    ...fonts.body,
     flex: '0 1 auto',
     padding: '1rem',
     marginLeft: '1.5rem',
@@ -87,7 +88,7 @@ const MessageView = ({ message, listRef, avatar }) => {
       <div className={css(styles.image, messageAvatar.avatar)} />
       <div
         ref={listRef}
-        className={css(styles.message, fonts.body, messageStyle)}
+        className={css(styles.message, messageStyle)}
       >
         {message.text}
       </div>
