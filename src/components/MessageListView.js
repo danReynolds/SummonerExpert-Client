@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types';
 
-import { colors, fonts } from '../assets/styles/Common';
+import { colors } from '../assets/styles/Common';
 import MessageView from './MessageView';
 
 const styles = StyleSheet.create({

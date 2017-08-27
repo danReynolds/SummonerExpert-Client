@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
 
-import { colors, fonts } from '../assets/styles/Common';
+import { colors, fonts, desktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
 import CollapsibleItem from './CollapsibleItem';
 import Explorer from '../static/explorer';
@@ -63,7 +63,7 @@ const menuStyles = {
     color: '#b8b7ad',
   },
   bmOverlay: {
-    display: 'none',
+    background: 'none',
   }
 };
 
@@ -81,8 +81,10 @@ class ConversationExplorer extends Component {
   };
 
   render() {
+    const isOpen = window.innerWidth > desktop;
+
     return (
-      <Menu isOpen customCrossIcon={false} styles={menuStyles}>
+      <Menu isOpen={isOpen} customCrossIcon={false} styles={menuStyles}>
         <div className={css(styles.menuTitle)}>Conversation Explorer</div>
         {this.renderExplorerSections()}
       </Menu>

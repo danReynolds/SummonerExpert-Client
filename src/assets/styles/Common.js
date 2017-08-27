@@ -1,8 +1,11 @@
 import { StyleSheet } from 'aphrodite';
 
+export const desktop = 1224;
+export const mobile = 480;
+
 export const breakpoints = {
-  desktop: '@media (min-width : 1224px)',
-  mobile: '@media (max-width: 480px)',
+  desktop: `@media (min-width : ${desktop}px)`,
+  mobile: `@media (max-width: ${mobile}px)`,
 };
 
 export default StyleSheet.create({
