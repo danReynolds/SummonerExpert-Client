@@ -59,8 +59,10 @@ class conversationInput extends Component {
 
   submitMessage = () => {
     const { text } = this.state;
-    this.clearText();
-    sendMessage(text);
+    if (text) {
+      this.clearText();
+      sendMessage(text);
+    }
   }
 
   render() {

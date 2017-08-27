@@ -53,10 +53,13 @@ class SearchBar extends Component {
   }
 
   submitMessage = () => {
-    this.clearText();
     const { history } = this.props;
     const { text } = this.state;
-    sendMessage(text);
+
+    if (text) {
+      sendMessage(text);
+    }
+    this.clearText();
     history.push('/conversation');
   }
 

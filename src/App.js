@@ -16,7 +16,7 @@ const Navigation = () => (
   <Provider messageListStore={messageListStore}>
     <Router>
       <div>
-        <DevTools />
+        {process.env.NODE_ENV === 'development' ? <DevTools /> : null}
         <Route exact path="/" component={Home} />
         <Route path="/conversation" component={Conversation} />
       </div>

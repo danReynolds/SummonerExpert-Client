@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { observer } from 'mobx-react'
 
 import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { MESSAGE_TYPES } from '../stores/MessageStore';
@@ -66,10 +67,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const MessageView = ({ message, listRef, avatar }) => {
+const MessageView = observer(({ message, listRef, avatar }) => {
+  const { text, type } = message;
   let messageStyle, messageAvatar;
 
-  if (message.type === MESSAGE_TYPES.user) {
+  if (type === MESSAGE_TYPES.user) {
     messageStyle = styles.userMessage;
     messageAvatar = StyleSheet.create({
       avatar: {
@@ -83,6 +85,7 @@ const MessageView = ({ message, listRef, avatar }) => {
     });
   }
 
+
   return (
     <div className={css(styles.messageContainer)}>
       <div className={css(styles.image, messageAvatar.avatar)} />
@@ -90,11 +93,11 @@ const MessageView = ({ message, listRef, avatar }) => {
         ref={listRef}
         className={css(styles.message, messageStyle)}
       >
-        {message.text}
+        {text || 'Loading...'}
       </div>
     </div>
 
   )
-};
+});
 
 export default MessageView;
