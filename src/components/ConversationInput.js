@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ChatInput extends Component {
+class conversationInput extends Component {
   constructor(props) {
     super(props);
 
@@ -65,4 +65,4 @@ class ChatInput extends Component {
   }
 };
 
-export default ChatInput;
+export default conversationInput;

@@ -41,7 +41,7 @@ class SearchBar extends Component {
     e.preventDefault();
     this.clearText();
     sendMessage(text);
-    history.push('/chat');
+    history.push('/conversation');
   }
 
   render() {

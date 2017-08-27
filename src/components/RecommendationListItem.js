@@ -45,7 +45,7 @@ class RecommendationListItem extends Component {
   handleClick = () => {
     const { history, item: { query } } = this.props;
     sendMessage(query);
-    history.push('/chat');
+    history.push('/conversation');
   }
 
   render() {

@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Chat from './pages/Chat';
+import Conversation from './pages/Conversation';
 import messageListStore from './stores/MessageListStore';
 
 const Navigation = () => (
@@ -18,7 +18,7 @@ const Navigation = () => (
       <div>
         <DevTools />
         <Route exact path="/" component={Home} />
-        <Route path="/chat" component={Chat} />
+        <Route path="/conversation" component={Conversation} />
       </div>
     </Router>
   </Provider>
