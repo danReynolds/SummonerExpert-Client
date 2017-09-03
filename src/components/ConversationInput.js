@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Icon from 'react-icons-kit';
 import { ic_send } from 'react-icons-kit/md/ic_send';
 
-import { colors, fonts } from '../assets/styles/Common';
+import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -79,7 +79,10 @@ class conversationInput extends Component {
           value={text}
         />
         <div onClick={this.submitMessage} className={css(styles.conversationIconWrapper)}>
-          <Icon size={56} icon={ic_send} />
+          <Icon
+            size={window.innerWidth >= breakpoints.desktop ? 56 : 40}
+            icon={ic_send}
+          />
         </div>
       </form>
     )

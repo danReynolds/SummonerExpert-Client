@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
 
-import { colors, fonts, desktop } from '../assets/styles/Common';
+import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
 import CollapsibleItem from './CollapsibleItem';
 import Explorer from '../static/explorer';
@@ -68,12 +68,29 @@ const menuStyles = {
 };
 
 class ConversationExplorer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: isDesktop(),
+    };
+  }
+
+  handleClickSection = (message) => {
+    this.setState({ isOpen: isDesktop() });
+    sendMessage(message);
+  }
+
+  isMenuOpen = ({ isOpen }) => {
+    this.setState({ isOpen });
+  }
+
   renderExplorerSections = () => {
     return Explorer.map(section => (
       <Collapsible title={section.title}>
         {
           section.queries.map(query => (
-            <CollapsibleItem onClick={sendMessage} text={query} />
+            <CollapsibleItem onClick={this.handleClickSection} text={query} />
           ))
         }
       </Collapsible>
@@ -81,10 +98,15 @@ class ConversationExplorer extends Component {
   };
 
   render() {
-    const isOpen = window.innerWidth > desktop;
-
+    const { isOpen } = this.state;
     return (
-      <Menu isOpen={isOpen} customCrossIcon={false} styles={menuStyles}>
+      <Menu
+        noOverlay={isDesktop()}
+        isOpen={isOpen}
+        onStateChange={this.isMenuOpen}
+        customCrossIcon={false}
+        styles={menuStyles}
+      >
         <div className={css(styles.menuTitle)}>Conversation Explorer</div>
         {this.renderExplorerSections()}
       </Menu>

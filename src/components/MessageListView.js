@@ -8,7 +8,6 @@ import MessageView from './MessageView';
 
 const styles = StyleSheet.create({
   messageList: {
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -20,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   noMessages: {
+    padding: '1rem',
     color: colors.grey,
     fontSize: '2rem',
   },

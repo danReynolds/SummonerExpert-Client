@@ -5,7 +5,7 @@ import Icon from 'react-icons-kit';
 import { ic_search } from 'react-icons-kit/md/ic_search';
 import PropTypes from 'prop-types';
 
-import { colors, fonts } from '../assets/styles/Common';
+import { colors, fonts, breakpoints, desktop } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -13,12 +13,19 @@ const styles = StyleSheet.create({
     ...fonts.body,
     width: '100%',
     border: 'none',
-    fontSize: '6rem',
     color: colors.blue,
     background: 'none',
 
     ':focus': {
       outline: 'none',
+    },
+
+    [breakpoints.desktop]: {
+      fontSize: '6rem',
+    },
+
+    [breakpoints.mobile]: {
+      fontSize: '2rem',
     },
   },
   searchBarForm: {
@@ -78,11 +85,11 @@ class SearchBar extends Component {
           onChange={this.handleChange}
           className={css(styles.bar)}
           type='search'
-          placeholder='Ask away Summoner'
+          placeholder='Ask away'
           value={text}
         />
         <div onClick={this.submitMessage} className={css(styles.searchIconWrapper)}>
-          <Icon size={100} icon={ic_search} />
+          <Icon size={window.innerWidth > desktop ? 100 : 40} icon={ic_search} />
         </div>
       </form>
     )

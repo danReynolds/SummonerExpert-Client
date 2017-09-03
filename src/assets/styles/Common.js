@@ -3,6 +3,10 @@ import { StyleSheet } from 'aphrodite';
 export const desktop = 1224;
 export const mobile = 480;
 
+export const isDesktop = () => {
+  return window.innerWidth >= desktop;
+}
+
 export const breakpoints = {
   desktop: `@media (min-width : ${desktop}px)`,
   mobile: `@media (max-width: ${mobile}px)`,
@@ -10,7 +14,6 @@ export const breakpoints = {
 
 export default StyleSheet.create({
   container: {
-    paddingTop: '4rem',
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +23,6 @@ export default StyleSheet.create({
     },
 
     [breakpoints.mobile]: {
-      padding: '0 2rem',
       width: 'initial',
     },
   },
