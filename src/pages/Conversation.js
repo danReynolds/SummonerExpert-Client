@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   conversationContent: {
-    padding: '0 2rem',
     height: '100%',
   },
   container: {

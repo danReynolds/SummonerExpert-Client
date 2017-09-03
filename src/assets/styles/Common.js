@@ -14,6 +14,7 @@ export const breakpoints = {
 
 export default StyleSheet.create({
   container: {
+    padding: '0 2rem',
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',

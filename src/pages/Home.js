@@ -10,11 +10,11 @@ import Champions from '../static/champions';
 
 const styles = StyleSheet.create({
   homeContainer: {
-    paddingTop: '4rem',
     backgroundColor: colors.darkBlue,
     height: '100vh',
   },
   header: {
+    paddingTop: '2rem',
     flex: '0 1 auto',
   },
   listContainer: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   tabHeader: {
     display: 'flex',
-    marginTop: '4rem',
+    paddingTop: '2rem',
   },
   recommendationList: {
     width: '32%',
