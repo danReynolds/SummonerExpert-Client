@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   searchBarForm: {
     display: 'flex',
     alignItems: 'center',
-    color: colors.darkGrey,
+    color: colors.white,
   },
   searchIconWrapper: {
     cursor: 'pointer',

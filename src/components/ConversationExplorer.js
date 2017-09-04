@@ -13,9 +13,17 @@ const styles = StyleSheet.create({
     ...fonts.body,
     color: colors.grey,
     background: colors.midBlue,
-    padding: '1.5rem',
     fontSize: '1.25rem',
-
+    height: '5rem',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 1.5rem ',
+  },
+  menuContent: {
+    height: 0,
+    overflow: 'auto',
+    flex: 1,
+    display: 'block',
   },
   menuItem: {
     color: colors.grey,
@@ -36,6 +44,9 @@ const menuStyles = {
     height: '30px',
     left: '36px',
     top: '36px'
+  },
+  bmMenuWrap: {
+    left: 0,
   },
   bmBurgerBars: {
     background: '#373a47'
@@ -61,6 +72,9 @@ const menuStyles = {
   },
   bmItemList: {
     color: '#b8b7ad',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
   },
 };
 
@@ -109,7 +123,9 @@ class ConversationExplorer extends Component {
         styles={menuStyles}
       >
         <div className={css(styles.menuTitle)}>Conversation Explorer</div>
-        {this.renderExplorerSections()}
+        <div className={css(styles.menuContent)}>
+          {this.renderExplorerSections()}
+        </div>
       </Menu>
     )
   }

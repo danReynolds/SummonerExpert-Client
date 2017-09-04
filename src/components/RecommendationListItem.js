@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   dualImageSeparator: {
-    padding: '0 0.5rem',
+    padding: '0 1rem',
   },
   container: {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
     backgroundColor: colors.white,
-    padding: '0.5rem',
+    padding: '1rem',
     marginTop: '1rem',
 
     ':hover': {

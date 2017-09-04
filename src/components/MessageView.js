@@ -4,13 +4,13 @@ import { observer } from 'mobx-react'
 
 import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { MESSAGE_TYPES } from '../stores/MessageStore';
-import LogoImage from '../assets/images/logo.jpg';
+import LogoImage from '../assets/images/summoner-expert.svg';
 
 const styles = StyleSheet.create({
   messageContainer: {
     display: 'flex',
     alignItems: 'center',
-    margin: '1rem 0',
+    margin: '2rem 0',
 
     [breakpoints.mobile]: {
       maxWidth: '100%',
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     borderRadius: '50%',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    backgroundColor: colors.white,
   },
 });
 

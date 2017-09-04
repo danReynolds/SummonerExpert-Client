@@ -14,8 +14,7 @@ export const breakpoints = {
 
 export default StyleSheet.create({
   container: {
-    padding: '0 2rem',
-    margin: '0 auto',
+    margin: '7.5rem 1.5rem 0 1.5rem',
     display: 'flex',
     flexDirection: 'column',
 
@@ -37,6 +36,7 @@ export const colors = {
   blue: '#55baea',
   midBlue: '#368cb5',
   darkBlue: '#242735',
+  nightBlue: '#1b1d27',
   white: '#f5f5f5',
   red: '#d44b4b',
 };

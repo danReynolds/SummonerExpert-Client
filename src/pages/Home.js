@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import SearchBar from '../components/SearchBar';
-import CommonStyles, { colors, desktop } from '../assets/styles/Common';
+import CommonStyles, { desktop } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
 import Tab from '../components/Tab';
 import Items from '../static/items';
 import Champions from '../static/champions';
 
 const styles = StyleSheet.create({
-  homeContainer: {
-    backgroundColor: colors.darkBlue,
-    height: '100vh',
+  homePage: {
+    flex: 1,
+    display: 'flex',
   },
   header: {
     paddingTop: '2rem',
@@ -22,9 +22,20 @@ const styles = StyleSheet.create({
     marginTop: '4rem',
     justifyContent: 'space-between',
   },
+  tabContainer: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
   tabHeader: {
     display: 'flex',
     paddingTop: '2rem',
+  },
+  tabContent: {
+    flex: 1,
+    height: 0,
+    overflow: 'auto',
+    marginBottom: '1rem',
   },
   recommendationList: {
     width: '32%',
@@ -70,12 +81,13 @@ class Home extends Component {
     const { items, getItemImage } = RECOMMENDATIONS[selectedTab];
 
     return (
-      <div>
+      <div className={css(styles.tabContainer)}>
         <div className={css(styles.tabHeader)}>
           {RECOMMENDATIONS.map((recommendation, index) => {
             const { title } = recommendation;
             return (
               <Tab
+                key={`tab-${index}`}
                 index={index}
                 onClick={this.handleSelectTab}
                 title={title}
@@ -109,14 +121,12 @@ class Home extends Component {
 
   render() {
     return (
-      <div className={css(styles.homeContainer)}>
+      <div className={css(styles.homePage)}>
         <div className={css(CommonStyles.container)}>
           <div className={css(styles.header)}>
             <SearchBar />
           </div>
-          <div className={css(styles.content)}>
-            {window.innerWidth >= desktop ? this.renderLists() : this.renderTabs()}
-          </div>
+          {window.innerWidth >= desktop ? this.renderLists() : this.renderTabs()}
         </div>
       </div>
     );

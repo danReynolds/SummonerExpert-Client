@@ -10,25 +10,23 @@ import { getRandomAvatar } from '../static/avatars';
 const styles = StyleSheet.create({
   conversationPage: {
     backgroundColor: colors.darkBlue,
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    flex: 1,
   },
   conversationContent: {
-    height: '100%',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   container: {
-    height: '100%',
+    flex: 1,
   },
   conversationInput: {
     marginTop: 'auto',
+    paddingTop: '1rem',
   },
-  messageList: {
-    marginTop: '6rem',
-    height: '100%',
-    overflow: 'auto',
-    marginBottom: '2rem',
-  }
 });
 
 class Conversation extends Component {
@@ -43,9 +41,7 @@ class Conversation extends Component {
         <ConversationExplorer />
         <div className={css(styles.conversationContent)}>
           <div className={css(styles.container, CommonStyles.container)}>
-            <div className={css(styles.messageList)}>
-              <MessageListView avatar={this.avatar} />
-            </div>
+            <MessageListView avatar={this.avatar} />
             <div className={css(styles.conversationInput)}>
               <ConversationInput />
             </div>

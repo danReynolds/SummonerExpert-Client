@@ -8,15 +8,17 @@ import MessageView from './MessageView';
 
 const styles = StyleSheet.create({
   messageList: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    overflow: 'auto',
+    display: 'block',
+    height: 0,
+    flex: 1,
   },
   messageListEmpty: {
     height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
   noMessages: {
     padding: '1rem',

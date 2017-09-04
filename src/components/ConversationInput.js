@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginBottom: '2rem',
   },
   conversationIconWrapper: {
-    margin: '0 1rem',
+    marginLeft: '1rem',
     cursor: 'pointer',
     ':hover': {
       color: colors.midBlue,
