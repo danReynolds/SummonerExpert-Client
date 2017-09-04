@@ -43,7 +43,7 @@ const menuStyles = {
     width: '36px',
     height: '30px',
     left: '36px',
-    top: '36px'
+    top: '26px'
   },
   bmMenuWrap: {
     left: 0,
