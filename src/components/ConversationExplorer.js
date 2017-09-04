@@ -83,11 +83,15 @@ class ConversationExplorer extends Component {
   }
 
   renderExplorerSections = () => {
-    return Explorer.map((section, index) => (
-      <Collapsible key={`section-${index}`} title={section.title}>
+    return Explorer.map((section, sectionIndex) => (
+      <Collapsible key={`section-${sectionIndex}`} title={section.title}>
         {
-          section.queries.map(query => (
-            <CollapsibleItem key={`section-item-${index}`} onClick={this.handleClickSection} text={query} />
+          section.queries.map((query, queryIndex) => (
+            <CollapsibleItem
+              key={`section-${sectionIndex}-item-${queryIndex}`}
+              onClick={this.handleClickSection}
+              text={query}
+            />
           ))
         }
       </Collapsible>
