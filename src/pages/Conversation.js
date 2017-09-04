@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   },
   conversationInput: {
     marginTop: 'auto',
-    paddingTop: '1rem',
   },
 });
 

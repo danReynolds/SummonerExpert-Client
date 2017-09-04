@@ -45,6 +45,9 @@ const menuStyles = {
     left: '36px',
     top: '26px'
   },
+  bmOverlay: {
+    width: '110%',
+  },
   bmMenuWrap: {
     left: 0,
   },
