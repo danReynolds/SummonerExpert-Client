@@ -32,14 +32,6 @@ class MessageListView extends Component {
     avatar: PropTypes.string,
   }
 
-  componentDidUpdate() {
-    this.scrollToLastMessage();
-  }
-
-  scrollToLastMessage = () => {
-    this.lastMessage && this.lastMessage.scrollIntoView();
-  };
-
   render() {
     const { messageListStore, avatar } = this.props;
     let messageListContent, messageListStyle;
@@ -51,7 +43,6 @@ class MessageListView extends Component {
         messages.map((message, index) => (
           <MessageView
             key={`message-${index}`}
-            listRef={(m) => this.lastMessage = m}
             message={message}
             avatar={avatar}
           />
@@ -67,10 +58,7 @@ class MessageListView extends Component {
     }
 
     return (
-      <div
-        ref={(messageListView) => this.messageListView = messageListView}
-        className={css(messageListStyle)}
-      >
+      <div className={css(messageListStyle)}>
         {messageListContent}
       </div>
     )

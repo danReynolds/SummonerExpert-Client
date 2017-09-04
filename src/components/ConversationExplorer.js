@@ -62,9 +62,6 @@ const menuStyles = {
   bmItemList: {
     color: '#b8b7ad',
   },
-  bmOverlay: {
-    background: 'none',
-  }
 };
 
 class ConversationExplorer extends Component {
@@ -86,11 +83,11 @@ class ConversationExplorer extends Component {
   }
 
   renderExplorerSections = () => {
-    return Explorer.map(section => (
-      <Collapsible title={section.title}>
+    return Explorer.map((section, index) => (
+      <Collapsible key={`section-${index}`} title={section.title}>
         {
           section.queries.map(query => (
-            <CollapsibleItem onClick={this.handleClickSection} text={query} />
+            <CollapsibleItem key={`section-item-${index}`} onClick={this.handleClickSection} text={query} />
           ))
         }
       </Collapsible>

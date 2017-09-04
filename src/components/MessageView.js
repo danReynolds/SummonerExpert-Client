@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { observer } from 'mobx-react'
 
@@ -67,37 +67,43 @@ const styles = StyleSheet.create({
   },
 });
 
-const MessageView = observer(({ message, listRef, avatar }) => {
-  const { text, type } = message;
-  let messageStyle, messageAvatar;
-
-  if (type === MESSAGE_TYPES.user) {
-    messageStyle = styles.userMessage;
-    messageAvatar = StyleSheet.create({
-      avatar: {
-        backgroundImage: `url(${avatar})`
-      }
-    })
-  } else {
-    messageStyle = styles.botMessage;
-    messageAvatar = StyleSheet.create({
-      avatar: { backgroundImage: `url(${LogoImage})` }
-    });
+@observer
+class MessageView extends Component {
+  componentDidUpdate() {
+    this.message.scrollIntoView();
   }
 
+  render() {
+    const { message: { text, type }, avatar } = this.props;
+    let messageStyle, messageAvatar;
 
-  return (
-    <div className={css(styles.messageContainer)}>
-      <div className={css(styles.image, messageAvatar.avatar)} />
-      <div
-        ref={listRef}
-        className={css(styles.message, messageStyle)}
-      >
-        {text || 'Loading...'}
+    if (type === MESSAGE_TYPES.user) {
+      messageStyle = styles.userMessage;
+      messageAvatar = StyleSheet.create({
+        avatar: {
+          backgroundImage: `url(${avatar})`
+        }
+      })
+    } else {
+      messageStyle = styles.botMessage;
+      messageAvatar = StyleSheet.create({
+        avatar: { backgroundImage: `url(${LogoImage})` }
+      });
+    }
+
+    return (
+      <div className={css(styles.messageContainer)}>
+        <div className={css(styles.image, messageAvatar.avatar)} />
+        <div
+          ref={(message) => this.message = message }
+          className={css(styles.message, messageStyle)}
+        >
+          {text || 'Loading...'}
+        </div>
       </div>
-    </div>
 
-  )
-});
+    );
+  }
+};
 
 export default MessageView;
