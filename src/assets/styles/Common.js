@@ -39,6 +39,8 @@ export const colors = {
   nightBlue: '#1b1d27',
   white: '#f5f5f5',
   red: '#d44b4b',
+  facebook: '#3b5998',
+  twitter: '#1da1f2',
 };
 
 export const fonts = {

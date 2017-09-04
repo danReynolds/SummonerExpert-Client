@@ -111,7 +111,10 @@ class Home extends Component {
     return (
       <div className={css(styles.listContainer)}>
         {RECOMMENDATIONS.map((recommendation, index) => (
-          <div className={css(styles.recommendationList)}>
+          <div
+            key={`recommendation-${index}`}
+            className={css(styles.recommendationList)}
+          >
             <RecommendationList limit={5} {...recommendation} />
           </div>
         ))}
