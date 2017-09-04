@@ -15,8 +15,8 @@ const fetch = require('node-fetch');
 
 const API_VERSION = '7.5.2';
 const FILE_BASE_PATH = '/app/src/static';
-const DATA_BASE_URL = `http://ddragon.leagueoflegends.com/cdn/${API_VERSION}/data/en_US`;
-const IMAGE_BASE_URL = `http://ddragon.leagueoflegends.com/cdn/${API_VERSION}/img`;
+const DATA_BASE_URL = `https://ddragon.leagueoflegends.com/cdn/${API_VERSION}/data/en_US`;
+const IMAGE_BASE_URL = `https://ddragon.leagueoflegends.com/cdn/${API_VERSION}/img`;
 
 // Fetch Avatars
 const fetchAvatars = async () => {
