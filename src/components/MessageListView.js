@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     display: 'block',
     height: 0,
     flex: 1,
-    padding: '0 1.5rem',
   },
   messageListEmpty: {
     height: '100%',
