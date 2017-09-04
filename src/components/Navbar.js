@@ -63,24 +63,28 @@ class Navbar extends Component {
   render() {
     return (
       <div className={css(styles.navbar)}>
-        <div className={css(styles.socialWrapper)}>
-          <a
-            target='_blank'
-            rel='noopener noreferrer'
-            href='https://www.facebook.com/summonerExpert'
-            className={css(styles.socialIcon, styles.facebook)}
-          >
-            <Icon size={32} icon={facebookF} />
-          </a>
-          <a
-            target='_blank'
-            rel='noopener noreferrer'
-            href='https://twitter.com/summonerexpert'
-            className={css(styles.socialIcon, styles.twitter)}
-          >
-            <Icon size={32} icon={twitter} />
-          </a>
-        </div>
+        {
+          window.location.pathname === '/' && (
+            <div className={css(styles.socialWrapper)}>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://www.facebook.com/summonerExpert'
+                className={css(styles.socialIcon, styles.facebook)}
+              >
+                <Icon size={32} icon={facebookF} />
+              </a>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://twitter.com/summonerexpert'
+                className={css(styles.socialIcon, styles.twitter)}
+              >
+                <Icon size={32} icon={twitter} />
+              </a>
+            </div>
+          )
+        }
         <img className={css(styles.logo)} src={LogoImage} alt='logo' />
       </div>
     )
