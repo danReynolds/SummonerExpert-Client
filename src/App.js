@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 
 import Home from './pages/Home';
+import About from './pages/About';
 import Conversation from './pages/Conversation';
 import messageListStore from './stores/MessageListStore';
 import Navbar from './components/Navbar';
@@ -35,6 +36,7 @@ class App extends Component {
             {process.env.NODE_ENV === 'development' ? <DevTools /> : null}
             <Navbar />
             <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
             <Route path="/conversation" component={Conversation} />
           </div>
         </Router>

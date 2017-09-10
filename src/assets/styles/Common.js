@@ -48,4 +48,16 @@ export const fonts = {
     fontFamily: 'Lato',
     color: colors.darkGrey,
   },
+  header: {
+    fontSize: '2.5rem',
+    color: colors.white,
+  },
+  link: {
+    color: colors.white,
+    textDecoration: 'none',
+
+    ':hover': {
+      color: colors.blue,
+    }
+  },
 };

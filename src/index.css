@@ -11,7 +11,6 @@ html, body, #root, [data-reactroot] {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  overflow: hidden;
 }
 
 ::-webkit-scrollbar {

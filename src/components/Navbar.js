@@ -4,11 +4,12 @@ import Icon from 'react-icons-kit';
 import { facebookF } from 'react-icons-kit/fa/facebookF';
 import { twitter } from 'react-icons-kit/fa/twitter';
 
-import { colors } from '../assets/styles/Common';
+import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
 
 const styles = StyleSheet.create({
   navbar: {
+    alignItems: 'center',
     position: 'fixed',
     width: '100%',
     height: '5rem',
@@ -16,13 +17,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     background: colors.nightBlue,
   },
+  link: {
+    ...fonts.link,
+    padding: '0 1rem',
+  },
   logo: {
+    position: 'absolute',
     height: '6rem',
     width: '6rem',
     borderRadius: '50%',
-    marginTop: '1rem',
+    marginTop: '1.5rem',
     background: colors.white,
-    margin: '1rem auto 0 auto',
   },
   socialWrapper: {
     left: '2rem',
@@ -57,6 +62,11 @@ const styles = StyleSheet.create({
     width: '2.75rem',
     marginRight: '1rem',
   },
+  navbarItems: {
+    paddingRight: '1rem',
+    color: colors.white,
+    marginLeft: 'auto',
+  }
 });
 
 class Navbar extends Component {
@@ -64,7 +74,7 @@ class Navbar extends Component {
     return (
       <div className={css(styles.navbar)}>
         {
-          window.location.pathname === '/' && (
+          window.location.pathname !== '/conversation' && (
             <div className={css(styles.socialWrapper)}>
               <a
                 target='_blank'
@@ -86,6 +96,16 @@ class Navbar extends Component {
           )
         }
         <img className={css(styles.logo)} src={LogoImage} alt='logo' />
+        {
+          isDesktop() && (
+            <div className={css(styles.navbarItems)}>
+              <a className={css(styles.link)} href="/">Home</a>
+              <a className={css(styles.link)} href="/conversation">Chat</a>
+              <a className={css(styles.link)} href="/about">About</a>
+            </div>
+          )
+        }
+
       </div>
     )
   }
