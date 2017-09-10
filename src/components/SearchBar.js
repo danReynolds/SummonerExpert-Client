@@ -5,7 +5,7 @@ import Icon from 'react-icons-kit';
 import { ic_search } from 'react-icons-kit/md/ic_search';
 import PropTypes from 'prop-types';
 
-import { colors, fonts, breakpoints, desktop } from '../assets/styles/Common';
+import { colors, fonts, breakpoints, isDesktop } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -81,15 +81,15 @@ class SearchBar extends Component {
     return (
       <form className={css(styles.searchBarForm)} onSubmit={this.handleSubmit}>
         <input
-          autoFocus
+          autoFocus={isDesktop()}
           onChange={this.handleChange}
           className={css(styles.bar)}
           type='search'
-          placeholder='Ask away'
+          placeholder='Speak, Summoner'
           value={text}
         />
         <div onClick={this.submitMessage} className={css(styles.searchIconWrapper)}>
-          <Icon size={window.innerWidth > desktop ? 100 : 40} icon={ic_search} />
+          <Icon size={isDesktop() ? 100 : 40} icon={ic_search} />
         </div>
       </form>
     )

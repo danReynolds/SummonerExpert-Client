@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     background: colors.grey,
-    padding: '1rem',
+    padding: '0.8rem',
     color: colors.darkGrey,
     cursor: 'pointer',
 

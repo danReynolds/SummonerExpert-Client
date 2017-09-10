@@ -14,7 +14,7 @@ export const breakpoints = {
 
 export default StyleSheet.create({
   container: {
-    margin: '7.5rem 1.5rem 0 1.5rem',
+    margin: '7.5rem auto 0 auto',
     display: 'flex',
     flexDirection: 'column',
 
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     },
 
     [breakpoints.mobile]: {
-      width: 'initial',
+      width: '90%',
     },
   },
 });
@@ -45,7 +45,7 @@ export const colors = {
 
 export const fonts = {
   body: {
-    font: 'Lato',
+    fontFamily: 'Lato',
     color: colors.darkGrey,
   },
 };

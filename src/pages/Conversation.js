@@ -5,7 +5,6 @@ import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
-import { getRandomAvatar } from '../static/avatars';
 
 const styles = StyleSheet.create({
   conversationPage: {
@@ -13,6 +12,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+    width: '100%',
   },
   conversationContent: {
     flex: 1,
@@ -31,7 +31,18 @@ const styles = StyleSheet.create({
 class Conversation extends Component {
   constructor(props) {
     super(props);
-    this.avatar = getRandomAvatar();
+
+    this.scrollMessageListView = () => {
+      this.messageListView.scrollTop = this.messageListView.scrollHeight;
+    }
+  }
+
+  componentDidMount() {
+     window.addEventListener('resize', this.scrollMessageListView);
+  }
+
+  componentWillUnmount() {
+     window.removeEventListener('resize', this.scrollMessageListView);
   }
 
   render() {
@@ -40,14 +51,14 @@ class Conversation extends Component {
         <ConversationExplorer />
         <div className={css(styles.conversationContent)}>
           <div className={css(styles.container, CommonStyles.container)}>
-            <MessageListView avatar={this.avatar} />
+            <MessageListView messageListRef={list => this.messageListView = list} />
             <div className={css(styles.conversationInput)}>
               <ConversationInput />
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

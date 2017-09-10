@@ -27,15 +27,16 @@ const styles = StyleSheet.create({
   },
 });
 
-@inject('messageListStore') @observer
+@inject('messageListStore', 'avatar') @observer
 class MessageListView extends Component {
   static PropTypes = {
     messageListStore: PropTypes.object,
     avatar: PropTypes.string,
+    messageListRef: PropTypes.func,
   }
 
   render() {
-    const { messageListStore, avatar } = this.props;
+    const { messageListStore, avatar, messageListRef } = this.props;
     let messageListContent, messageListStyle;
     const messages = messageListStore.messages;
 
@@ -60,7 +61,10 @@ class MessageListView extends Component {
     }
 
     return (
-      <div className={css(messageListStyle)}>
+      <div
+        ref={messageListRef}
+        className={css(messageListStyle)}
+      >
         {messageListContent}
       </div>
     )
