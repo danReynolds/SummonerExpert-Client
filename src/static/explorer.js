@@ -55,7 +55,7 @@ const explorer = [
     ],
   },
   {
-    title: 'Matchup Rankings',
+    title: 'Matchup rankings',
     queries: [
       'Top three counters for Vayne',
       '2nd best support with Sivir',
@@ -75,7 +75,7 @@ const explorer = [
     ],
   },
   {
-    title: 'Role Rankings',
+    title: 'Role rankings',
     queries: [
       'Which champions gets the most CS in mid lane?',
       'Which mid laner has the highest play rate in gold?',
@@ -92,6 +92,15 @@ const explorer = [
       'How is Blitzcrank doing?',
       'Is Mordekaiser viable?',
       'Is Graves a jungler?',
+    ],
+  },
+  {
+    title: 'Role performance',
+    queries: [
+      'How much CS does Ornn get top?',
+      'Does Sion die a lot?',
+      "What is Zed's ban rate mid?",
+      'How many wards does Soraka place in Silver?',
     ],
   },
   {
