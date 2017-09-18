@@ -22,21 +22,14 @@ const styles = StyleSheet.create({
 });
 
 class Collapsible extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { open: false };
-
-  }
-
   toggleOpen = () => {
-    const { open } = this.state;
-    this.setState({ open: !open });
+    const { onSectionOpen, index } = this.props;
+    onSectionOpen(index);
   }
 
   renderTitle = () => {
-    const { title } = this.props;
-    const { open } = this.state;
-    const icon = open ? ic_keyboard_arrow_down : ic_keyboard_arrow_right;
+    const { title, isOpen } = this.props;
+    const icon = isOpen ? ic_keyboard_arrow_down : ic_keyboard_arrow_right;
 
     return (
       <div onClick={this.toggleOpen} className={css(styles.title)}>
@@ -47,13 +40,12 @@ class Collapsible extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    const { open } = this.state;
+    const { children, isOpen } = this.props;
     return (
       <div className={css(styles.container)}>
         {this.renderTitle()}
         <div className={css(styles.content)}>
-          {open ? children : null}
+          {isOpen ? children : null}
         </div>
       </div>
     )

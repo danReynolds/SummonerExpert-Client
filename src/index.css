@@ -13,6 +13,10 @@ html, body, #root, [data-reactroot] {
   width: 100%;
 }
 
+option {
+  padding-left: 1rem;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }

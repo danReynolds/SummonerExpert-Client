@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
+import _ from 'lodash';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
+import Dropdown from './DropDown';
 import CollapsibleItem from './CollapsibleItem';
 import Explorer from '../static/explorer';
 import { sendMessage } from '../actions/ApiAiActions';
@@ -81,12 +83,16 @@ const menuStyles = {
   },
 };
 
+const ALL_TAG = 'All';
+const DEFAULT_QUERY_SIZE = 5;
+
 class ConversationExplorer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: isDesktop(),
+      selectedTag: null,
     };
   }
 
@@ -95,24 +101,68 @@ class ConversationExplorer extends Component {
     sendMessage(message);
   }
 
+  handleSelectTag = (tag) => {
+    this.setState({ selectedTag: tag });
+  }
+
   isMenuOpen = ({ isOpen }) => {
     this.setState({ isOpen });
   }
 
+  onSectionOpen = (index) => {
+    const { openSectionIndex } = this.state;
+    const openIndex = openSectionIndex === index ? null : index;
+    this.setState({ openSectionIndex: openIndex, selectedTag: null });
+  }
+
   renderExplorerSections = () => {
-    return Explorer.map((section, sectionIndex) => (
-      <Collapsible key={`section-${sectionIndex}`} title={section.title}>
-        {
-          section.queries.map((query, queryIndex) => (
-            <CollapsibleItem
-              key={`section-${sectionIndex}-item-${queryIndex}`}
-              onClick={this.handleClickSection}
-              text={query}
-            />
-          ))
+    const { openSectionIndex, selectedTag } = this.state;
+
+    return Explorer.map(({ title, tags, queries }, sectionIndex) => {
+      let filteredQueries = queries;
+      let allTags;
+      if (tags) {
+        allTags = [ALL_TAG].concat(tags);
+      }
+
+      if (selectedTag !== ALL_TAG) {
+        if (selectedTag) {
+          filteredQueries = queries.filter(
+            query => !query.tags || query.tags.includes(selectedTag)
+          );
+        } else {
+          filteredQueries = _.sampleSize(filteredQueries, DEFAULT_QUERY_SIZE);
         }
-      </Collapsible>
-    ))
+      }
+
+      return (
+        <Collapsible
+          key={`section-${sectionIndex}`}
+          title={title}
+          index={sectionIndex}
+          isOpen={sectionIndex === openSectionIndex }
+          onSectionOpen={this.onSectionOpen}
+        >
+          {allTags && (
+            <Dropdown
+              placeholder="Filter by Topic"
+              onSelect={this.handleSelectTag}
+              selectedValue={selectedTag}
+              options={allTags}
+            />
+          )}
+          {
+            filteredQueries.map((query, queryIndex) => (
+              <CollapsibleItem
+                key={`section-${sectionIndex}-item-${queryIndex}`}
+                onClick={this.handleClickSection}
+                text={query.text}
+              />
+            ))
+          }
+        </Collapsible>
+      );
+    })
   };
 
   render() {
