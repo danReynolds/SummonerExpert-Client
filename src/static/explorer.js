@@ -70,7 +70,7 @@ const explorer = [
     title: 'Matchup rankings',
     tags: ['Role', 'Order', 'Elo', 'Metric', 'List Position', 'List Size'],
     queries: [
-      { text: 'Three counters for Vayne ADC', tags: ['List Size', 'Elo'] },
+      { text: 'Three counters for Vayne ADC', tags: ['List Size'] },
       { text: '2nd best support with Sivir', tags: ['List Position', 'Role'] },
       { text: 'Worst jungler to play against Lee Sin', tags: ['Order'] },
       { text: 'Which 5 supports synergyize best with Jinx?', tags: ['List Size', 'Order'] },
