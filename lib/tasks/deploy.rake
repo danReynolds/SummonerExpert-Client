@@ -22,7 +22,6 @@ namespace :deploy do
   desc 'copy to server files needed to run and manage Docker containers'
   task :configs do
     on server do
-      upload! File.expand_path('../../docker-compose.yml', __dir__), deploy_path
       upload! File.expand_path('../../docker-compose.production.yml', __dir__), deploy_path
       upload! File.expand_path('../../nginx.conf', __dir__), deploy_path
       upload! File.expand_path('../../nginx.upstream.conf', __dir__), deploy_path
@@ -56,7 +55,7 @@ namespace :docker do
     on server do
       within deploy_path do
         with rails_env: deploy_env, deploy_tag: deploy_tag, env_key: env_key do
-          execute 'docker-compose', '-f', 'docker-compose.yml', '-f', 'docker-compose.production.yml', 'run', 'app', 'rake', 'secrets:decrypt'
+          execute 'docker-compose', '-f', 'docker-compose.production.yml', 'run', 'app', 'rake', 'secrets:decrypt'
         end
       end
     end
@@ -67,7 +66,7 @@ namespace :docker do
     on server do
       within deploy_path do
         with rails_env: deploy_env, deploy_tag: deploy_tag do
-          execute 'docker-compose', '-f', 'docker-compose.yml', '-f', 'docker-compose.production.yml', 'down'
+          execute 'docker-compose', '-f', 'docker-compose.production.yml', 'down'
         end
       end
     end
@@ -78,7 +77,7 @@ namespace :docker do
     on server do
       within deploy_path do
         with rails_env: deploy_env, deploy_tag: deploy_tag do
-          execute 'docker-compose', '-f', 'docker-compose.yml', '-f', 'docker-compose.production.yml', 'up', '-d'
+          execute 'docker-compose', '-f', 'docker-compose.production.yml', 'up', '-d'
 
           # Remove the old image and write the new deploy tag to a log file
           execute 'docker', 'rmi', 'danreynolds/summonerexpert_client:$(cat deploy.tag)'
