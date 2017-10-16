@@ -8,9 +8,12 @@ import registerServiceWorker from './registerServiceWorker';
 // Only allow state mutations within @action
 useStrict(true);
 
-// Adjust browser zoom on load to hand browsers with higher DPIs
-// https://stackoverflow.com/questions/27122862/force-zoom-level-dpi-scale-with-css-header-tag-or-javascript
-document.querySelector('body').style.zoom = `${1 / window.devicePixelRatio * 100}%`;
+
+if (navigator.appVersion.includes('Win')) {
+  // Adjust browser zoom on load to hand browsers with higher DPIs on Windows
+  // https://stackoverflow.com/questions/27122862/force-zoom-level-dpi-scale-with-css-header-tag-or-javascript
+  document.querySelector('body').style.zoom = `${1 / window.devicePixelRatio * 100}%`;
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
