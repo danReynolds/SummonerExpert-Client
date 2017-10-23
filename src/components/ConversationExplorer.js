@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
+import Select from 'react-select';
 import _ from 'lodash';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
-import Dropdown from './DropDown';
 import CollapsibleItem from './CollapsibleItem';
 import Explorer from '../static/explorer';
 import { sendMessage } from '../actions/ApiAiActions';
@@ -102,7 +102,7 @@ class ConversationExplorer extends Component {
   }
 
   handleSelectTag = (tag) => {
-    this.setState({ selectedTag: tag });
+    this.setState({ selectedTag: tag && tag.value });
   }
 
   isMenuOpen = ({ isOpen }) => {
@@ -122,13 +122,13 @@ class ConversationExplorer extends Component {
       let filteredQueries = queries;
       let allTags;
       if (tags) {
-        allTags = [ALL_TAG].concat(tags);
+        allTags = [ALL_TAG].concat(tags).map(t => ({ value: t, label: t }))
       }
 
       if (selectedTag !== ALL_TAG) {
         if (selectedTag) {
           filteredQueries = queries.filter(
-            query => !query.tags || query.tags.includes(selectedTag)
+            query => query.tags && query.tags.includes(selectedTag)
           );
         } else {
           filteredQueries = _.sampleSize(filteredQueries, DEFAULT_QUERY_SIZE);
@@ -144,11 +144,12 @@ class ConversationExplorer extends Component {
           onSectionOpen={this.onSectionOpen}
         >
           {allTags && (
-            <Dropdown
+            <Select
               placeholder="Filter by Topic"
-              onSelect={this.handleSelectTag}
-              selectedValue={selectedTag}
+              onChange={this.handleSelectTag}
+              value={selectedTag}
               options={allTags}
+              searchable={false}
             />
           )}
           {
