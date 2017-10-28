@@ -24,6 +24,9 @@ option {
   border: none;
   box-shadow: none;
 }
+.Select-placeholder {
+  cursor: pointer;
+}
 .Select, .Select .Select-option, .Select .Select-control,
 .Select .Select-placeholder, .Select .Select-value {
   background-color: #e4e4e4;

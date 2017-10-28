@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
-import { colors, fonts } from '../assets/styles/Common';
+import { colors } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -28,16 +28,16 @@ const styles = StyleSheet.create({
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: colors.white,
+    border: '2px solid',
+    borderRadius: 2,
+    borderColor: colors.blue,
     padding: '1rem',
     marginTop: '1rem',
+    color: colors.white,
 
     ':hover': {
-      backgroundColor: colors.grey,
+      borderColor: colors.midBlue,
     }
-  },
-  query: {
-    ...fonts.body,
   },
 });
 
@@ -76,7 +76,7 @@ class RecommendationListItem extends Component {
     return (
       <div onClick={this.handleClick} className={css(styles.container)}>
         {imageContent}
-        <div className={css(styles.query)}>{query}</div>
+        <div>{query}</div>
       </div>
     );
   }
