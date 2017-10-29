@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { observer } from 'mobx-react'
+import { fadeInLeftBig, fadeInRightBig } from 'react-animations';
 
 import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { MESSAGE_TYPES } from '../stores/MessageStore';
@@ -8,11 +9,15 @@ import LogoImage from '../assets/images/summoner-expert.svg';
 
 const styles = StyleSheet.create({
   messageContainer: {
+    animationName: fadeInLeftBig,
+    animationDuration: '0.3s',
     display: 'flex',
     alignItems: 'center',
     margin: '2rem 0',
   },
   userMessageContainer: {
+    animationName: fadeInRightBig,
+    animationDuration: '0.15s',
     flexDirection: 'row-reverse',
   },
   message: {

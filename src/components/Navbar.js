@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Icon from 'react-icons-kit';
 import { facebookF } from 'react-icons-kit/fa/facebookF';
 import { twitter } from 'react-icons-kit/fa/twitter';
+import { google } from 'react-icons-kit/fa/google';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
@@ -22,12 +23,16 @@ const styles = StyleSheet.create({
     padding: '0 1rem',
   },
   logo: {
+    height: 'inherit',
+    width: 'inherit',
+    borderRadius: '50%',
+    background: colors.white,
+  },
+  logoContainer: {
+    marginTop: '1.5rem',
     position: 'absolute',
     height: '6rem',
     width: '6rem',
-    borderRadius: '50%',
-    marginTop: '1.5rem',
-    background: colors.white,
   },
   socialWrapper: {
     left: '2rem',
@@ -52,14 +57,21 @@ const styles = StyleSheet.create({
       background: colors.white,
     },
   },
+  google: {
+    background: colors.google,
+    ':hover': {
+      color: colors.google,
+      background: colors.white,
+    },
+  },
   socialIcon: {
     color: colors.white,
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '2.75rem',
-    width: '2.75rem',
+    height: '2.5rem',
+    width: '2.5rem',
     marginRight: '1rem',
   },
   navbarItems: {
@@ -74,7 +86,7 @@ class Navbar extends Component {
     return (
       <div className={css(styles.navbar)}>
         {
-          window.location.pathname !== '/conversation' && (
+          window.location.pathname !== '/conversation' && isDesktop() && (
             <div className={css(styles.socialWrapper)}>
               <a
                 target='_blank'
@@ -82,7 +94,7 @@ class Navbar extends Component {
                 href='https://www.facebook.com/summonerExpert'
                 className={css(styles.socialIcon, styles.facebook)}
               >
-                <Icon size={32} icon={facebookF} />
+                <Icon size={25} icon={facebookF} />
               </a>
               <a
                 target='_blank'
@@ -90,12 +102,22 @@ class Navbar extends Component {
                 href='https://twitter.com/summonerexpert'
                 className={css(styles.socialIcon, styles.twitter)}
               >
-                <Icon size={32} icon={twitter} />
+                <Icon size={25} icon={twitter} />
+              </a>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://assistant.google.com/services/a/id/335d3b57787076a8/'
+                className={css(styles.socialIcon, styles.google)}
+              >
+                <Icon size={25} icon={google} />
               </a>
             </div>
           )
         }
-        <img className={css(styles.logo)} src={LogoImage} alt='logo' />
+        <a className={css(styles.logoContainer)} href="/">
+          <img className={css(styles.logo)} src={LogoImage} alt='logo' />
+        </a>
         {
           isDesktop() && (
             <div className={css(styles.navbarItems)}>

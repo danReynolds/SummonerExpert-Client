@@ -9,7 +9,7 @@ import RecommendationListItem from './RecommendationListItem';
 const styles = StyleSheet.create({
   title: {
     ...fonts.body,
-      color: colors.grey,
+      color: colors.white,
       fontSize: '1rem',
       textTransform: 'uppercase',
       marginBottom: '1rem',

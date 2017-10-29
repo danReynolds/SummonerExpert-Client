@@ -1,4 +1,4 @@
-FROM starefossen/ruby-node:2-8
+FROM node:8.7
 
 # Set the working directory to /app
 RUN mkdir /app

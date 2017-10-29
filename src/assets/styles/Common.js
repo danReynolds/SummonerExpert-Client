@@ -41,6 +41,7 @@ export const colors = {
   red: '#d44b4b',
   facebook: '#3b5998',
   twitter: '#1da1f2',
+  google: '#ea4335',
 };
 
 export const fonts = {
