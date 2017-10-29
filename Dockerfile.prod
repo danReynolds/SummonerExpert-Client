@@ -2,3 +2,5 @@ FROM nginx
 
 # Copy the current directory contents into the container at /app
 ADD build /app
+
+WORKDIR /app
