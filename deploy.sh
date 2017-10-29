@@ -16,4 +16,4 @@ if [ -z "${DEPLOY_TAG}" ]; then
   return
 fi
 
-docker run -e DEPLOY_TYPE="$DEPLOY_TYPE" -e DEPLOY_TAG=$DEPLOY_TAG -e ENV_KEY=$ENV_KEY -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock --env-file .env deployer
+docker run -e DEPLOY_TYPE="$DEPLOY_TYPE" -e DEPLOY_TAG=$DEPLOY_TAG -e ENV_KEY=$ENV_KEY -v $PWD:/app -v /var/run/docker.sock:/var/run/docker.sock --env-file .env danreynolds/deploymanager:0.0.1
