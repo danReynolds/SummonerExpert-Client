@@ -2,6 +2,7 @@ import { StyleSheet, css } from 'aphrodite';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
+import { fadeIn } from 'react-animations';
 
 import { colors } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
@@ -25,6 +26,8 @@ const styles = StyleSheet.create({
     padding: '0 1rem',
   },
   container: {
+    animationName: fadeIn,
+    animationDuration: '1s',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
