@@ -1,21 +1,7 @@
 version: '3'
 services:
-  app:
-    command: 'serve -s build -p 3000'
-    image: danreynolds/summonerexpert_client:$DEPLOY_TAG
-    ports:
-      - 3000
-    volumes:
-      - ./.env:/app/.env
-    environment:
-      - ENV_KEY=$ENV_KEY
-      - DEPLOY_TAG=$DEPLOY_TAG
-    env_file:
-      - .env
   nginx:
-    image: nginx
-    depends_on:
-      - app
+    image: danreynolds/summonerexpert_client:$DEPLOY_TAG
     ports:
       - 80
     networks:
@@ -26,6 +12,12 @@ services:
     volumes:
       - logs:/etc/nginx/log/
       - ./nginx.upstream.conf:/etc/nginx/conf.d/default.conf
+      - ./.env:/app/.env
+    environment:
+      - ENV_KEY=$ENV_KEY
+      - DEPLOY_TAG=$DEPLOY_TAG
+    env_file:
+      - .env
 volumes:
   logs:
 networks:
