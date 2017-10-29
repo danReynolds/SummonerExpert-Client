@@ -4,8 +4,5 @@ FROM starefossen/ruby-node:2-8
 RUN mkdir /app
 WORKDIR /app
 
-# Add Ruby dependencies necessary for secret decryption
-RUN gem install sshkit rake
-
 # Copy the current directory contents into the container at /app
 ADD . /app
