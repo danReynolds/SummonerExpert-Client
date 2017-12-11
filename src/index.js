@@ -13,7 +13,7 @@ useStrict(true);
 if (navigator.appVersion.includes('Win')) {
   // Adjust browser zoom on load to hand browsers with higher DPIs on Windows
   // https://stackoverflow.com/questions/27122862/force-zoom-level-dpi-scale-with-css-header-tag-or-javascript
-  document.querySelector('body').style.zoom = `${1 / window.devicePixelRatio * 100}%`;
+  document.querySelector('html').style.zoom = `${1 / window.devicePixelRatio * 100}%`;
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));

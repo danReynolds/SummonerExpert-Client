@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Icon from 'react-icons-kit';
 import { ic_send } from 'react-icons-kit/md/ic_send';
-import PropTypes from 'prop-types';
 
 import { colors, fonts, breakpoints, isDesktop } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
