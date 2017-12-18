@@ -5,10 +5,11 @@ import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
+import BannerImage from '../assets/images/banner.jpg';
 
 const styles = StyleSheet.create({
   conversationPage: {
-    backgroundColor: colors.darkBlue,
+    backgroundImage: `linear-gradient(${colors.brightBlue}, ${colors.nightBlue}), url(${BannerImage})`,
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
