@@ -7,6 +7,7 @@ import { google } from 'react-icons-kit/fa/google';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
+import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
   navbar: {
@@ -16,11 +17,10 @@ const styles = StyleSheet.create({
     height: '5rem',
     justifyContent: 'center',
     display: 'flex',
-    background: colors.nightBlue,
   },
   link: {
     ...fonts.link,
-    padding: '0 1rem',
+    padding: '1rem',
   },
   logo: {
     height: 'inherit',
@@ -121,9 +121,9 @@ class Navbar extends Component {
         {
           isDesktop() && (
             <div className={css(styles.navbarItems)}>
-              <a className={css(styles.link)} href="/">Home</a>
-              <a className={css(styles.link)} href="/conversation">Chat</a>
-              <a className={css(styles.link)} href="/about">About</a>
+              <a className={style(styles.link, 'hvr-underline-reveal')} href="/">Home</a>
+              <a className={style(styles.link, 'hvr-underline-reveal')} href="/conversation">Chat</a>
+              <a className={style(styles.link, 'hvr-underline-reveal')} href="/about">About</a>
             </div>
           )
         }

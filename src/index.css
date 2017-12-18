@@ -17,9 +17,6 @@ option {
   padding-left: 1rem;
 }
 
-.Select .Select-control {
-  border: none;
-}
 .Select.is-focused:not(.is-open) > .Select-control {
   border: none;
   box-shadow: none;
@@ -27,21 +24,9 @@ option {
 .Select-placeholder {
   cursor: pointer;
 }
-.Select, .Select .Select-option, .Select .Select-control,
-.Select .Select-placeholder, .Select .Select-value {
-  background-color: #e4e4e4;
-}
-.Select .Select-option.is-selected {
-  background-color: #cecece;
-}
-.Select .Select-option.is-focused {
-  background-color: #f2f2f2;
-}
-.Select .Select-placeholder, .Select .Select-value, .Select .Select-option {
-  color: #565656;
-}
-.Select .Select-menu-outer {
-  border-bottom: 1px solid #565656;
+
+.Select-value-label {
+  color: #f5f5f5 !important;
 }
 
 ::-webkit-scrollbar {

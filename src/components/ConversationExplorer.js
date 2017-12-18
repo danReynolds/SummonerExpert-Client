@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
-import Select from 'react-select';
-import _ from 'lodash';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
+import Option from './Option';
 import CollapsibleItem from './CollapsibleItem';
 import Explorer from '../static/explorer';
 import { sendMessage } from '../actions/ApiAiActions';
+import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
   menuTitle: {
     ...fonts.body,
     color: colors.grey,
-    background: colors.midBlue,
     fontSize: '1.25rem',
     height: '5rem',
     display: 'flex',
     alignItems: 'center',
     padding: '0 1.5rem ',
+
+    ':hover': {
+      cursor: 'pointer',
+      background: colors.midBlue,
+    }
   },
   menuContent: {
     height: 0,
@@ -52,6 +56,7 @@ const menuStyles = {
   },
   bmMenuWrap: {
     left: 0,
+    background: 'none',
   },
   bmBurgerBars: {
     background: '#373a47'
@@ -62,12 +67,11 @@ const menuStyles = {
   },
   bmCross: {
     cursor: 'pointer',
-    background: '#bdc3c7'
   },
   bmMenu: {
-    background: colors.grey,
     fontSize: '1.15rem',
     overflow: 'auto',
+    background: 'none',
   },
   bmMenuItem: {
     color: 'red',
@@ -83,16 +87,14 @@ const menuStyles = {
   },
 };
 
-const ALL_TAG = 'All';
-const DEFAULT_QUERY_SIZE = 5;
-
 class ConversationExplorer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       isOpen: isDesktop(),
-      selectedTag: null,
+      isCategoryOpen: false,
+      selectedCategory: Explorer.champion.key,
     };
   }
 
@@ -101,12 +103,17 @@ class ConversationExplorer extends Component {
     sendMessage(message);
   }
 
-  handleSelectTag = (tag) => {
-    this.setState({ selectedTag: tag && tag.value });
+  handleSelectCategory = (category) => {
+    this.setState({ selectedCategory: category });
+    this.toggleCategoryOpen();
   }
 
   isMenuOpen = ({ isOpen }) => {
     this.setState({ isOpen });
+  }
+
+  toggleCategoryOpen = () => {
+    this.setState({ selectCategoryOpen: !this.state.selectCategoryOpen });
   }
 
   onSectionOpen = (index) => {
@@ -115,27 +122,24 @@ class ConversationExplorer extends Component {
     this.setState({ openSectionIndex: openIndex, selectedTag: null });
   }
 
-  renderExplorerSections = () => {
-    const { openSectionIndex, selectedTag } = this.state;
+  renderCategoryOptions = () => {
+    const { selectedCategory } = this.state;
 
-    return Explorer.map(({ title, tags, queries }, sectionIndex) => {
-      let filteredQueries = queries;
-      let allTags;
-      if (tags) {
-        allTags = [ALL_TAG].concat(tags).map(t => ({ value: t, label: t }))
-      }
+    return Object.values(Explorer).map((category, index) => (
+      <Option
+        selected={category.key === selectedCategory}
+        value={category.key}
+        title={category.title}
+        index={index}
+        onClick={this.handleSelectCategory}
+      />
+    ));
+  }
 
-      if (selectedTag !== ALL_TAG) {
-        if (selectedTag) {
-          filteredQueries = queries.filter(
-            query => query.tags && query.tags.includes(selectedTag)
-          );
-        } else {
-          filteredQueries = _.sampleSize(filteredQueries, DEFAULT_QUERY_SIZE);
-        }
-      }
+  renderCategorySections = () => {
+    const { openSectionIndex, selectedCategory } = this.state;
 
-      return (
+    return Explorer[selectedCategory].sections.map(({ title, tags, queries }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
           title={title}
@@ -143,18 +147,10 @@ class ConversationExplorer extends Component {
           isOpen={sectionIndex === openSectionIndex }
           onSectionOpen={this.onSectionOpen}
         >
-          {allTags && (
-            <Select
-              placeholder="Filter by Topic"
-              onChange={this.handleSelectTag}
-              value={selectedTag}
-              options={allTags}
-              searchable={false}
-            />
-          )}
           {
-            filteredQueries.map((query, queryIndex) => (
+            queries.map((query, queryIndex) => (
               <CollapsibleItem
+                index={queryIndex}
                 key={`section-${sectionIndex}-item-${queryIndex}`}
                 onClick={this.handleClickSection}
                 text={query.text}
@@ -162,23 +158,29 @@ class ConversationExplorer extends Component {
             ))
           }
         </Collapsible>
-      );
-    })
+    ));
   };
 
   render() {
-    const { isOpen } = this.state;
+    const { isOpen, selectCategoryOpen } = this.state;
+    const desktop = isDesktop();
+    const menuStyleOverrides = desktop ? (
+      { ...menuStyles, bmBurgerButton: { display: 'none' }
+    }) : menuStyles;
+
     return (
       <Menu
-        noOverlay={isDesktop()}
+        noOverlay={desktop}
         isOpen={isOpen}
         onStateChange={this.isMenuOpen}
         customCrossIcon={false}
-        styles={menuStyles}
+        styles={menuStyleOverrides}
       >
-        <div className={css(styles.menuTitle)}>Conversation Explorer</div>
+        <div onClick={this.toggleCategoryOpen} className={style(styles.menuTitle, 'hvr-fade')}>
+          Conversation Explorer
+        </div>
         <div className={css(styles.menuContent)}>
-          {this.renderExplorerSections()}
+          {selectCategoryOpen ? this.renderCategoryOptions() : this.renderCategorySections()}
         </div>
       </Menu>
     )

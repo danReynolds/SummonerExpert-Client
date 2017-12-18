@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
 
     [breakpoints.desktop]: {
-      fontSize: '6rem',
+      fontSize: '4rem',
     },
 
     [breakpoints.mobile]: {
@@ -81,11 +81,12 @@ class SearchBar extends Component {
     return (
       <form className={css(styles.searchBarForm)} onSubmit={this.handleSubmit}>
         <input
+          spellCheck={false}
           autoFocus={isDesktop()}
           onChange={this.handleChange}
           className={css(styles.bar)}
           type='search'
-          placeholder='Speak, Summoner'
+          placeholder='Talk to Summoner Expert'
           value={text}
         />
         <div onClick={this.submitMessage} className={css(styles.searchIconWrapper)}>

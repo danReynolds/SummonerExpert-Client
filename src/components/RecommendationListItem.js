@@ -6,6 +6,7 @@ import { fadeIn } from 'react-animations';
 
 import { colors } from '../assets/styles/Common';
 import { sendMessage } from '../actions/ApiAiActions';
+import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
   image: {
@@ -77,7 +78,7 @@ class RecommendationListItem extends Component {
     }
 
     return (
-      <div onClick={this.handleClick} className={css(styles.container)}>
+      <div onClick={this.handleClick} className={style(styles.container, 'hvr-fade')}>
         {imageContent}
         <div>{query}</div>
       </div>

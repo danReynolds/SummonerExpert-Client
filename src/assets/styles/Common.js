@@ -34,14 +34,16 @@ export const colors = {
   midGrey: '#cecece',
   darkGrey: '#565656',
   blue: '#55baea',
-  midBlue: '#368cb5',
+  midBlue: '#2098D1',
   darkBlue: '#242735',
-  nightBlue: '#1b1d27',
   white: '#f5f5f5',
   red: '#d44b4b',
   facebook: '#3b5998',
   twitter: '#1da1f2',
   google: '#ea4335',
+  brightBlue: '#142c85',
+  nightBlue: 'rgba(17, 37, 66, 0.95)',
+  gold: '#dad09a',
 };
 
 export const fonts = {

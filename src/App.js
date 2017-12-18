@@ -7,6 +7,7 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
+import BannerImage from './assets/images/banner.jpg';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -18,7 +19,8 @@ import { colors } from './assets/styles/Common';
 
 const styles = StyleSheet.create({
   rootContainer: {
-    background: colors.darkBlue,
+    backgroundImage: `linear-gradient(${colors.brightBlue}, ${colors.nightBlue}), url(${BannerImage})`,
+    backgroundSize: 'cover',
   },
 });
 
