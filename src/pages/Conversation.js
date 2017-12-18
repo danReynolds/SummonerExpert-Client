@@ -5,7 +5,7 @@ import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
-import BannerImage from '../assets/images/vitaliy-paykov-212215.jpg';
+import BannerImage from '../assets/images/banner.jpg';
 
 const styles = StyleSheet.create({
   conversationPage: {

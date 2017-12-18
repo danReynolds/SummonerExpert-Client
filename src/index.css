@@ -13,22 +13,6 @@ html, body, #root, [data-reactroot] {
   width: 100%;
 }
 
-option {
-  padding-left: 1rem;
-}
-
-.Select.is-focused:not(.is-open) > .Select-control {
-  border: none;
-  box-shadow: none;
-}
-.Select-placeholder {
-  cursor: pointer;
-}
-
-.Select-value-label {
-  color: #f5f5f5 !important;
-}
-
 ::-webkit-scrollbar {
     display: none;
 }
