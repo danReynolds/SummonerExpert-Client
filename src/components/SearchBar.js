@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
 
     [breakpoints.mobile]: {
-      fontSize: '2rem',
+      fontSize: '1.5rem',
     },
   },
   searchBarForm: {

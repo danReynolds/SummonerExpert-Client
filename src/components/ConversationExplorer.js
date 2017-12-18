@@ -53,13 +53,14 @@ const menuStyles = {
   },
   bmOverlay: {
     width: '110%',
+    background: colors.nightBlue,
   },
   bmMenuWrap: {
     left: 0,
     background: 'none',
   },
   bmBurgerBars: {
-    background: '#373a47'
+    background: colors.white,
   },
   bmCrossButton: {
     height: '24px',
@@ -164,7 +165,7 @@ class ConversationExplorer extends Component {
   render() {
     const { isOpen, selectCategoryOpen } = this.state;
     const desktop = isDesktop();
-    const menuStyleOverrides = desktop ? (
+    const menuStyleOverrides = desktop || isOpen ? (
       { ...menuStyles, bmBurgerButton: { display: 'none' }
     }) : menuStyles;
 
