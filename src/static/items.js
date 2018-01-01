@@ -22,10 +22,6 @@ export const itemQueries = [
     query: 'Tell me about Boots of Speed.',
   },
   {
-    id: 'Boots of Speed',
-    query: 'Tell me about Boots of Speed.',
-  },
-  {
     id: 'Rumble',
     query: 'What does Dyrus build on Rumble Top?',
   },
@@ -48,7 +44,7 @@ export const getItemImage = (item) => {
   if (!itemImage) {
     return;
   }
-  
+
   return `${itemJSON.url}/${itemImage}`;
 };
 
