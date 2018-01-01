@@ -20,11 +20,36 @@ export const itemQueries = [
   {
     id: 'Boots of Speed',
     query: 'Tell me about Boots of Speed.',
-  }
+  },
+  {
+    id: 'Boots of Speed',
+    query: 'Tell me about Boots of Speed.',
+  },
+  {
+    id: 'Rumble',
+    query: 'What does Dyrus build on Rumble Top?',
+  },
+  {
+    id: 'Annie',
+    query: 'What does Annie Bot build on Annie Bot?',
+  },
+  {
+    id: 'Zoe',
+    query: 'Best build for Zoe Mid',
+  },
+  {
+    id: 'Ornn',
+    query: 'Most frequent build for Ornn Top',
+  },
 ];
 
 export const getItemImage = (item) => {
-  return `${itemJSON.url}/${itemJSON.data[item]}`;
+  const itemImage = itemJSON.data[item];
+  if (!itemImage) {
+    return;
+  }
+  
+  return `${itemJSON.url}/${itemImage}`;
 };
 
 export default {

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   noMessages: {
     padding: '1rem',
     color: colors.grey,
-    fontSize: '2rem',
+    fontSize: '1.5rem',
   },
 });
 

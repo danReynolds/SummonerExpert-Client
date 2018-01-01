@@ -19,7 +19,7 @@ export const championQueries = [
   },
   {
     id: 'Caitlyn',
-    query: 'Highest winrate build for Caitlyn.',
+    query: 'Highest win rate ability order for Caitlyn.',
   },
   {
     id: "Cho'Gath",
@@ -28,10 +28,12 @@ export const championQueries = [
   {
     id: 'Sona',
     query: 'Does Sona get a lot of assists?',
-  }
-];
-
-export const championMatchupQueries = [
+  },
+  {
+    id: 'Garen',
+    id2: 'Darius',
+    query: 'How does Garen do against Darius Top?',
+  },
   {
     id: 'Nocturne',
     id2: 'Shyvana',
@@ -70,11 +72,15 @@ export const championMatchupQueries = [
 ];
 
 export const getChampionImage = (champion) => {
-  return `${championJSON.url}/${championJSON.data[champion]}`;
+  const championImage = championJSON.data[champion];
+  if (!championImage) {
+    return;
+  }
+
+  return `${championJSON.url}/${championImage}`;
 }
 
 export default {
   getChampionImage,
   championQueries,
-  championMatchupQueries,
 };

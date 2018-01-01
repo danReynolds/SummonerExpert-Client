@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
+import Icon from 'react-icons-kit';
+import { ic_clear } from 'react-icons-kit/md/ic_clear';
 
 import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
@@ -41,13 +43,19 @@ const styles = StyleSheet.create({
       color: colors.blue,
     }
   },
+  closeButton: {
+    position: 'absolute',
+    right: '-60px',
+    top: '24px',
+    color: colors.blue,
+  }
 });
 
 const menuStyles = {
   bmBurgerButton: {
     position: 'fixed',
-    width: '36px',
-    height: '30px',
+    width: '26px',
+    height: '20px',
     left: '36px',
     top: '26px'
   },
@@ -60,7 +68,7 @@ const menuStyles = {
     background: 'none',
   },
   bmBurgerBars: {
-    background: colors.white,
+    background: colors.blue,
   },
   bmCrossButton: {
     height: '24px',
@@ -109,7 +117,11 @@ class ConversationExplorer extends Component {
     this.toggleCategoryOpen();
   }
 
-  isMenuOpen = ({ isOpen }) => {
+  handleClosePressed = () => {
+    this.setMenuOpen({ isOpen: false });
+  }
+
+  setMenuOpen = ({ isOpen }) => {
     this.setState({ isOpen });
   }
 
@@ -173,7 +185,7 @@ class ConversationExplorer extends Component {
       <Menu
         noOverlay={desktop}
         isOpen={isOpen}
-        onStateChange={this.isMenuOpen}
+        onStateChange={this.setMenuOpen}
         customCrossIcon={false}
         styles={menuStyleOverrides}
       >
@@ -183,6 +195,13 @@ class ConversationExplorer extends Component {
         <div className={css(styles.menuContent)}>
           {selectCategoryOpen ? this.renderCategoryOptions() : this.renderCategorySections()}
         </div>
+        {
+          isOpen && !desktop && (
+            <div className={css(styles.closeButton)} onClick={this.handleClosePressed}>
+              <Icon icon={ic_clear} size={32} />
+            </div>
+          )
+        }
       </Menu>
     )
   }

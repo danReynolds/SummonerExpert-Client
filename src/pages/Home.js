@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import SearchBar from '../components/SearchBar';
-import CommonStyles, { desktop } from '../assets/styles/Common';
+import CommonStyles, { desktop, breakpoints } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
 import Tab from '../components/Tab';
 import Items from '../static/items';
 import Champions from '../static/champions';
+import Summoners from '../static/summoners';
 
 const styles = StyleSheet.create({
   homePage: {
     flex: 1,
     display: 'flex',
+    [breakpoints.mobile]: {
+      width: '100%',
+    },
   },
   header: {
     paddingTop: '2rem',
@@ -52,14 +56,16 @@ const RECOMMENDATIONS = [
     getItemImage: Champions.getChampionImage,
   },
   {
-    title: 'matchups',
-    items: Champions.championMatchupQueries,
+    title: 'summoners',
+    items: Summoners.summonerQueries,
     getItemImage: Champions.getChampionImage,
   },
   {
     title: 'items',
     items: Items.itemQueries,
-    getItemImage: Items.getItemImage,
+    getItemImage: (image) => {
+      return Items.getItemImage(image) || Champions.getChampionImage(image);
+    },
   },
 ];
 

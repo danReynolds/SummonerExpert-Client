@@ -5,7 +5,7 @@ import { facebookF } from 'react-icons-kit/fa/facebookF';
 import { twitter } from 'react-icons-kit/fa/twitter';
 import { google } from 'react-icons-kit/fa/google';
 
-import { colors, fonts, isDesktop } from '../assets/styles/Common';
+import { colors, fonts, isDesktop, breakpoints } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
 import { style } from '../lib/utils';
 
@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '6rem',
     width: '6rem',
+    [breakpoints.mobile]: {
+      height: '3.5rem',
+      width: '3.5rem',
+      marginTop: '0',
+    },
   },
   socialWrapper: {
     left: '2rem',
@@ -83,10 +88,11 @@ const styles = StyleSheet.create({
 
 class Navbar extends Component {
   render() {
+    const desktop = isDesktop();
     return (
       <div className={css(styles.navbar)}>
         {
-          window.location.pathname !== '/conversation' && isDesktop() && (
+          window.location.pathname !== '/conversation' && desktop && (
             <div className={css(styles.socialWrapper)}>
               <a
                 target='_blank'
@@ -127,9 +133,8 @@ class Navbar extends Component {
             </div>
           )
         }
-
       </div>
-    )
+    );
   }
 }
 

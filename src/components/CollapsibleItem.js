@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite';
 import PropTypes from 'prop-types';
 import { fadeIn } from 'react-animations';
 import { colors } from '../assets/styles/Common';
-import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
   collapsibleItem: {
@@ -12,7 +11,6 @@ const styles = StyleSheet.create({
     paddingBottom: '0.5rem',
     margin: '1rem',
     cursor: 'pointer',
-    display: 'table',
 
     ':hover': {
       color: colors.blue,
@@ -38,7 +36,7 @@ class CollapsibleItem  extends Component {
     return (
       <div
         onClick={this.handleClick}
-        className={style(styles.collapsibleItem, animateStyles.animate, 'hvr-underline-reveal')}
+        className={css(styles.collapsibleItem, animateStyles.animate)}
       >
         {text}
       </div>

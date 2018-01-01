@@ -2,7 +2,7 @@ import React from 'react';
 import { useStrict } from 'mobx';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './lib/hover-min.css';
+import './lib/hover.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 

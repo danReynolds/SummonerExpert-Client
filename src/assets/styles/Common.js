@@ -24,6 +24,7 @@ export default StyleSheet.create({
 
     [breakpoints.mobile]: {
       width: '90%',
+      marginTop: '5rem',
     },
   },
 });

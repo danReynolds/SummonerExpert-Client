@@ -201,12 +201,85 @@ export default {
     key: 'summoner',
     sections: [
       {
-        title: 'Performance',
+        title: 'Rank',
         queries: [
-          { text: 'Lookup imaqtpie in NA' },
-          { text: 'Lookup God' },
+          { text: 'How is Imaqtpie doing?' },
+          { text: 'Lookup Dyrus' },
+          { text: 'What rank is Pobelter?' },
         ],
       },
+      {
+        title: 'Champions',
+        queries: [
+          { text: '3 most played champions by Rallemus' },
+          { text: "Who is TheOddOne's highest KDA champion?" },
+          { text: 'Which champion does Doublelift get the most kills with?' },
+        ],
+      },
+      {
+        title: 'Champion Performance',
+        queries: [
+          { text: 'Does Doublelift play Xayah?' },
+          { text: 'LL Stylish playing Zed' },
+          { text: 'How is mvsh doing on Draven?' },
+        ]
+      },
+      {
+        title: 'Champion Stats',
+        queries: [
+          { text: 'How many kills does Rikara get playing Ezreal?' },
+          { text: 'How many wards does Pants are Dragon place as Xin Zhao jg?' },
+          { text: 'KDA for CLG Reign0ver playing Jarvan' }
+        ]
+      },
+      {
+        title: 'Champion Builds',
+        queries: [
+          { text: 'What does Dyrus build on Rumble Top?' },
+          { text: 'Which build gives Doublelift the best KDA on Xayah?' },
+          { text: 'What does Annie Bot build on Annie Bot?' },
+        ]
+      },
+      {
+        title: 'Champion Counters',
+        queries: [
+          { text: 'Who counters TheOddOne playing Ezreal?' },
+          { text: 'Who has the highest KDA against Dyrus as Camille?' },
+          { text: "Who gets the most assists against pokimane's Lulu?" },
+        ]
+      },
+      {
+        title: 'Champion Matchups',
+        queries: [
+          { text: "How does Pants are Dragon do playing Xin Xhao against Kha'Zix jg?" },
+          { text: 'How many times has Dyrus played Rumble Top against Jayce?' },
+          { text: "What is pokimane's KDA playing Lulu against Bard?" },
+        ],
+      },
+      {
+        title: 'Teammates',
+        queries: [
+          { text: 'Who helps Pants are Dragon win the most games as Warwick?' },
+          { text: 'Which teammate does Dyrus get the best KDA with playing Rumble Top?' },
+          { text: '5 people pokimane plays with the most as Lulu' },
+        ],
+      },
+      {
+        title: 'Bans',
+        queries: [
+          { text: 'Who does Dyrus ban to get the best KDA playing Rumble Top?' },
+          { text: "Who does Saaantorin ban most often playing Kha'Zix" },
+          { text: 'Top 3 bans by Rikara playing Lucian ADC' },
+        ]
+      },
+      {
+        title: 'Spells',
+        queries: [
+          { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
+          { text: 'Which spells does Pobelter get the best KDA on playing Azir Mid?' },
+          { text: 'Spells fulano takes the most towers with playing Gangplank' },
+        ],
+      }
     ]
   },
 };
