@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    right: '-60px',
+    right: '1rem',
     top: '24px',
-    color: colors.blue,
+    color: colors.white,
   }
 });
 
@@ -68,7 +68,7 @@ const menuStyles = {
     background: 'none',
   },
   bmBurgerBars: {
-    background: colors.blue,
+    background: colors.white,
   },
   bmCrossButton: {
     height: '24px',
@@ -183,6 +183,7 @@ class ConversationExplorer extends Component {
 
     return (
       <Menu
+        width={desktop ? 300 : '100%'}
         noOverlay={desktop}
         isOpen={isOpen}
         onStateChange={this.setMenuOpen}
