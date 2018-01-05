@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     animationName: fadeIn,
     padding: '1.5rem',
     cursor: 'pointer',
-    display: 'table',
-    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
   },
   selected: {
     borderLeft: `2px solid ${colors.gold}`,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const Option = ({ index, title, value, onClick, selected }) => {
+const Option = ({ index, children, value, onClick, selected }) => {
   const handleClick = () => {
     onClick(value);
   };
@@ -36,8 +36,12 @@ const Option = ({ index, title, value, onClick, selected }) => {
   }
 
   return (
-    <div onClick={handleClick} className={style(...optionStyles)}>
-      {title}
+    <div
+      onClick={handleClick}
+      key={`category-${index}`}
+      className={style(...optionStyles)}
+    >
+      {children}
     </div>
   );
 }
@@ -45,7 +49,6 @@ const Option = ({ index, title, value, onClick, selected }) => {
 Option.PropTypes = {
   index: PropTypes.number,
   onClick: PropTypes.func,
-  title: PropTypes.string,
   value: PropTypes.string,
 };
 

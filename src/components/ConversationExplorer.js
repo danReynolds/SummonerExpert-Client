@@ -3,8 +3,10 @@ import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
 import Icon from 'react-icons-kit';
 import { ic_clear } from 'react-icons-kit/md/ic_clear';
+import { ic_chat } from 'react-icons-kit/md/ic_chat';
+import Modal from 'react-responsive-modal';
 
-import { colors, fonts, isDesktop } from '../assets/styles/Common';
+import { colors, fonts, isDesktop, CategoryIcons } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
 import Option from './Option';
 import CollapsibleItem from './CollapsibleItem';
@@ -13,7 +15,7 @@ import { sendMessage } from '../actions/ApiAiActions';
 import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
-  menuTitle: {
+  categorySelector: {
     ...fonts.body,
     color: colors.grey,
     fontSize: '1.25rem',
@@ -48,7 +50,22 @@ const styles = StyleSheet.create({
     right: '1rem',
     top: '24px',
     color: colors.white,
-  }
+  },
+  queryPrompt: {
+    cursor: 'pointer',
+    colors: colors.white,
+    padding: '0.8rem',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  iconWrapper: {
+    marginRight: '0.5rem',
+  },
+  categoryIcon: {
+    height: '1.8rem',
+    marginLeft: 'auto',
+  },
 });
 
 const menuStyles = {
@@ -104,8 +121,17 @@ class ConversationExplorer extends Component {
       isOpen: isDesktop(),
       isCategoryOpen: false,
       selectedCategory: Explorer.champion.key,
+      modalOpen: false,
     };
   }
+
+  onOpenModal = () => {
+    this.setState({ modalOpen: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ modalOpen: false });
+  };
 
   handleClickSection = (message) => {
     this.setState({ isOpen: isDesktop() });
@@ -135,6 +161,17 @@ class ConversationExplorer extends Component {
     this.setState({ openSectionIndex: openIndex, selectedTag: null });
   }
 
+  renderModal = () => {
+    const { modalOpen } = this.state;
+    return (
+      <div>
+        <Modal open={modalOpen} onClose={this.onCloseModal} little>
+          <h2>Simple centered modal</h2>
+        </Modal>
+      </div>
+    );
+  }
+
   renderCategoryOptions = () => {
     const { selectedCategory } = this.state;
 
@@ -142,10 +179,12 @@ class ConversationExplorer extends Component {
       <Option
         selected={category.key === selectedCategory}
         value={category.key}
-        title={category.title}
         index={index}
         onClick={this.handleSelectCategory}
-      />
+      >
+        {category.title}
+        <img className={css(styles.categoryIcon)} src={CategoryIcons[category.key]} alt='logo' />
+      </Option>
     ));
   }
 
@@ -175,7 +214,7 @@ class ConversationExplorer extends Component {
   };
 
   render() {
-    const { isOpen, selectCategoryOpen } = this.state;
+    const { isOpen, selectCategoryOpen, selectedCategory } = this.state;
     const desktop = isDesktop();
     const menuStyleOverrides = desktop || isOpen ? (
       { ...menuStyles, bmBurgerButton: { display: 'none' }
@@ -190,10 +229,12 @@ class ConversationExplorer extends Component {
         customCrossIcon={false}
         styles={menuStyleOverrides}
       >
-        <div onClick={this.toggleCategoryOpen} className={style(styles.menuTitle, 'hvr-fade')}>
+        <div onClick={this.toggleCategoryOpen} className={style(styles.categorySelector, 'hvr-fade')}>
           Conversation Explorer
+          <img className={css(styles.categoryIcon)} src={CategoryIcons[selectedCategory]} alt='logo' />
         </div>
         <div className={css(styles.menuContent)}>
+        {this.renderModal()}
           {selectCategoryOpen ? this.renderCategoryOptions() : this.renderCategorySections()}
         </div>
         {

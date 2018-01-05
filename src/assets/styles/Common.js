@@ -1,5 +1,17 @@
 import { StyleSheet } from 'aphrodite';
 
+import ChampionIcon from '../images/barbute.svg';
+import SummonerIcon from '../images/hood.svg';
+import GeneralIcon from '../images/book-cover.svg';
+import ItemIcon from '../images/winged-sword.svg';
+
+export const CategoryIcons = {
+  champion: ChampionIcon,
+  summoner: SummonerIcon,
+  general: GeneralIcon,
+  item: ItemIcon,
+};
+
 export const desktop = 1224;
 export const mobile = 480;
 
