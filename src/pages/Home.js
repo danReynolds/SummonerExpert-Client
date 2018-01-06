@@ -8,6 +8,7 @@ import Tab from '../components/Tab';
 import Items from '../static/items';
 import Champions from '../static/champions';
 import Summoners from '../static/summoners';
+import Explorer from '../static/explorer';
 
 const styles = StyleSheet.create({
   homePage: {
@@ -51,19 +52,19 @@ const styles = StyleSheet.create({
 
 const RECOMMENDATIONS = [
   {
-    title: 'champions',
+    category: Explorer.champion.key,
     items: Champions.championQueries,
     getItemImage: Champions.getChampionImage,
     icon: CategoryIcons.champion,
   },
   {
-    title: 'summoners',
+    category: Explorer.summoner.key,
     items: Summoners.summonerQueries,
     getItemImage: Champions.getChampionImage,
     icon: CategoryIcons.summoner,
   },
   {
-    title: 'items',
+    category: Explorer.item.key,
     items: Items.itemQueries,
     getItemImage: (image) => {
       return Items.getItemImage(image) || Champions.getChampionImage(image);

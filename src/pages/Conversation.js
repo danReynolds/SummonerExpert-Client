@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import qs from 'query-string';
 
 import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
@@ -47,9 +48,12 @@ class Conversation extends Component {
   }
 
   render() {
+    const { location: { search } } = this.props;
+    const category = qs.parse(search).category || 'champions';
+
     return (
       <div className={css(styles.conversationPage)}>
-        <ConversationExplorer />
+        <ConversationExplorer category={category} />
         <div className={css(styles.conversationContent)}>
           <div className={css(styles.container, CommonStyles.container)}>
             <MessageListView messageListRef={list => this.messageListView = list} />

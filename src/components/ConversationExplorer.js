@@ -119,7 +119,7 @@ class ConversationExplorer extends Component {
     this.state = {
       isOpen: isDesktop(),
       isCategoryOpen: false,
-      selectedCategory: Explorer.champion.key,
+      selectedCategory: props.category || Explorer.champion.key,
       modalOpen: false,
     };
   }

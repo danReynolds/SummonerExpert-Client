@@ -7,7 +7,7 @@ import { colors, fonts, isDesktop } from '../assets/styles/Common';
 import RecommendationListItem from './RecommendationListItem';
 
 const styles = StyleSheet.create({
-  title: {
+  category: {
     ...fonts.body,
       color: colors.white,
       fontSize: '1rem',
@@ -23,26 +23,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const RecommendationList  = ({ title, items, getItemImage, limit, icon }) => (
+const RecommendationList  = ({ category, items, getItemImage, limit, icon }) => (
   <div>
     {
       isDesktop() && (
         <div className={css(styles.header)}>
         <img className={css(styles.icon)} src={icon} alt='logo' />
-          <div className={css(styles.title)}>{title}</div>
+          <div className={css(styles.category)}>{category}</div>
         </div>
       )
     }
     {
       _.sampleSize(items, limit).map(item => (
-        <RecommendationListItem key={item.id} item={item} getItemImage={getItemImage} />
+        <RecommendationListItem
+          category={category}
+          key={item.id}
+          item={item}
+          getItemImage={getItemImage}
+        />
       ))
     }
   </div>
 );
 
 RecommendationList.PropTypes = {
-  title: PropTypes.string,
+  category: PropTypes.string,
   items: PropTypes.object,
   getItemImage: PropTypes.func,
   limit: PropTypes.number,
