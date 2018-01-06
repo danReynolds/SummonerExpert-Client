@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import SearchBar from '../components/SearchBar';
-import CommonStyles, { desktop, breakpoints } from '../assets/styles/Common';
+import CommonStyles, { desktop, breakpoints, CategoryIcons } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
 import Tab from '../components/Tab';
 import Items from '../static/items';
@@ -54,11 +54,13 @@ const RECOMMENDATIONS = [
     title: 'champions',
     items: Champions.championQueries,
     getItemImage: Champions.getChampionImage,
+    icon: CategoryIcons.champion,
   },
   {
     title: 'summoners',
     items: Summoners.summonerQueries,
     getItemImage: Champions.getChampionImage,
+    icon: CategoryIcons.summoner,
   },
   {
     title: 'items',
@@ -66,6 +68,7 @@ const RECOMMENDATIONS = [
     getItemImage: (image) => {
       return Items.getItemImage(image) || Champions.getChampionImage(image);
     },
+    icon: CategoryIcons.item,
   },
 ];
 
@@ -90,13 +93,14 @@ class Home extends Component {
       <div className={css(styles.tabContainer)}>
         <div className={css(styles.tabHeader)}>
           {RECOMMENDATIONS.map((recommendation, index) => {
-            const { title } = recommendation;
+            const { title, icon } = recommendation;
             return (
               <Tab
                 key={`tab-${index}`}
                 index={index}
                 onClick={this.handleSelectTab}
                 title={title}
+                icon={icon}
                 selected={selectedTab === index}
               />
             );

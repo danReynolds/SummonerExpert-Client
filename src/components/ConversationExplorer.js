@@ -3,7 +3,6 @@ import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
 import Icon from 'react-icons-kit';
 import { ic_clear } from 'react-icons-kit/md/ic_clear';
-import { ic_chat } from 'react-icons-kit/md/ic_chat';
 import Modal from 'react-responsive-modal';
 
 import { colors, fonts, isDesktop, CategoryIcons } from '../assets/styles/Common';
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
   },
   categoryIcon: {
     height: '1.8rem',
-    marginLeft: 'auto',
+    marginRight: '1rem',
   },
 });
 
@@ -174,16 +173,16 @@ class ConversationExplorer extends Component {
 
   renderCategoryOptions = () => {
     const { selectedCategory } = this.state;
-
     return Object.values(Explorer).map((category, index) => (
       <Option
         selected={category.key === selectedCategory}
         value={category.key}
         index={index}
+        key={`option-${index}`}
         onClick={this.handleSelectCategory}
       >
-        {category.title}
         <img className={css(styles.categoryIcon)} src={CategoryIcons[category.key]} alt='logo' />
+        {category.title}
       </Option>
     ));
   }
@@ -230,8 +229,8 @@ class ConversationExplorer extends Component {
         styles={menuStyleOverrides}
       >
         <div onClick={this.toggleCategoryOpen} className={style(styles.categorySelector, 'hvr-fade')}>
-          Conversation Explorer
           <img className={css(styles.categoryIcon)} src={CategoryIcons[selectedCategory]} alt='logo' />
+          Conversation Explorer
         </div>
         <div className={css(styles.menuContent)}>
         {this.renderModal()}
