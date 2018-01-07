@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
 
 class Collapsible extends Component {
   toggleOpen = () => {
-    const { onSelect, index } = this.props;
-    onSelect(index);
+    const { onSelect, dataKey } = this.props;
+    onSelect(dataKey);
   }
 
   handleClick = (e) => {

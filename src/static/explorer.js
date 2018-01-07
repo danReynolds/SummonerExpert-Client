@@ -1,3 +1,30 @@
+import _ from 'lodash';
+
+const entities = {
+  role: {
+    key: 'role',
+    title: 'Role',
+    values: ['top', 'jungle', 'middle', 'ADC', 'support'],
+    template: 'playing {role}'
+  },
+  elo: {
+    key: 'elo',
+    title: 'Elo',
+    values: ['bronze', 'silver', 'gold', 'platinum and above'],
+    template: 'in {elo} division',
+  },
+  metric: {
+    key: 'metric',
+    title: 'Metric',
+    values: ['highest win rate', 'most common']
+  },
+  champion: {
+    key: 'champion',
+    title: 'Champion',
+    values: ['Aatrox', 'Zed']
+  },
+}
+
 export default {
   general: {
     title: 'General',
@@ -14,10 +41,12 @@ export default {
   champion: {
     title: 'Champion',
     key: 'champion',
-    sections: [
-      {
+    sections: {
+      abilityOrder: {
+        key: 'abilityOrder',
         title: 'Ability order',
-        entities: ['Role', 'Elo', 'Metric'],
+        entities: _.pick(entities, ['role', 'elo', 'metric', 'champion']),
+        queryTemplate: '{metric} ability order for {champion:required} {role} {elo}',
         queries: [
           { text: 'Kassadin skill order mid lane', tags: ['Role'] },
           { text: 'Azir skill order mid lane in Silver', tags: ['Role', 'Elo'] },
@@ -29,7 +58,8 @@ export default {
           { text: 'Highest win rate ability order for Nocturne Jungle in Bronze', tags: ['Role', 'Metric', 'Elo'] },
         ],
       },
-      {
+      ability: {
+        key: 'ability',
         title: 'Ability',
         queries: [
           { text: "What does Twitch's ultimate do?" },
@@ -37,14 +67,16 @@ export default {
           { text: "Rek'Sai w" },
         ]
       },
-      {
+      allyTips: {
+        key: 'allyTips',
         title: 'Ally tips',
         queries: [
           { text: 'Tip for playing with Jayce' },
           { text: 'How to play Yasuo' },
         ],
       },
-      {
+      build: {
+        key: 'build',
         title: 'Builds',
         tags: ['Role', 'Metric', 'Elo'],
         queries: [
@@ -55,28 +87,32 @@ export default {
           { text: 'Most frequent build on Jarvan IV Top in Silver', tags: ['Elo', 'Metric', 'Role'] },
         ],
       },
-      {
+      cooldown: {
+        key: 'cooldown',
         title: 'Cooldowns',
         queries: [
           { text: "What is the cooldown of Ahri's ult at rank 2?" },
           { text: "Viktor cooldown e rank 1" },
         ],
       },
-      {
+      enemyTips: {
+        key: 'enemyTips',
         title: 'Enemy tips',
         queries: [
           { text: 'How do I play against Yorick?' },
           { text: 'How to win vs Vayne' },
         ],
       },
-      {
+      lore: {
+        key: 'lore',
         title: 'Lore',
         queries: [
           { text: 'Tell me about Poppy' },
           { text: 'Who is Heimerdinger?' },
         ],
       },
-      {
+      matchupRankings: {
+        key: 'matchupRankings',
         title: 'Matchup rankings',
         tags: ['Role', 'Order', 'Elo', 'Metric', 'List Position', 'List Size'],
         queries: [
@@ -94,7 +130,8 @@ export default {
           { text: 'Which 10 mid laners go on killing sprees against Azir?', tags: ['Role', 'Metric'] },
         ],
       },
-      {
+      matchups: {
+        key: 'matchups',
         title: 'Matchups',
         tags: ['Role', 'Elo', 'Metric'],
         queries: [
@@ -111,7 +148,8 @@ export default {
           { text: 'How does Viktor do against Katorina mid in Bronze?', tags: ['Elo', 'Role'] },
         ],
       },
-      {
+      roleRankings: {
+        key: 'roleRankings',
         title: 'Role rankings',
         tags: ['Elo', 'List Size', 'List Position', 'Metric'],
         queries: [
@@ -127,7 +165,8 @@ export default {
           { text: 'Who has the 2nd highest win rate in Top lane?', tags: ['Metric', 'List Position'] },
         ],
       },
-      {
+      rolePerformanceSummary: {
+        key: 'rolePerformanceSummary',
         title: 'Role performance summary',
         tags: ['Elo', 'Role'],
         queries: [
@@ -139,7 +178,8 @@ export default {
           { text: 'Is Graves a jungler?', tags: ['Role'] },
         ],
       },
-      {
+      rolePerformance: {
+        key: 'rolePerformance',
         title: 'Role performance',
         tags: ['Role', 'Elo', 'Metric'],
         queries: [
@@ -157,7 +197,8 @@ export default {
           { text: 'How many games in total has Nunu been played in Platinum?', tags: ['Metric', 'Elo'] },
         ],
       },
-      {
+      baseStats: {
+        key: 'baseStats',
         title: 'Base stats',
         queries: [
           { text: "What is Maokai's health at level 10?" },
@@ -166,27 +207,30 @@ export default {
           { text: "What is Caitlyn's attack range?" },
         ],
       },
-      {
+      title: {
+        key: 'title',
         title: 'Title',
         queries: [
           { text: 'What do they call Braum?' },
           { text: "What is Elise's title?" },
         ],
       },
-    ],
+    },
   },
   item: {
     title: 'Item',
     key: 'item',
-    sections: [
-      {
+    sections: {
+      build: {
+        key: 'build',
         title: 'Build',
         queries: [
           { text: 'How do you build bork?' },
           { text: 'Build for Redemption' },
         ],
       },
-      {
+      description: {
+        key: 'description',
         title: 'Description',
         queries: [
           { text: 'Tell me about Boots of Speed' },
@@ -194,13 +238,14 @@ export default {
           { text: 'Stats for Mercurial Scimitar' },
         ],
       },
-    ]
+    }
   },
   summoner: {
     title: 'Summoner',
     key: 'summoner',
-    sections: [
-      {
+    sections: {
+      rank: {
+        key: 'rank',
         title: 'Rank',
         queries: [
           { text: 'How is Imaqtpie doing?' },
@@ -208,7 +253,8 @@ export default {
           { text: 'What rank is Pobelter?' },
         ],
       },
-      {
+      champions: {
+        key: 'champions',
         title: 'Champions',
         queries: [
           { text: '3 most played champions by Rallemus' },
@@ -216,7 +262,8 @@ export default {
           { text: 'Which champion does Doublelift get the most kills with?' },
         ],
       },
-      {
+      championPerformance: {
+        key: 'championPerformance',
         title: 'Champion Performance',
         queries: [
           { text: 'Does Doublelift play Xayah?' },
@@ -224,15 +271,17 @@ export default {
           { text: 'How is mvsh doing on Draven?' },
         ]
       },
-      {
+      championStats: {
         title: 'Champion Stats',
+        key: 'championStats',
         queries: [
           { text: 'How many kills does Rikara get playing Ezreal?' },
           { text: 'How many wards does Pants are Dragon place as Xin Zhao jg?' },
           { text: 'KDA for CLG Reign0ver playing Jarvan' }
         ]
       },
-      {
+      championBuild: {
+        key: 'championBuild',
         title: 'Champion Builds',
         queries: [
           { text: 'What does Dyrus build on Rumble Top?' },
@@ -240,7 +289,8 @@ export default {
           { text: 'What does Annie Bot build on Annie Bot?' },
         ]
       },
-      {
+      championCounters: {
+        key: 'championCounters',
         title: 'Champion Counters',
         queries: [
           { text: 'Who counters TheOddOne playing Ezreal?' },
@@ -248,7 +298,8 @@ export default {
           { text: "Who gets the most assists against pokimane's Lulu?" },
         ]
       },
-      {
+      championMatchups: {
+        key: 'championMatchups',
         title: 'Champion Matchups',
         queries: [
           { text: "How does Pants are Dragon do playing Xin Xhao against Kha'Zix jg?" },
@@ -256,7 +307,8 @@ export default {
           { text: "What is pokimane's KDA playing Lulu against Bard?" },
         ],
       },
-      {
+      teammates: {
+        key: 'teammates',
         title: 'Teammates',
         queries: [
           { text: 'Who helps Pants are Dragon win the most games as Warwick?' },
@@ -264,7 +316,8 @@ export default {
           { text: '5 people pokimane plays with the most as Lulu' },
         ],
       },
-      {
+      bans: {
+        key: 'bans',
         title: 'Bans',
         queries: [
           { text: 'Who does Dyrus ban to get the best KDA playing Rumble Top?' },
@@ -272,7 +325,8 @@ export default {
           { text: 'Top 3 bans by Rikara playing Lucian ADC' },
         ]
       },
-      {
+      spells: {
+        key: 'spells',
         title: 'Spells',
         queries: [
           { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
@@ -280,6 +334,6 @@ export default {
           { text: 'Spells fulano takes the most towers with playing Gangplank' },
         ],
       }
-    ]
+    }
   },
 };

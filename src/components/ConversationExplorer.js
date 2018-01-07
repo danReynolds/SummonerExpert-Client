@@ -156,19 +156,22 @@ class ConversationExplorer extends Component {
     this.setState({ selectCategoryOpen: !this.state.selectCategoryOpen });
   }
 
-  selectSection = (index) => {
-    const { selectedSectionIndex } = this.state;
-    const openIndex = selectedSectionIndex === index ? null : index;
-    this.setState({ selectedSectionIndex: openIndex });
+  selectSection = (section) => {
+    const { selectedSection } = this.state;
+    const openIndex = selectedSection === section ? null : section;
+    this.setState({ selectedSection: openIndex });
   }
 
   renderModal = () => {
-    const { modalOpen, selectedCategory, selectedSectionIndex } = this.state;
+    const { modalOpen, selectedCategory, selectedSection } = this.state;
+    const sections = Explorer[selectedCategory].sections;
+    const section = sections[selectedSection];
     return (
       <div>
         <Modal open={modalOpen} onClose={this.onCloseModal}>
           <QueryBuilder
-            selectedSection={Explorer[selectedCategory].sections[selectedSectionIndex || 0].title}
+            selectedCategory={selectedCategory}
+            selectedSection={(section || Object.values(sections)[0]).key}
           />
         </Modal>
       </div>
@@ -192,14 +195,15 @@ class ConversationExplorer extends Component {
   }
 
   renderCategorySections = () => {
-    const { selectedSectionIndex, selectedCategory } = this.state;
+    const { selectedSection, selectedCategory } = this.state;
 
-    return Explorer[selectedCategory].sections.map(({ title, tags, queries }, sectionIndex) => (
+    return Object.values(Explorer[selectedCategory].sections).map(({ key, title, tags, queries }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
+          dataKey={key}
           title={title}
           index={sectionIndex}
-          isOpen={sectionIndex === selectedSectionIndex }
+          isOpen={key === selectedSection }
           onSelect={this.selectSection}
           onEdit={this.toggleModal}
         >

@@ -55,10 +55,26 @@ class DropDown extends Component {
     }
   }
 
+  static defaultProps = {
+    onSelect: () => {},
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { value } = this.state;
+    if (prevState.value !== value) {
+    }
+  }
+
   handleChange = ({ inputValue }) => {
     if (typeof inputValue === 'string') {
       this.setState({ value: inputValue });
     }
+  }
+
+  handleSelect = (selectedItem) => {
+    const { onSelect } = this.props;
+    this.close();
+    onSelect(selectedItem.key);
   }
 
   clearValue = () => {
@@ -70,7 +86,7 @@ class DropDown extends Component {
   }
 
   render() {
-    const { items, onChange } = this.props;
+    const { items, onChange, placeholder } = this.props;
     const { value, isOpen } = this.state;
 
     return (
@@ -80,7 +96,8 @@ class DropDown extends Component {
         isOpen={isOpen}
         inputValue={value}
         onOuterClick={this.close}
-        onSelect={this.close}
+        onSelect={this.handleSelect}
+        itemToString={item => item && item.title}
         render={({
           isOpen,
           getInputProps,
@@ -90,19 +107,23 @@ class DropDown extends Component {
           highlightedIndex,
         }) => (
           <div>
-            <input onClick={this.clearValue} className={css(styles.input)} {...getInputProps()} />
+            <input
+              onClick={this.clearValue}
+              className={css(styles.input)}
+              {...getInputProps({ placeholder })}
+            />
             {
               isOpen && (
                 <div className={css(styles.optionContainer)}>
                   {items.filter(
-                    item => item.toLowerCase().includes(inputValue.toLowerCase())
+                    item => item.title.toLowerCase().includes(inputValue.toLowerCase())
                   ).map(item => (
                     <div
-                      key={item}
+                      key={item.key}
                       className={css(styles.option)}
                       {...getItemProps({ item })}
                     >
-                      {item}
+                      {item.title}
                     </div>
                   ))}
                 </div>
