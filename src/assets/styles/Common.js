@@ -48,7 +48,7 @@ export const colors = {
   darkGrey: '#565656',
   blue: '#55baea',
   midBlue: '#2098D1',
-  darkBlue: '#242735',
+  darkBlue: '#12264e',
   white: '#f5f5f5',
   red: '#d44b4b',
   facebook: '#3b5998',

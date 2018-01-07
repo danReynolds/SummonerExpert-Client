@@ -7,6 +7,7 @@ import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
 import BannerImage from '../assets/images/banner.jpg';
+import Explorer from '../static/explorer';
 
 const styles = StyleSheet.create({
   conversationPage: {
@@ -49,7 +50,7 @@ class Conversation extends Component {
 
   render() {
     const { location: { search } } = this.props;
-    const category = qs.parse(search).category || 'champions';
+    const category = qs.parse(search).category || Explorer.champion.key;
 
     return (
       <div className={css(styles.conversationPage)}>

@@ -3,12 +3,13 @@ import { StyleSheet, css } from 'aphrodite';
 import { slide as Menu } from 'react-burger-menu';
 import Icon from 'react-icons-kit';
 import { ic_clear } from 'react-icons-kit/md/ic_clear';
-import Modal from 'react-responsive-modal';
 
 import { colors, fonts, isDesktop, CategoryIcons } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
 import Option from './Option';
+import QueryBuilder from './QueryBuilder';
 import CollapsibleItem from './CollapsibleItem';
+import Modal from './Modal';
 import Explorer from '../static/explorer';
 import { sendMessage } from '../actions/ApiAiActions';
 import { style } from '../lib/utils';
@@ -81,7 +82,7 @@ const menuStyles = {
   },
   bmMenuWrap: {
     left: 0,
-    background: 'none',
+    background: colors.darkBlue,
   },
   bmBurgerBars: {
     background: colors.white,
@@ -124,8 +125,9 @@ class ConversationExplorer extends Component {
     };
   }
 
-  onOpenModal = () => {
-    this.setState({ modalOpen: true });
+  toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({ modalOpen: !modalOpen });
   };
 
   onCloseModal = () => {
@@ -154,18 +156,20 @@ class ConversationExplorer extends Component {
     this.setState({ selectCategoryOpen: !this.state.selectCategoryOpen });
   }
 
-  onSectionOpen = (index) => {
-    const { openSectionIndex } = this.state;
-    const openIndex = openSectionIndex === index ? null : index;
-    this.setState({ openSectionIndex: openIndex, selectedTag: null });
+  selectSection = (index) => {
+    const { selectedSectionIndex } = this.state;
+    const openIndex = selectedSectionIndex === index ? null : index;
+    this.setState({ selectedSectionIndex: openIndex });
   }
 
   renderModal = () => {
-    const { modalOpen } = this.state;
+    const { modalOpen, selectedCategory, selectedSectionIndex } = this.state;
     return (
       <div>
-        <Modal open={modalOpen} onClose={this.onCloseModal} little>
-          <h2>Simple centered modal</h2>
+        <Modal open={modalOpen} onClose={this.onCloseModal}>
+          <QueryBuilder
+            selectedSection={Explorer[selectedCategory].sections[selectedSectionIndex || 0].title}
+          />
         </Modal>
       </div>
     );
@@ -188,15 +192,16 @@ class ConversationExplorer extends Component {
   }
 
   renderCategorySections = () => {
-    const { openSectionIndex, selectedCategory } = this.state;
+    const { selectedSectionIndex, selectedCategory } = this.state;
 
     return Explorer[selectedCategory].sections.map(({ title, tags, queries }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
           title={title}
           index={sectionIndex}
-          isOpen={sectionIndex === openSectionIndex }
-          onSectionOpen={this.onSectionOpen}
+          isOpen={sectionIndex === selectedSectionIndex }
+          onSelect={this.selectSection}
+          onEdit={this.toggleModal}
         >
           {
             queries.map((query, queryIndex) => (
@@ -233,7 +238,7 @@ class ConversationExplorer extends Component {
           Conversation Explorer
         </div>
         <div className={css(styles.menuContent)}>
-        {this.renderModal()}
+          {this.renderModal()}
           {selectCategoryOpen ? this.renderCategoryOptions() : this.renderCategorySections()}
         </div>
         {

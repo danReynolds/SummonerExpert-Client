@@ -1,55 +1,118 @@
-import { StyleSheet, css } from 'aphrodite';
+import Downshift from 'downshift'
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
 import { colors } from '../assets/styles/Common';
 
 const styles = StyleSheet.create({
-  select: {
-    width: '100%',
-    height: '3rem',
-    background: colors.grey,
-    color: colors.darkGrey,
-    textIndent: '1rem',
-    appearance: 'none',
-    cursor: 'pointer',
+  input: {
+    background: 'none',
+    padding: '1rem',
+    border: `2px solid ${colors.blue}`,
+    borderRadius: '2px',
+    color: colors.white,
+    opacity: 0.95,
+    fontFamily: 'Lato',
+    fontSize: '1.25rem',
     outline: 'none',
+    width: '12.5rem',
+    cursor: 'pointer',
+    textOverflow: 'ellipsis',
+
+    ':hover': {
+      background: colors.blue,
+    },
+
+    ':focus': {
+      background: colors.blue,
+    },
+  },
+  option: {
+    padding: '1rem',
+    background: colors.white,
+    border: `2px solid ${colors.white}`,
+    color: colors.darkGrey,
+    width: '12.5rem',
+    cursor: 'pointer',
+
+    ':hover': {
+      background: colors.grey,
+      border: `2px solid ${colors.grey}`,
+    },
+  },
+  optionContainer: {
+    maxHeight: '21vh',
+    overflow: 'auto',
   },
 });
 
 class DropDown extends Component {
-  static propTypes = {
-    options: PropTypes.array,
-    placeholder: PropTypes.string,
-    onSelect: PropTypes.func,
-    selectedValue: PropTypes.string,
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.value,
+      isOpen: false,
+    }
   }
 
-  handleChange = (e) => {
-    const { onSelect } = this.props;
-    const { target: { value } } = e;
-    onSelect(value);
+  handleChange = ({ inputValue }) => {
+    if (typeof inputValue === 'string') {
+      this.setState({ value: inputValue });
+    }
+  }
+
+  clearValue = () => {
+    this.setState({ isOpen: true, value: '' });
+  }
+
+  close = () => {
+    this.setState({ isOpen: false });
   }
 
   render() {
-    const { options, key, placeholder, selectedValue } = this.props;
-    const optionContent = options.map((tag, tagIndex) => (
-      <option key={`${key}-tag-${tagIndex}`} value={tag}>{tag}</option>
-    ));
-    optionContent.unshift(
-      <option key={`${key}-tag-default`} disabled selected>{placeholder}</option>
-    );
+    const { items, onChange } = this.props;
+    const { value, isOpen } = this.state;
 
     return (
-      <select
-        value={selectedValue}
-        onChange={this.handleChange}
-        className={css(styles.select)}
-      >
-        {optionContent}
-      </select>
-    )
+      <Downshift
+        onChange={onChange}
+        onStateChange={this.handleChange}
+        isOpen={isOpen}
+        inputValue={value}
+        onOuterClick={this.close}
+        onSelect={this.close}
+        render={({
+          isOpen,
+          getInputProps,
+          getItemProps,
+          inputValue,
+          selectedItem,
+          highlightedIndex,
+        }) => (
+          <div>
+            <input onClick={this.clearValue} className={css(styles.input)} {...getInputProps()} />
+            {
+              isOpen && (
+                <div className={css(styles.optionContainer)}>
+                  {items.filter(
+                    item => item.toLowerCase().includes(inputValue.toLowerCase())
+                  ).map(item => (
+                    <div
+                      key={item}
+                      className={css(styles.option)}
+                      {...getItemProps({ item })}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              )
+            }
+          </div>
+        )}
+      />
+    );
   }
-}
+};
 
 export default DropDown;

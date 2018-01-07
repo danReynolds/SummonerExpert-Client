@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import PropTypes from 'prop-types';
 import { fadeIn } from 'react-animations';
+
 import { colors } from '../assets/styles/Common';
 
 const styles = StyleSheet.create({

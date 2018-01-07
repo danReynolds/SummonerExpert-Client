@@ -17,7 +17,7 @@ export default {
     sections: [
       {
         title: 'Ability order',
-        tags: ['Role', 'Elo', 'Metric'],
+        entities: ['Role', 'Elo', 'Metric'],
         queries: [
           { text: 'Kassadin skill order mid lane', tags: ['Role'] },
           { text: 'Azir skill order mid lane in Silver', tags: ['Role', 'Elo'] },
