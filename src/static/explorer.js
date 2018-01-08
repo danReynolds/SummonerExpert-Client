@@ -1,17 +1,17 @@
 import _ from 'lodash';
 
-const entities = {
+export const Entities = {
   role: {
     key: 'role',
     title: 'Role',
     values: ['top', 'jungle', 'middle', 'ADC', 'support'],
-    template: 'playing {role}'
+    template: 'playing'
   },
   elo: {
     key: 'elo',
     title: 'Elo',
     values: ['bronze', 'silver', 'gold', 'platinum and above'],
-    template: 'in {elo} division',
+    template: 'in:division',
   },
   metric: {
     key: 'metric',
@@ -45,7 +45,7 @@ export default {
       abilityOrder: {
         key: 'abilityOrder',
         title: 'Ability order',
-        entities: _.pick(entities, ['role', 'elo', 'metric', 'champion']),
+        entities: _.pick(Entities, ['role', 'elo', 'metric', 'champion']),
         queryTemplate: '{metric} ability order for {champion:required} {role} {elo}',
         queries: [
           { text: 'Kassadin skill order mid lane', tags: ['Role'] },

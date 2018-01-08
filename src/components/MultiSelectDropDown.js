@@ -1,6 +1,7 @@
 import Downshift from 'downshift'
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import _ from 'lodash';
 
 import { colors } from '../assets/styles/Common';
 
@@ -66,7 +67,7 @@ const typeStyles = {
       },
     },
     optionContainer: {
-      margin: '0 0 1rem 1rem',
+      margin: '0 1rem 1rem 1rem',
       fontSize: '1rem',
     },
     option: {
@@ -80,7 +81,7 @@ const typeStyles = {
   }),
 };
 
-class DropDown extends Component {
+class MultiSelectDropDown extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -92,43 +93,73 @@ class DropDown extends Component {
   static defaultProps = {
     onSelect: () => {},
     type: 'default',
+    value: '',
+  }
+
+  getValidItems = (value) => {
+    const { items } = this.props;
+    return items.filter(item =>
+      _.some(value.split(','), valueFragment => valueFragment.includes(item.title))
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
     const { value } = this.state;
+    const { onChange } = this.props;
+
     if (prevState.value !== value) {
+      onChange(this.getValidItems(value));
     }
   }
 
-  handleChange = ({ inputValue }) => {
+  handleChange = (inputValue) => {
+    const { value } = this.state;
     if (typeof inputValue === 'string') {
-      this.setState({ value: inputValue });
+      // prevValue is a slight hack because selecting an item counts as a inputValue
+      // change with the selected option and onInputValueChange triggers before
+      // onSelect so the entire value is overwritten with the selected value.
+      // Store the entire selected value before that happens so handleSelect can recover it
+      this.setState({ value: inputValue, prevValue: value });
     }
   }
 
   handleSelect = (selectedItem) => {
-    const { onSelect } = this.props;
+    const { prevValue } = this.state;
+    const updatedValue = this.getValidItems(prevValue).concat(selectedItem)
+      .map(item => item.title).join(', ');
+    this.setState({ value: updatedValue });
     this.close();
-    onSelect(selectedItem.key);
   }
 
-  clearValue = () => {
-    this.setState({ isOpen: true, value: '' });
+  newInput = () => {
+    const { value, isOpen } = this.state;
+    if (!isOpen) {
+      this.setState({ isOpen: true, value: !value.endsWith(', ') && value.length ? `${value}, ` : value });
+    }
   }
 
   close = () => {
     this.setState({ isOpen: false });
   }
 
+  filteredOptions = (inputValue) => {
+    const { items } = this.props;
+    const allActiveInput = inputValue.split(',').map(input => _.trim(input));
+    const lastActiveInput = _.last(allActiveInput) || '';
+    return items.filter(item =>
+      item.title.toLowerCase().includes(lastActiveInput.toLowerCase()) &&
+        !_.some(allActiveInput, input => input === item.title)
+    );
+  }
+
   render() {
-    const { items, onChange, placeholder } = this.props;
+    const { placeholder } = this.props;
     const { value, isOpen } = this.state;
     const { type } = this.props;
 
     return (
       <Downshift
-        onChange={onChange}
-        onStateChange={this.handleChange}
+        onInputValueChange={this.handleChange}
         isOpen={isOpen}
         inputValue={value}
         onOuterClick={this.close}
@@ -145,24 +176,22 @@ class DropDown extends Component {
           return (
             <div>
               <input
-                onClick={this.clearValue}
                 className={css(styles.input, typeStyles[type].input)}
-                {...getInputProps({ placeholder })}
+                {...getInputProps({ placeholder, value: inputValue, onClick: this.newInput })}
               />
               {
                 isOpen && (
                   <div className={css(styles.optionContainer, typeStyles[type].optionContainer)}>
-                    {items.filter(
-                      item => item.title.toLowerCase().includes(inputValue.toLowerCase())
-                    ).map(item => (
-                      <div
-                        key={item.key}
-                        className={css(styles.option, typeStyles[type].option)}
-                        {...getItemProps({ item })}
-                      >
-                        {item.title}
-                      </div>
-                    ))}
+                    {this.filteredOptions(inputValue).map(item => (
+                        <div
+                          key={item.key}
+                          className={css(styles.option, typeStyles[type].option)}
+                          {...getItemProps({ item })}
+                        >
+                          {item.title}
+                        </div>
+                      )
+                    )}
                   </div>
                 )
               }
@@ -174,4 +203,4 @@ class DropDown extends Component {
   }
 };
 
-export default DropDown;
+export default MultiSelectDropDown;

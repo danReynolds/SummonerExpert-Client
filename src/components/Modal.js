@@ -15,6 +15,7 @@ const styles = {
   overlay: {
     padding: 0,
     background: 'none',
+    overflow: 'hidden',
   },
 };
 
