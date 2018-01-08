@@ -4,18 +4,18 @@ import { StyleSheet, css } from 'aphrodite';
 
 import { colors } from '../assets/styles/Common';
 
-const styles = StyleSheet.create({
+const styles = (isOpen) => StyleSheet.create({
   input: {
     background: 'none',
     padding: '1rem',
     border: `2px solid ${colors.blue}`,
+    borderBottom: `${isOpen ? 'none' : `2px solid ${colors.blue}`}`,
     borderRadius: '2px',
     color: colors.white,
     opacity: 0.95,
     fontFamily: 'Lato',
     fontSize: '1.25rem',
     outline: 'none',
-    width: '12.5rem',
     cursor: 'pointer',
     textOverflow: 'ellipsis',
 
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     background: colors.white,
     border: `2px solid ${colors.white}`,
     color: colors.darkGrey,
-    width: '12.5rem',
     cursor: 'pointer',
     ':hover': {
       background: colors.grey,
@@ -46,16 +45,17 @@ const styles = StyleSheet.create({
 });
 
 const typeStyles = {
-  default: StyleSheet.create({
+  default: () => StyleSheet.create({
 
   }),
-  inline: StyleSheet.create({
+  inline: (inputLength, isOpen) => StyleSheet.create({
     input: {
       border: 'none',
-      borderBottom: `2px solid ${colors.white}`,
-      margin: '0 0 0 1rem',
+      borderBottom: `${isOpen ? 'none' : `2px solid ${colors.white}`}`,
       padding: '0 0 0.5rem 0',
       fontSize: '2rem',
+      fontFamily: 'Roboto Mono, monospace',
+      width: `${inputLength}ch`,
 
       ':hover': {
         background: 'none',
@@ -66,11 +66,9 @@ const typeStyles = {
       },
     },
     optionContainer: {
-      margin: '0 0 1rem 1rem',
       fontSize: '1rem',
     },
     option: {
-      width: '10.5rem',
       border: 'none',
       ':hover': {
         border: 'none',
@@ -109,7 +107,7 @@ class DropDown extends Component {
   handleSelect = (selectedItem) => {
     const { onSelect } = this.props;
     this.close();
-    onSelect(selectedItem.key);
+    onSelect(selectedItem);
   }
 
   clearValue = () => {
@@ -124,7 +122,6 @@ class DropDown extends Component {
     const { items, onChange, placeholder } = this.props;
     const { value, isOpen } = this.state;
     const { type } = this.props;
-
     return (
       <Downshift
         onChange={onChange}
@@ -142,22 +139,23 @@ class DropDown extends Component {
           selectedItem,
           highlightedIndex,
         }) => {
+          const inputLength = inputValue.length || placeholder.length;
           return (
             <div>
               <input
                 onClick={this.clearValue}
-                className={css(styles.input, typeStyles[type].input)}
                 {...getInputProps({ placeholder })}
+                className={css(styles(isOpen).input, typeStyles[type](inputLength, isOpen).input )}
               />
               {
                 isOpen && (
-                  <div className={css(styles.optionContainer, typeStyles[type].optionContainer)}>
+                  <div className={css(styles().optionContainer, typeStyles[type]().optionContainer)}>
                     {items.filter(
                       item => item.title.toLowerCase().includes(inputValue.toLowerCase())
                     ).map(item => (
                       <div
                         key={item.key}
-                        className={css(styles.option, typeStyles[type].option)}
+                        className={css(styles().option, typeStyles[type]().option)}
                         {...getItemProps({ item })}
                       >
                         {item.title}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import _ from 'lodash';
 
 import DropDown from './DropDown';
 import MultiSelectDropDown from './MultiSelectDropDown';
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   entityComponentWrapper: {
     display: 'flex',
   },
-  entitySugar: {
+  fragment: {
     marginLeft: '1rem',
   },
 });
@@ -45,9 +46,9 @@ class QueryBuilder extends Component {
     };
   }
 
-  handleSelectSection = (section) => {
+  handleSelectSection = ({ sectionKey }) => {
     const { selectedCategory } = this.state;
-    this.setState({ selectedSection: selectedCategory.sections[section] });
+    this.setState({ selectedSection: selectedCategory.sections[sectionKey] });
   }
 
   handleChangeEntity = (selectedEntities) => {
@@ -56,34 +57,43 @@ class QueryBuilder extends Component {
     });
   }
 
-  renderQueryTemplate = (template) => {
-    const { selectedEntities, entityValues } = this.state;
-    return template.split(/(\{\w+:?\w+\})/).filter(fragment => fragment.length > 0).map((fragment, i) => {
-      const templateValues = fragment.match(/\{(\w+):?(\w*)\}/);
-      if (templateValues) {
-        const entityName = templateValues[1];
-        const entityRequired = templateValues[2].length > 0;
+  updateEntityValue = ({ entity, title }) => {
+    const { entityValues } = this.state;
+    this.setState({ entityValues: { ...entityValues, [entity]: title } });
+  }
 
-        if (selectedEntities[entityName] || entityRequired) {
-          const entity = Entities[entityName];
+  renderQueryTemplate = (template) => {
+    const { selectedEntities, entityValues, selectedSection } = this.state;
+    return template.split(/(\{\w+:?\w+\})/)
+      .map(fragment => _.trim(fragment))
+      .filter(fragment => fragment.length > 0).map((fragment, i) => {
+      const templateValues = fragment.match(/\{(\w+)\}/);
+      if (templateValues) {
+        const entityKey = templateValues[1];
+        if (selectedEntities[entityKey] || selectedSection.requiredEntities.includes(entityKey)) {
+        const entityKey = templateValues[1];
+          const entity = Entities[entityKey];
           const { template: entityTemplate } = entity;
+
           const entityComponent = (
-            <DropDown
-              key={`fragment-${i}`}
-              type='inline'
-              placeholder={entity.title}
-              items={entity.values.map(value => ({ key: value, title: value }))}
-              value={entityValues[entityName]}
-            />
+            <div key={`fragment-${i}`} className={css(styles.fragment)}>
+              <DropDown
+                type='inline'
+                onSelect={this.updateEntityValue}
+                placeholder={entity.title}
+                items={entity.values.map(value => ({ entity: entity.key, key: value, title: value }))}
+                value={entityValues[entityKey]}
+              />
+            </div>
           );
 
           if (entityTemplate) {
             const entitySugar = entityTemplate.split(':');
             return (
-              <div className={css(styles.entityComponentWrapper)}>
-                <div className={css(styles.entitySugar)}>{entitySugar[0]}</div>
+              <div key={`fragment-${i}`} className={css(styles.entityComponentWrapper)}>
+                { entitySugar[0] && <div className={css(styles.fragment)}>{entitySugar[0]}</div> }
                 {entityComponent}
-                <div className={css(styles.entitySugar)}>{entitySugar[1]}</div>
+                { entitySugar[1] && <div className={css(styles.fragment)}>{entitySugar[1]}</div> }
               </div>
             );
           } else {
@@ -93,13 +103,17 @@ class QueryBuilder extends Component {
           return '';
         }
       } else {
-        return <div key={`fragment-${i}`} className={css(styles.queryText)}>{fragment}</div>;
+        return <div key={`fragment-${i}`} className={css(styles.fragment)}>{fragment}</div>;
       }
     });
   }
 
   render() {
     const { selectedCategory, selectedSection } = this.state;
+    const selectableEntities = Object.values(
+      _.pick(Entities, selectedSection.entities))
+      .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
+    );
     return (
       <div>
         <div className={css(styles.title)}>Build your Question</div>
@@ -116,7 +130,7 @@ class QueryBuilder extends Component {
             <MultiSelectDropDown
               placeholder={'Choose filters'}
               onChange={this.handleChangeEntity}
-              items={Object.values(selectedSection.entities)}
+              items={selectableEntities}
             />
           </div>
         </div>

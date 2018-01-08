@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export const Entities = {
   role: {
     key: 'role',
@@ -45,8 +43,9 @@ export default {
       abilityOrder: {
         key: 'abilityOrder',
         title: 'Ability order',
-        entities: _.pick(Entities, ['role', 'elo', 'metric', 'champion']),
-        queryTemplate: '{metric} ability order for {champion:required} {role} {elo}',
+        entities: [Entities.role.key, Entities.champion.key, Entities.metric.key, Entities.elo.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: '{metric} ability order for {champion} {role} {elo}',
         queries: [
           { text: 'Kassadin skill order mid lane', tags: ['Role'] },
           { text: 'Azir skill order mid lane in Silver', tags: ['Role', 'Elo'] },

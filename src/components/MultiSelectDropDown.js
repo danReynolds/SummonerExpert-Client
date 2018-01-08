@@ -86,6 +86,7 @@ class MultiSelectDropDown extends Component {
     super(props);
     this.state = {
       value: props.value,
+      prevValue: '',
       isOpen: false,
     }
   }
@@ -131,6 +132,12 @@ class MultiSelectDropDown extends Component {
     this.close();
   }
 
+  handleOuterClick = () => {
+    const { prevValue } = this.state;
+    this.close();
+    this.setState({ value: this.getValidItems(prevValue).map(item => item.title).join(', ') });
+  }
+
   newInput = () => {
     const { value, isOpen } = this.state;
     if (!isOpen) {
@@ -160,9 +167,9 @@ class MultiSelectDropDown extends Component {
     return (
       <Downshift
         onInputValueChange={this.handleChange}
+        onOuterClick={this.handleOuterClick}
         isOpen={isOpen}
         inputValue={value}
-        onOuterClick={this.close}
         onSelect={this.handleSelect}
         itemToString={item => item && item.title}
         render={({
