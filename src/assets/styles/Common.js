@@ -29,6 +29,7 @@ export default StyleSheet.create({
     margin: '7.5rem auto 0 auto',
     display: 'flex',
     flexDirection: 'column',
+    position: 'relative',
 
     [breakpoints.desktop]: {
       width: 1200,
@@ -39,6 +40,17 @@ export default StyleSheet.create({
       marginTop: '5rem',
     },
   },
+  containerWide: {
+    margin: '0 auto 0 auto',
+    [breakpoints.desktop]: {
+      width: 1600,
+    },
+
+    [breakpoints.mobile]: {
+      width: '90%',
+      marginTop: '5rem',
+    },
+  }
 });
 
 export const colors = {

@@ -10,7 +10,6 @@ const styles = {
     maxWidth: '100%',
     opacity: 0.95,
     background: colors.nightBlue,
-    padding: '15vh 15vw',
   },
   overlay: {
     padding: 0,

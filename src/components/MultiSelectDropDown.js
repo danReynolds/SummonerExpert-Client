@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     width: '12.5rem',
     cursor: 'pointer',
     textOverflow: 'ellipsis',
+    transitionDuration: '.3s',
 
     ':hover': {
       background: colors.blue,
@@ -43,6 +44,8 @@ const styles = StyleSheet.create({
   optionContainer: {
     maxHeight: '21vh',
     overflow: 'auto',
+    position: 'absolute',
+    zIndex: 1000,
   },
 });
 

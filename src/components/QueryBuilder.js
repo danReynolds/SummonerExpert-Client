@@ -5,7 +5,8 @@ import _ from 'lodash';
 import DropDown from './DropDown';
 import MultiSelectDropDown from './MultiSelectDropDown';
 import Explorer, { Entities } from '../static/explorer';
-import { colors } from '../assets/styles/Common';
+import CommonStyles, { colors } from '../assets/styles/Common';
+import Button from './Button';
 
 const styles = StyleSheet.create({
   title: {
@@ -25,12 +26,21 @@ const styles = StyleSheet.create({
     marginTop: '10vh',
     color: colors.white,
     fontSize: '2rem',
+    fontFamily: 'Roboto Mono, monospace',
   },
   entityComponentWrapper: {
     display: 'flex',
   },
   fragment: {
     marginLeft: '1rem',
+  },
+  footer: {
+    position: 'absolute',
+    right: 0,
+    bottom: '0',
+  },
+  container: {
+    height: '60vh',
   },
 });
 
@@ -115,7 +125,7 @@ class QueryBuilder extends Component {
       .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
     );
     return (
-      <div>
+      <div className={css(CommonStyles.container, styles.container)}>
         <div className={css(styles.title)}>Build your Question</div>
         <div className={css(styles.dropdowns)}>
           <div className={css(styles.dropdown)}>
@@ -136,6 +146,11 @@ class QueryBuilder extends Component {
         </div>
         <div className={css(styles.queryTemplate)}>
           {this.renderQueryTemplate(selectedSection.queryTemplate)}
+        </div>
+        <div className={css(styles.footer)}>
+          <Button>
+            Send
+          </Button>
         </div>
       </div>
     )

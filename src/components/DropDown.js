@@ -5,6 +5,9 @@ import { StyleSheet, css } from 'aphrodite';
 import { colors } from '../assets/styles/Common';
 
 const styles = (isOpen) => StyleSheet.create({
+  container: {
+    position: 'relative',
+  },
   input: {
     background: 'none',
     padding: '1rem',
@@ -13,11 +16,12 @@ const styles = (isOpen) => StyleSheet.create({
     borderRadius: '2px',
     color: colors.white,
     opacity: 0.95,
-    fontFamily: 'Lato',
     fontSize: '1.25rem',
     outline: 'none',
     cursor: 'pointer',
+    fontFamily: 'Roboto Mono, monospace',
     textOverflow: 'ellipsis',
+    transition: 'background .3s',
 
     ':hover': {
       background: colors.blue,
@@ -28,6 +32,7 @@ const styles = (isOpen) => StyleSheet.create({
     },
   },
   option: {
+    fontFamily: 'Lato',
     padding: '1rem',
     background: colors.white,
     border: `2px solid ${colors.white}`,
@@ -41,6 +46,9 @@ const styles = (isOpen) => StyleSheet.create({
   optionContainer: {
     maxHeight: '21vh',
     overflow: 'auto',
+    position: 'absolute',
+    zIndex: 1000,
+    minWidth: '100%',
   },
 });
 
@@ -54,15 +62,17 @@ const typeStyles = {
       borderBottom: `${isOpen ? 'none' : `2px solid ${colors.white}`}`,
       padding: '0 0 0.5rem 0',
       fontSize: '2rem',
-      fontFamily: 'Roboto Mono, monospace',
       width: `${inputLength}ch`,
+      transition: 'borderBottomColor .3s, width .3s',
 
       ':hover': {
         background: 'none',
+        borderBottomColor: colors.blue,
       },
 
       ':focus': {
         background: 'none',
+        color: colors.blue,
       },
     },
     optionContainer: {
@@ -141,7 +151,7 @@ class DropDown extends Component {
         }) => {
           const inputLength = inputValue.length || placeholder.length;
           return (
-            <div>
+            <div className={css(styles().container)}>
               <input
                 onClick={this.clearValue}
                 {...getInputProps({ placeholder })}
