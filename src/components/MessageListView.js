@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types';
 
-import { colors } from '../assets/styles/Common';
+import { colors, breakpoints } from '../assets/styles/Common';
 import MessageView from './MessageView';
 
 const styles = StyleSheet.create({
@@ -23,7 +23,11 @@ const styles = StyleSheet.create({
   noMessages: {
     padding: '1rem',
     color: colors.grey,
-    fontSize: '1.5rem',
+    fontSize: '2rem',
+
+    [breakpoints.mobile]: {
+      fontSize: '1.5rem',
+    }
   },
 });
 

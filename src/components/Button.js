@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const Button = ({ children }) => {
+const Button = ({ children, onClick }) => {
   return (
-    <div className={css(styles.container)}>
+    <div onClick={onClick} className={css(styles.container)}>
       {children}
     </div>
   );

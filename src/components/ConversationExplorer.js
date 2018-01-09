@@ -170,6 +170,7 @@ class ConversationExplorer extends Component {
       <div>
         <Modal open={modalOpen} onClose={this.onCloseModal}>
           <QueryBuilder
+            onComplete={this.onCloseModal}
             selectedCategory={selectedCategory}
             selectedSection={(section || Object.values(sections)[0]).key}
           />

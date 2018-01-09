@@ -56,14 +56,15 @@ const typeStyles = {
   default: () => StyleSheet.create({
 
   }),
-  inline: (inputLength, isOpen) => StyleSheet.create({
+  inline: (inputLength, isOpen, validation = false) => StyleSheet.create({
     input: {
       border: 'none',
-      borderBottom: `${isOpen ? 'none' : `2px solid ${colors.white}`}`,
+      borderBottom: `${isOpen ? 'none' : `2px solid`}`,
       padding: '0 0 0.5rem 0',
       fontSize: '2rem',
       width: `${inputLength}ch`,
       transition: 'borderBottomColor .3s, width .3s',
+      borderBottomColor: `${validation ? colors.red : colors.white}`,
 
       ':hover': {
         background: 'none',
@@ -129,7 +130,7 @@ class DropDown extends Component {
   }
 
   render() {
-    const { items, onChange, placeholder } = this.props;
+    const { items, onChange, placeholder, validation } = this.props;
     const { value, isOpen } = this.state;
     const { type } = this.props;
     return (
@@ -155,7 +156,10 @@ class DropDown extends Component {
               <input
                 onClick={this.clearValue}
                 {...getInputProps({ placeholder })}
-                className={css(styles(isOpen).input, typeStyles[type](inputLength, isOpen).input )}
+                className={css(
+                  styles(isOpen).input,
+                  typeStyles[type](inputLength, isOpen, validation && !inputValue.length).input
+                )}
               />
               {
                 isOpen && (
