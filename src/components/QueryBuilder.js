@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import _ from 'lodash';
+import ordinal from 'ordinal';
 
 import DropDown from './DropDown';
+import Input, { INPUT_TYPES } from './Input';
 import MultiSelectDropDown from './MultiSelectDropDown';
 import Explorer, { Entities } from '../static/explorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
@@ -28,6 +30,8 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: '2rem',
     fontFamily: 'Roboto Mono, monospace',
+    flexWrap: 'wrap',
+    lineHeight: 2,
   },
   entityComponentWrapper: {
     display: 'flex',
@@ -70,7 +74,7 @@ class QueryBuilder extends Component {
     }
   }
 
-  handleSelectSection = ({ sectionKey }) => {
+  handleSelectSection = ({ key: sectionKey }) => {
     const { selectedCategory } = this.state;
     this.setState({ selectedSection: selectedCategory.sections[sectionKey] });
   }
@@ -108,13 +112,20 @@ class QueryBuilder extends Component {
     }
   }
 
+  onChangeFormat = (entity, value) => (
+    { title: value, entity }
+  );
+
   interpolateQueryString = () => {
     const { entityValues, selectedSection } = this.state;
     if (selectedSection) {
       return Object.keys(entityValues).reduce((acc, entityKey) => {
-        const { template: entityTemplate } = Entities[entityKey];
+        const { template: entityTemplate, type } = Entities[entityKey];
         let interpolatedValue;
-        const entityValue =  entityValues[entityKey];
+        let entityValue =  entityValues[entityKey];
+        if (type === INPUT_TYPES.ORDINAL) {
+          entityValue = ordinal(parseInt(entityValue, 10));
+        }
 
         if (entityTemplate) {
           const entitySugar = entityTemplate.split(':');
@@ -136,32 +147,53 @@ class QueryBuilder extends Component {
         const entityKey = templateValues[1];
         if (selectedEntities[entityKey] || selectedSection.requiredEntities.includes(entityKey)) {
           const entity = Entities[entityKey];
+          const entityValue = entityValues[entityKey] || '';
           const { template: entityTemplate } = entity;
 
-          const entityComponent = (
-            <div key={`fragment-${i}`} className={css(styles.fragment)}>
+          let entityComponent;
+
+          if (entity.type) {
+            const { type } = entity;
+            entityComponent = (
+              <Input
+                validation={validation}
+                onChange={this.updateEntityValue}
+                onChangeFormat={this.onChangeFormat.bind(this, entity.key)}
+                placeholder={entity.title}
+                type={type}
+                value={entityValue}
+              />
+            );
+          } else {
+            entityComponent = (
               <DropDown
                 validation={validation}
                 type='inline'
                 onSelect={this.updateEntityValue}
                 placeholder={entity.title}
                 items={entity.values.map(value => ({ entity: entity.key, key: value, title: value }))}
-                value={entityValues[entityKey]}
+                value={entityValue}
               />
-            </div>
-          );
+            );
+          }
 
           if (entityTemplate) {
             const entitySugar = entityTemplate.split(':');
             return (
               <div key={`fragment-${i}`} className={css(styles.entityComponentWrapper)}>
                 { entitySugar[0] && <div className={css(styles.fragment)}>{entitySugar[0]}</div> }
-                {entityComponent}
+                <div className={css(styles.fragment)}>
+                  {entityComponent}
+                </div>
                 { entitySugar[1] && <div className={css(styles.fragment)}>{entitySugar[1]}</div> }
               </div>
             );
           } else {
-            return entityComponent;
+            return (
+              <div key={`fragment-${i}`} className={css(styles.fragment)}>
+                {entityComponent}
+              </div>
+            );
           }
         } else {
           return '';

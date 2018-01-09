@@ -4,7 +4,6 @@ import Icon from 'react-icons-kit';
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import { ic_keyboard_arrow_down } from 'react-icons-kit/md/ic_keyboard_arrow_down';
 import { fadeIn } from 'react-animations';
-import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit';
 
 import { colors } from '../assets/styles/Common';
 import { style } from '../lib/utils';
@@ -31,12 +30,6 @@ class Collapsible extends Component {
     onSelect(dataKey);
   }
 
-  handleClick = (e) => {
-    const { onEdit, title } = this.props;
-    onEdit(title);
-    e.stopPropagation();
-  }
-
   renderTitle = () => {
     const { title, isOpen } = this.props;
     const icon = isOpen ? ic_keyboard_arrow_down : ic_keyboard_arrow_right;
@@ -45,13 +38,6 @@ class Collapsible extends Component {
       <div onClick={this.toggleOpen} className={style(styles.title, 'hvr-fade')}>
         <Icon icon={icon} size={32} />
         {title}
-        {
-          isOpen && (
-            <div onClick={this.handleClick} className={css(styles.iconWrapper)}>
-              <Icon icon={ic_mode_edit} size={26} />
-            </div>
-          )
-        }
       </div>
     )
   }

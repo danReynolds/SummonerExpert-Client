@@ -8,6 +8,7 @@ import { colors, fonts, isDesktop, CategoryIcons } from '../assets/styles/Common
 import Collapsible from './Collapsible';
 import Option from './Option';
 import QueryBuilder from './QueryBuilder';
+import Button from './Button';
 import CollapsibleItem from './CollapsibleItem';
 import Modal from './Modal';
 import Explorer from '../static/explorer';
@@ -65,6 +66,12 @@ const styles = StyleSheet.create({
   categoryIcon: {
     height: '1.8rem',
     marginRight: '1rem',
+  },
+  customize: {
+    width: '100%',
+    padding: '0.5rem 0 0.5rem 0',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -130,10 +137,6 @@ class ConversationExplorer extends Component {
     this.setState({ modalOpen: !modalOpen });
   };
 
-  onCloseModal = () => {
-    this.setState({ modalOpen: false });
-  };
-
   handleClickSection = (message) => {
     this.setState({ isOpen: isDesktop() });
     sendMessage(message);
@@ -168,9 +171,9 @@ class ConversationExplorer extends Component {
     const section = sections[selectedSection];
     return (
       <div>
-        <Modal open={modalOpen} onClose={this.onCloseModal}>
+        <Modal open={modalOpen} onClose={this.toggleModal}>
           <QueryBuilder
-            onComplete={this.onCloseModal}
+            onComplete={this.toggleModal}
             selectedCategory={selectedCategory}
             selectedSection={(section || Object.values(sections)[0]).key}
           />
@@ -208,6 +211,9 @@ class ConversationExplorer extends Component {
           onSelect={this.selectSection}
           onEdit={this.toggleModal}
         >
+          <div className={css(styles.customize)}>
+            <Button onClick={this.toggleModal}>Customize</Button>
+          </div>
           {
             queries.map((query, queryIndex) => (
               <CollapsibleItem

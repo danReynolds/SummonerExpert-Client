@@ -3,7 +3,42 @@ export const Entities = {
     key: 'role',
     title: 'Role',
     values: ['top', 'jungle', 'middle', 'ADC', 'support'],
-    template: 'playing'
+    template: 'playing ',
+  },
+  role1: {
+    key: 'role1',
+    title: 'Role 1',
+    values: ['top', 'jungle', 'middle', 'ADC', 'support'],
+    template: 'playing ',
+  },
+  role2: {
+    key: 'role2',
+    title: 'Role 2',
+    values: ['top', 'jungle', 'middle', 'ADC', 'support'],
+    template: 'playing ',
+  },
+  list_order: {
+    key: 'list_order',
+    title: 'List order',
+    values: ['highest', 'lowest'],
+  },
+  matchup_position: {
+    key: 'matchup_position',
+    title: 'Stat',
+    values: [
+      'kills', 'deaths', 'assists', 'CS', 'gold earned', 'win rate', 'damage dealt to champions',
+      'killing sprees',
+    ],
+  },
+  list_size: {
+    key: 'list_size',
+    title: 'List size',
+    type: 'number',
+  },
+  list_position: {
+    key: 'list_position',
+    title: 'List position',
+    type: 'ORDINAL',
   },
   elo: {
     key: 'elo',
@@ -14,13 +49,24 @@ export const Entities = {
   metric: {
     key: 'metric',
     title: 'Metric',
-    values: ['highest win rate', 'most common']
+    values: ['highest win rate', 'most common'],
   },
   champion: {
     key: 'champion',
     title: 'Champion',
-    values: ['Aatrox', 'Zed']
+    values: ['Aatrox', 'Zed'],
   },
+  ability: {
+    key: 'ability',
+    title: 'Ability',
+    values: ['Q', 'W', 'E', 'R'],
+  },
+  rank: {
+    key: 'rank',
+    title: 'Rank',
+    values: [1, 2, 3, 4, 5],
+    template: 'at rank ',
+  }
 }
 
 export default {
@@ -60,6 +106,9 @@ export default {
       ability: {
         key: 'ability',
         title: 'Ability',
+        entities: [Entities.ability.key, Entities.champion.key],
+        requiredEntities: [Entities.ability.key, Entities.champion.key],
+        queryTemplate: 'What does the {ability} for {champion} do?',
         queries: [
           { text: "What does Twitch's ultimate do?" },
           { text: "What is Ivern's q?" },
@@ -69,6 +118,9 @@ export default {
       allyTips: {
         key: 'allyTips',
         title: 'Ally tips',
+        entities: [Entities.champion.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: 'Tip for playing {champion}',
         queries: [
           { text: 'Tip for playing with Jayce' },
           { text: 'How to play Yasuo' },
@@ -77,7 +129,9 @@ export default {
       build: {
         key: 'build',
         title: 'Builds',
-        tags: ['Role', 'Metric', 'Elo'],
+        entities: [Entities.champion.key, Entities.role.key, Entities.metric.key, Entities.elo.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: '{metric} build for {champion} {role} {elo}',
         queries: [
           { text: 'What do I build on Elise?' },
           { text: 'Ezreal build Diamond', tags: ['Elo'] },
@@ -93,10 +147,16 @@ export default {
           { text: "What is the cooldown of Ahri's ult at rank 2?" },
           { text: "Viktor cooldown e rank 1" },
         ],
+        entities: [Entities.champion.key, Entities.ability.key, Entities.rank.key],
+        requiredEntities: [Entities.champion.key, Entities.ability.key],
+        queryTemplate: '{champion} {ability} cooldown {rank}',
       },
       enemyTips: {
         key: 'enemyTips',
         title: 'Enemy tips',
+        entities: [Entities.champion.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: 'Tip for playing against {champion}',
         queries: [
           { text: 'How do I play against Yorick?' },
           { text: 'How to win vs Vayne' },
@@ -105,6 +165,9 @@ export default {
       lore: {
         key: 'lore',
         title: 'Lore',
+        entities: [Entities.champion.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: 'lore for {champion}',
         queries: [
           { text: 'Tell me about Poppy' },
           { text: 'Who is Heimerdinger?' },
@@ -113,7 +176,12 @@ export default {
       matchupRankings: {
         key: 'matchupRankings',
         title: 'Matchup rankings',
-        tags: ['Role', 'Order', 'Elo', 'Metric', 'List Position', 'List Size'],
+        entities: [
+          Entities.champion.key, Entities.role1.key, Entities.matchup_position, Entities.role2.key,
+          Entities.elo.key, Entities.list_position.key, Entities.list_size.key, Entities.list_order.key,
+        ],
+        requiredEntities: [Entities.champion.key, Entities.list_order.key, Entities.matchup_position.key],
+        queryTemplate: 'Which {list_size} champions have the {list_position} {list_order} {matchup_position} {role1} against {champion} {role2} {elo}',
         queries: [
           { text: 'Three counters for Vayne ADC', tags: ['List Size'] },
           { text: '2nd best support with Sivir', tags: ['List Position', 'Role'] },
