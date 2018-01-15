@@ -21,21 +21,21 @@ export const itemQueries = [
     const item = _.sample(ITEM_NAMES);
     return {
       id: item,
-      query: `How do you build {item}?`,
+      query: `How do you build ${item}?`,
     };
   })(),
   (() => {
     const item = _.sample(ITEM_NAMES);
     return {
       id: item,
-      query: `How much does {item} cost?`,
+      query: `How much does ${item} cost?`,
     };
   })(),
   (() => {
     const item = _.sample(ITEM_NAMES);
     return {
       id: item,
-      query: `Tell me about {item}`,
+      query: `Tell me about ${item}`,
     };
   })(),
   {

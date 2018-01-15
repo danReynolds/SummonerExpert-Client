@@ -51,7 +51,7 @@ export const Entities = {
   elo: {
     key: 'elo',
     title: 'Elo',
-    values: ['bronze', 'silver', 'gold', 'platinum and above'],
+    values: ['bronze', 'silver', 'gold', 'platinum', 'plat and above'],
     template: 'in:division',
   },
   metric: {
@@ -97,9 +97,9 @@ export const Entities = {
     title: 'Statistic',
     defaultValue: 'win rate',
     values: [
-      'win rate', 'CS', 'ban rate', 'damage dealt', 'gold', 'overall', 'deaths',
+      'win rate', 'CS', 'ban rate', 'damage dealt', 'gold', 'overall performance', 'deaths',
       'assists', 'kills', 'play rate', 'total healing done', 'total damage taken',
-      'games played', 'killing sprees',
+      'games per summoner', 'killing sprees'
     ],
   },
   position_details: {
@@ -285,7 +285,7 @@ export default {
         key: 'matchupRankings',
         title: 'Matchup rankings',
         entities: [
-          Entities.champion.key, Entities.role1.key, Entities.matchup_position, Entities.role2.key,
+          Entities.champion.key, Entities.role1.key, Entities.matchup_position.key, Entities.role2.key,
           Entities.elo.key, Entities.list_position.key, Entities.list_size.key, Entities.list_order.key,
         ],
         requiredEntities: [Entities.champion.key, Entities.list_order.key, Entities.matchup_position.key],
@@ -417,7 +417,7 @@ export default {
       title: {
         key: 'title',
         title: 'Title',
-        entitiies: [Entities.champion.key],
+        entities: [Entities.champion.key],
         requiredEntities: [Entities.champion.key],
         queryTemplate:  () => 'What do they call {champion}',
         queries: [
@@ -484,9 +484,9 @@ export default {
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return '{list_position} {list_size} champions with the {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+            return '{list_size} champions with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
           } else {
-            return '{list_position} {list_size} champion with the {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+            return '{list_size} champion with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
           }
         },
         queries: [
@@ -499,9 +499,9 @@ export default {
         key: 'championPerformance',
         title: 'Champion Performance',
         entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.summoner_role.key, Entities.recency.key,
+          Entities.summoner.key, Entities.champion.key, Entities.recency.key,
         ],
-        requiredEntities: [Entities.summoner.key, Entities.champion.key, Entities.summoner_metric.key],
+        requiredEntities: [Entities.summoner.key, Entities.champion.key],
         queryTemplate: () => 'How is {summoner} playing {champion} {summoner_role} {elo} {recency}',
         queries: [
           { text: 'Does Doublelift play Xayah?' },
@@ -625,9 +625,9 @@ export default {
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return '{list_position} {list_size} bans that give {summoner} the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_size} bans that give {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
           } else {
-            return '{list_position} {list_size} ban that gives {summoner} the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_size} ban that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
           }
         },
         queries: [
@@ -648,7 +648,7 @@ export default {
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
           Entities.summoner_metric_and_details.key,
         ],
-        queryTemplate: () => '{list_position} spell combination that gives {summoner} the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}',
+        queryTemplate: () => 'spell combination that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}',
         queries: [
           { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
           { text: 'Which spells does Pobelter get the best KDA on playing Azir Mid?' },
