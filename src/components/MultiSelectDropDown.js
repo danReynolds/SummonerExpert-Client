@@ -109,12 +109,18 @@ class MultiSelectDropDown extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { value } = this.state;
-    const { onChange } = this.props;
 
     if (prevState.value !== value) {
-      onChange(this.getValidItems(value));
+      this.onChangeDelayed(this.getValidItems(value));
     }
   }
+
+  // Debounce sending the onChange handler to the parent component
+  // in case the value is about to be changed again
+  onChangeDelayed = _.debounce((value) => {
+    const { onChange } = this.props;
+    onChange(value);
+  }, 0)
 
   handleChange = (inputValue) => {
     const { value } = this.state;

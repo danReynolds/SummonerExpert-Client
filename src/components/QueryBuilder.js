@@ -56,11 +56,12 @@ class QueryBuilder extends Component {
   constructor(props) {
     super(props);
     const category = Explorer[props.selectedCategory];
+    const selectedSection = category.sections[props.selectedSection];
     this.state = {
+      selectedSection,
       selectedCategory: category,
-      selectedSection: category.sections[props.selectedSection],
-      selectedEntities: {},
-      entityValues: {},
+      selectedEntities: [],
+      entityValues: this.updateEntityValues(selectedSection),
       validation: false,
     };
   }
@@ -76,13 +77,30 @@ class QueryBuilder extends Component {
 
   handleSelectSection = ({ key: sectionKey }) => {
     const { selectedCategory } = this.state;
-    this.setState({ selectedSection: selectedCategory.sections[sectionKey] });
+    const selectedSection = selectedCategory.sections[sectionKey];
+
+    this.setState({
+      selectedSection,
+      entityValues: this.updateEntityValues(selectedSection),
+    });
   }
 
-  handleChangeEntity = (selectedEntities) => {
+  handleChangeEntity = (selectedEntitiesList) => {
+    const { selectedSection, entityValues } = this.state;
+    const selectedEntities = selectedEntitiesList.map(entity => entity.key);
     this.setState({
-      selectedEntities: selectedEntities.reduce((acc, entity) => ({ ...acc, [entity.key]: entity }), {}),
+      selectedEntities,
+      entityValues: this.updateEntityValues(selectedSection, selectedEntities, entityValues)
     });
+  }
+
+  updateEntityValues = (selectedSection, selectedEntities = [], entityValues = {}) => {
+    const entities = selectedSection.entities.filter(
+      entityKey => selectedSection.requiredEntities.includes(entityKey) || selectedEntities.includes(entityKey)
+    );
+    return entities.reduce((acc, entityKey) => (
+      { ...acc, [entityKey]: entityValues[entityKey] || Entities[entityKey].defaultValue }
+    ), {});
   }
 
   updateEntityValue = ({ entity, title }) => {
@@ -97,7 +115,7 @@ class QueryBuilder extends Component {
 
   validateEntities = () => {
     const { selectedEntities, selectedSection, entityValues } = this.state;
-    const validatedEntities = Object.keys(selectedEntities).concat(selectedSection.requiredEntities);
+    const validatedEntities = selectedEntities.concat(selectedSection.requiredEntities);
     return _.every(validatedEntities, entity => entityValues[entity]);
   }
 
@@ -135,7 +153,7 @@ class QueryBuilder extends Component {
         }
 
         return acc.replace(new RegExp(`{${entityKey}}`), interpolatedValue);
-      }, selectedSection.queryTemplate).replace(/\s?\{\w+\}/g, '');
+      }, selectedSection.queryTemplate(entityValues)).replace(/\s?\{\w+\}/g, '');
     }
   }
 
@@ -145,15 +163,14 @@ class QueryBuilder extends Component {
       const templateValues = fragment.match(CAPTURE_ENTITY_TEMPLATE_PATTERN);
       if (templateValues) {
         const entityKey = templateValues[1];
-        if (selectedEntities[entityKey] || selectedSection.requiredEntities.includes(entityKey)) {
+        if (selectedEntities.includes(entityKey) || selectedSection.requiredEntities.includes(entityKey)) {
           const entity = Entities[entityKey];
           const entityValue = entityValues[entityKey] || '';
-          const { template: entityTemplate } = entity;
+          const { template: entityTemplate, type } = entity;
 
           let entityComponent;
 
-          if (entity.type) {
-            const { type } = entity;
+          if (type) {
             entityComponent = (
               <Input
                 validation={validation}
@@ -205,7 +222,7 @@ class QueryBuilder extends Component {
   }
 
   render() {
-    const { selectedCategory, selectedSection } = this.state;
+    const { selectedCategory, selectedSection, entityValues } = this.state;
     const selectableEntities = Object.values(
       _.pick(Entities, selectedSection.entities))
       .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
@@ -231,7 +248,7 @@ class QueryBuilder extends Component {
           </div>
         </div>
         <div className={css(styles.queryTemplate)}>
-          {this.renderQueryTemplate(selectedSection.queryTemplate)}
+          {this.renderQueryTemplate(selectedSection.queryTemplate(entityValues))}
         </div>
         <div className={css(styles.footer)}>
           <Button onClick={this.submitQuery}>Send</Button>

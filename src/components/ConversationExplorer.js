@@ -201,7 +201,7 @@ class ConversationExplorer extends Component {
   renderCategorySections = () => {
     const { selectedSection, selectedCategory } = this.state;
 
-    return Object.values(Explorer[selectedCategory].sections).map(({ key, title, tags, queries }, sectionIndex) => (
+    return Object.values(Explorer[selectedCategory].sections).map(({ key, title, queries, queryTemplate }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
           dataKey={key}
@@ -211,9 +211,13 @@ class ConversationExplorer extends Component {
           onSelect={this.selectSection}
           onEdit={this.toggleModal}
         >
-          <div className={css(styles.customize)}>
-            <Button onClick={this.toggleModal}>Customize</Button>
-          </div>
+          {
+            queryTemplate && (
+              <div className={css(styles.customize)}>
+                <Button onClick={this.toggleModal}>Customize</Button>
+              </div>
+            )
+          }
           {
             queries.map((query, queryIndex) => (
               <CollapsibleItem

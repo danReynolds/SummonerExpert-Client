@@ -1,26 +1,43 @@
+import _ from 'lodash';
 const itemJSON = require('./items.json');
 
+export const ITEM_NAMES = Object.keys(itemJSON.data);
 export const itemQueries = [
-  {
-    id: 'Hexdrinker',
-    query: 'What does Hexdrinker do?',
-  },
-  {
-    id: 'Tiamat',
-    query: "What stats does Tiamat give?"
-  },
-  {
-    id: 'Ardent Censer',
-    query: 'How do you build Ardent Censer?',
-  },
-  {
-    id: 'Redemption',
-    query: 'What does Redemption cost?',
-  },
-  {
-    id: 'Boots of Speed',
-    query: 'Tell me about Boots of Speed.',
-  },
+  (() => {
+    const item = _.sample(ITEM_NAMES);
+    return {
+      id: item,
+      query: `What does ${item} do?`,
+    };
+  })(),
+  (() => {
+    const item = _.sample(ITEM_NAMES);
+    return {
+      id: item,
+      query: `What stats does ${item} give?`,
+    };
+  })(),
+  (() => {
+    const item = _.sample(ITEM_NAMES);
+    return {
+      id: item,
+      query: `How do you build {item}?`,
+    };
+  })(),
+  (() => {
+    const item = _.sample(ITEM_NAMES);
+    return {
+      id: item,
+      query: `How much does {item} cost?`,
+    };
+  })(),
+  (() => {
+    const item = _.sample(ITEM_NAMES);
+    return {
+      id: item,
+      query: `Tell me about {item}`,
+    };
+  })(),
   {
     id: 'Rumble',
     query: 'What does Dyrus build on Rumble Top?',

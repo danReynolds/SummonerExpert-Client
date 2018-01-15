@@ -63,7 +63,7 @@ const typeStyles = {
       padding: '0 0 0.5rem 0',
       fontSize: '2rem',
       width: `${inputLength}ch`,
-      transition: 'borderBottomColor .3s, width .3s',
+      transition: 'borderBottomColor .3s',
       borderBottomColor: `${validation ? colors.red : colors.white}`,
 
       ':hover': {
