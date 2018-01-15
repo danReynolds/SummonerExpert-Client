@@ -3,9 +3,14 @@ import { StyleSheet, css } from 'aphrodite';
 
 import { colors } from '../assets/styles/Common';
 
-const styles = StyleSheet.create({
+export const BUTTON_TYPES = {
+  CANCEL: 'CANCEL',
+  CONFIRM: 'CONFIRM',
+};
+
+const styles = (type = BUTTON_TYPES.CONFIRM) => StyleSheet.create({
   container: {
-    border: `2px solid ${colors.gold}`,
+    border: `2px solid ${type === BUTTON_TYPES.CONFIRM ? colors.gold : colors.red}`,
     padding: '0.8rem 2rem',
     color: colors.white,
     display: 'inline-block',
@@ -15,14 +20,14 @@ const styles = StyleSheet.create({
     fontSize: '1.2rem',
 
     ':hover': {
-      background: colors.gold,
+      background: `${type === BUTTON_TYPES.CONFIRM ? colors.gold : colors.red}`,
     }
   }
 });
 
-const Button = ({ children, onClick }) => {
+const Button = ({ children, onClick, type, style }) => {
   return (
-    <div onClick={onClick} className={css(styles.container)}>
+    <div onClick={onClick} className={css(styles(type).container, style)}>
       {children}
     </div>
   );

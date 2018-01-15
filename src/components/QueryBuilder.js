@@ -8,7 +8,7 @@ import Input, { INPUT_TYPES } from './Input';
 import MultiSelectDropDown from './MultiSelectDropDown';
 import Explorer, { Entities } from '../static/explorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
-import Button from './Button';
+import Button, { BUTTON_TYPES } from './Button';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto Mono, monospace',
     flexWrap: 'wrap',
     lineHeight: 2,
+    marginLeft: '-1rem',
   },
   entityComponentWrapper: {
     display: 'flex',
@@ -45,7 +46,10 @@ const styles = StyleSheet.create({
     bottom: '0',
   },
   container: {
-    height: '60vh',
+    height: '80vh',
+  },
+  footerButton: {
+    marginLeft: '1rem',
   },
 });
 
@@ -120,11 +124,11 @@ class QueryBuilder extends Component {
   }
 
   submitQuery = () => {
-    const { onComplete } = this.props;
+    const { close } = this.props;
 
     if (this.validateEntities()) {
       sendMessage(this.interpolateQueryString());
-      onComplete();
+      close();
     } else {
       this.setState({ validation: true });
     }
@@ -223,6 +227,7 @@ class QueryBuilder extends Component {
 
   render() {
     const { selectedCategory, selectedSection, entityValues } = this.state;
+    const { close } = this.props;
     const selectableEntities = Object.values(
       _.pick(Entities, selectedSection.entities))
       .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
@@ -251,7 +256,8 @@ class QueryBuilder extends Component {
           {this.renderQueryTemplate(selectedSection.queryTemplate(entityValues))}
         </div>
         <div className={css(styles.footer)}>
-          <Button onClick={this.submitQuery}>Send</Button>
+          <Button type={BUTTON_TYPES.CANCEL} onClick={close}>Cancel</Button>
+          <Button style={styles.footerButton} onClick={this.submitQuery}>Send</Button>
         </div>
       </div>
     )

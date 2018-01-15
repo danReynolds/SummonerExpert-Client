@@ -173,7 +173,7 @@ class ConversationExplorer extends Component {
       <div>
         <Modal open={modalOpen} onClose={this.toggleModal}>
           <QueryBuilder
-            onComplete={this.toggleModal}
+            close={this.toggleModal}
             selectedCategory={selectedCategory}
             selectedSection={(section || Object.values(sections)[0]).key}
           />
@@ -200,7 +200,6 @@ class ConversationExplorer extends Component {
 
   renderCategorySections = () => {
     const { selectedSection, selectedCategory } = this.state;
-
     return Object.values(Explorer[selectedCategory].sections).map(({ key, title, queries, queryTemplate }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
@@ -247,6 +246,7 @@ class ConversationExplorer extends Component {
         onStateChange={this.setMenuOpen}
         customCrossIcon={false}
         styles={menuStyleOverrides}
+        listenForClose={() => {}}
       >
         <div onClick={this.toggleCategoryOpen} className={style(styles.categorySelector, 'hvr-fade')}>
           <img className={css(styles.categoryIcon)} src={CategoryIcons[selectedCategory]} alt='logo' />

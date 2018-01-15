@@ -474,7 +474,21 @@ export default {
       },
       champions: {
         key: 'champions',
-        title: 'Champions',
+        title: 'Champion Ranking',
+        entities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.list_size.key, Entities.list_position.key,
+          Entities.summoner_role.key, Entities.summoner_metric_and_details.key, Entities.recency.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: ({ list_size }) => {
+          if (parseInt(list_size, 10) > 1) {
+            return '{list_position} {list_size} champions with the {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+          } else {
+            return '{list_position} {list_size} champion with the {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+          }
+        },
         queries: [
           { text: '3 most played champions by Rallemus' },
           { text: "Who is TheOddOne's highest KDA champion?" },
