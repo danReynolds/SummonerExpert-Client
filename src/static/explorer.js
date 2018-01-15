@@ -320,7 +320,7 @@ export default {
           Entities.matchup_position.key, Entities.elo.key,
         ],
         requiredEntities: [Entities.champion1.key, Entities.champion2.key, Entities.matchup_position.key],
-        queryTemplate: () => 'How does {champion1} {role1} against {champion2} {role2} by {matchup_position} {elo}',
+        queryTemplate: () => 'How does {champion1} {role1} do against {champion2} {role2} by {matchup_position} {elo}',
         queries: [
           { text: 'Does Darius beat Kled in Top lane?', tags: ['Role'] },
           { text: 'Who gets more cs in Yorick vs Renekton?', tags: ['Metric'] },
