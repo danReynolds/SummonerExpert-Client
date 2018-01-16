@@ -44,7 +44,7 @@ export const championQueries = [
     const champion = _.sample(CHAMPION_NAMES);
     return {
       id: champion,
-      query: `Does {champion} get a lot of assists?`,
+      query: `Does ${champion} get a lot of assists?`,
     };
   })(),
   {
