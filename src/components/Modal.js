@@ -16,6 +16,7 @@ const styles = {
     padding: 0,
     background: 'none',
     overflow: 'hidden',
+    zIndex: 10000,
   },
 };
 

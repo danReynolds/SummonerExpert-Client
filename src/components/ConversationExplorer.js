@@ -165,6 +165,11 @@ class ConversationExplorer extends Component {
     this.setState({ selectedSection: openIndex });
   }
 
+  submitQuery = () => {
+    this.toggleModal();
+    this.setMenuOpen({ isOpen: false });
+  }
+
   renderModal = () => {
     const { modalOpen, selectedCategory, selectedSection } = this.state;
     const sections = Explorer[selectedCategory].sections;
@@ -174,6 +179,7 @@ class ConversationExplorer extends Component {
         <Modal open={modalOpen} onClose={this.toggleModal}>
           <QueryBuilder
             close={this.toggleModal}
+            submit={this.submitQuery}
             selectedCategory={selectedCategory}
             selectedSection={(section || Object.values(sections)[0]).key}
           />

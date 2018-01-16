@@ -7,7 +7,7 @@ import DropDown from './DropDown';
 import Input, { INPUT_TYPES } from './Input';
 import MultiSelectDropDown from './MultiSelectDropDown';
 import Explorer, { Entities } from '../static/explorer';
-import CommonStyles, { colors } from '../assets/styles/Common';
+import CommonStyles, { colors, breakpoints } from '../assets/styles/Common';
 import Button, { BUTTON_TYPES } from './Button';
 import { sendMessage } from '../actions/ApiAiActions';
 
@@ -16,12 +16,24 @@ const styles = StyleSheet.create({
     fontSize: '5rem',
     color: 'white',
     paddingBottom: '3vh',
+
+    [breakpoints.mobile]: {
+      fontSize: '2rem',
+    },
   },
   dropdowns: {
     display: 'flex',
+
+    [breakpoints.mobile]: {
+      flexWrap: 'wrap',
+    },
   },
   dropdown: {
     marginRight: '1.5rem',
+
+    [breakpoints.mobile]: {
+      marginTop: '1rem',
+    },
   },
   queryTemplate: {
     display: 'flex',
@@ -33,6 +45,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     lineHeight: 2,
     marginLeft: '-1rem',
+
+    [breakpoints.mobile]: {
+      marginTop: '2vh',
+      fontSize: '1.5rem',
+    },
   },
   entityComponentWrapper: {
     display: 'flex',
@@ -124,11 +141,11 @@ class QueryBuilder extends Component {
   }
 
   submitQuery = () => {
-    const { close } = this.props;
+    const { submit } = this.props;
 
     if (this.validateEntities()) {
       sendMessage(this.interpolateQueryString());
-      close();
+      submit();
     } else {
       this.setState({ validation: true });
     }

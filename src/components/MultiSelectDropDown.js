@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import _ from 'lodash';
 
-import { colors } from '../assets/styles/Common';
+import { colors, breakpoints } from '../assets/styles/Common';
 
 const styles = StyleSheet.create({
   input: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     maxHeight: '21vh',
     overflow: 'auto',
     position: 'absolute',
-    zIndex: 1000,
+    zIndex: 100000,
   },
 });
 
@@ -60,6 +60,10 @@ const typeStyles = {
       margin: '0 0 0 1rem',
       padding: '0 0 0.5rem 0',
       fontSize: '2rem',
+
+      [breakpoints.mobile]: {
+        fontSize: '1.5rem',
+      },
 
       ':hover': {
         background: 'none',

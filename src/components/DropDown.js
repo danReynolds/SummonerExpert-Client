@@ -2,7 +2,7 @@ import Downshift from 'downshift'
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-import { colors } from '../assets/styles/Common';
+import { colors, breakpoints } from '../assets/styles/Common';
 
 const styles = (isOpen) => StyleSheet.create({
   container: {
@@ -47,7 +47,7 @@ const styles = (isOpen) => StyleSheet.create({
     maxHeight: '21vh',
     overflow: 'auto',
     position: 'absolute',
-    zIndex: 1000,
+    zIndex: 100000,
     minWidth: '100%',
   },
 });
@@ -65,6 +65,10 @@ const typeStyles = {
       width: `${inputLength}ch`,
       transition: 'borderBottomColor .3s',
       borderBottomColor: `${validation ? colors.red : colors.white}`,
+
+      [breakpoints.mobile]: {
+        fontSize: '1.5rem',
+      },
 
       ':hover': {
         background: 'none',

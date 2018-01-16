@@ -88,7 +88,7 @@ class Home extends Component {
 
   renderTabs = () => {
     const { selectedTab } = this.state;
-    const { items, getItemImage } = RECOMMENDATIONS[selectedTab];
+    const recommendation = RECOMMENDATIONS[selectedTab];
 
     return (
       <div className={css(styles.tabContainer)}>
@@ -110,8 +110,7 @@ class Home extends Component {
         <div className={css(styles.tabContent)}>
           <RecommendationList
             limit={5}
-            items={items}
-            getItemImage={getItemImage}
+            {...recommendation}
           />
         </div>
       </div>
