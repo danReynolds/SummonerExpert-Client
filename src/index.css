@@ -16,3 +16,8 @@ html, body, #root, [data-reactroot] {
 ::-webkit-scrollbar {
     display: none;
 }
+
+/* Modal Styles */
+.Modal-closeIcon-0-1-4 {
+  display: none !important;
+}

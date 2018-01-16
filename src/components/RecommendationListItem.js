@@ -53,14 +53,13 @@ class RecommendationListItem extends Component {
   }
 
   handleClick = () => {
-    const { history, item: { query } } = this.props;
+    const { history, item: { query }, category } = this.props;
     sendMessage(query);
-    history.push('/conversation');
+    history.push(`/conversation?category=${category}`);
   }
 
   render() {
     const { getItemImage, item: { id, id2, query } } = this.props;
-
     let imageContent;
 
     if (id && id2) {

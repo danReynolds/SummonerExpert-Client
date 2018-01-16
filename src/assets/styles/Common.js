@@ -1,5 +1,17 @@
 import { StyleSheet } from 'aphrodite';
 
+import ChampionIcon from '../images/barbute.svg';
+import SummonerIcon from '../images/hood.svg';
+import GeneralIcon from '../images/book-cover.svg';
+import ItemIcon from '../images/winged-sword.svg';
+
+export const CategoryIcons = {
+  champion: ChampionIcon,
+  summoner: SummonerIcon,
+  general: GeneralIcon,
+  item: ItemIcon,
+};
+
 export const desktop = 1224;
 export const mobile = 480;
 
@@ -14,9 +26,10 @@ export const breakpoints = {
 
 export default StyleSheet.create({
   container: {
-    margin: '7.5rem auto 0 auto',
+    margin: '10vh auto 0 auto',
     display: 'flex',
     flexDirection: 'column',
+    position: 'relative',
 
     [breakpoints.desktop]: {
       width: 1200,
@@ -27,6 +40,17 @@ export default StyleSheet.create({
       marginTop: '5rem',
     },
   },
+  containerWide: {
+    margin: '0 auto 0 auto',
+    [breakpoints.desktop]: {
+      width: 1600,
+    },
+
+    [breakpoints.mobile]: {
+      width: '90%',
+      marginTop: '5rem',
+    },
+  }
 });
 
 export const colors = {
@@ -36,7 +60,7 @@ export const colors = {
   darkGrey: '#565656',
   blue: '#55baea',
   midBlue: '#2098D1',
-  darkBlue: '#242735',
+  darkBlue: '#12264e',
   white: '#f5f5f5',
   red: '#d44b4b',
   facebook: '#3b5998',

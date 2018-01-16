@@ -4,16 +4,19 @@ import { slide as Menu } from 'react-burger-menu';
 import Icon from 'react-icons-kit';
 import { ic_clear } from 'react-icons-kit/md/ic_clear';
 
-import { colors, fonts, isDesktop } from '../assets/styles/Common';
+import { colors, fonts, isDesktop, CategoryIcons } from '../assets/styles/Common';
 import Collapsible from './Collapsible';
 import Option from './Option';
+import QueryBuilder from './QueryBuilder';
+import Button from './Button';
 import CollapsibleItem from './CollapsibleItem';
+import Modal from './Modal';
 import Explorer from '../static/explorer';
 import { sendMessage } from '../actions/ApiAiActions';
 import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
-  menuTitle: {
+  categorySelector: {
     ...fonts.body,
     color: colors.grey,
     fontSize: '1.25rem',
@@ -48,7 +51,28 @@ const styles = StyleSheet.create({
     right: '1rem',
     top: '24px',
     color: colors.white,
-  }
+  },
+  queryPrompt: {
+    cursor: 'pointer',
+    colors: colors.white,
+    padding: '0.8rem',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  iconWrapper: {
+    marginRight: '0.5rem',
+  },
+  categoryIcon: {
+    height: '1.8rem',
+    marginRight: '1rem',
+  },
+  customize: {
+    width: '100%',
+    padding: '0.5rem 0 0.5rem 0',
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 const menuStyles = {
@@ -65,7 +89,7 @@ const menuStyles = {
   },
   bmMenuWrap: {
     left: 0,
-    background: 'none',
+    background: colors.darkBlue,
   },
   bmBurgerBars: {
     background: colors.white,
@@ -103,9 +127,15 @@ class ConversationExplorer extends Component {
     this.state = {
       isOpen: isDesktop(),
       isCategoryOpen: false,
-      selectedCategory: Explorer.champion.key,
+      selectedCategory: props.category || Explorer.champion.key,
+      modalOpen: false,
     };
   }
+
+  toggleModal = () => {
+    const { modalOpen } = this.state;
+    this.setState({ modalOpen: !modalOpen });
+  };
 
   handleClickSection = (message) => {
     this.setState({ isOpen: isDesktop() });
@@ -129,37 +159,70 @@ class ConversationExplorer extends Component {
     this.setState({ selectCategoryOpen: !this.state.selectCategoryOpen });
   }
 
-  onSectionOpen = (index) => {
-    const { openSectionIndex } = this.state;
-    const openIndex = openSectionIndex === index ? null : index;
-    this.setState({ openSectionIndex: openIndex, selectedTag: null });
+  selectSection = (section) => {
+    const { selectedSection } = this.state;
+    const openIndex = selectedSection === section ? null : section;
+    this.setState({ selectedSection: openIndex });
+  }
+
+  submitQuery = () => {
+    this.toggleModal();
+    this.setMenuOpen({ isOpen: false });
+  }
+
+  renderModal = () => {
+    const { modalOpen, selectedCategory, selectedSection } = this.state;
+    const sections = Explorer[selectedCategory].sections;
+    const section = sections[selectedSection];
+    return (
+      <div>
+        <Modal open={modalOpen} onClose={this.toggleModal}>
+          <QueryBuilder
+            close={this.toggleModal}
+            submit={this.submitQuery}
+            selectedCategory={selectedCategory}
+            selectedSection={(section || Object.values(sections)[0]).key}
+          />
+        </Modal>
+      </div>
+    );
   }
 
   renderCategoryOptions = () => {
     const { selectedCategory } = this.state;
-
     return Object.values(Explorer).map((category, index) => (
       <Option
         selected={category.key === selectedCategory}
         value={category.key}
-        title={category.title}
         index={index}
+        key={`option-${index}`}
         onClick={this.handleSelectCategory}
-      />
+      >
+        <img className={css(styles.categoryIcon)} src={CategoryIcons[category.key]} alt='logo' />
+        {category.title}
+      </Option>
     ));
   }
 
   renderCategorySections = () => {
-    const { openSectionIndex, selectedCategory } = this.state;
-
-    return Explorer[selectedCategory].sections.map(({ title, tags, queries }, sectionIndex) => (
+    const { selectedSection, selectedCategory } = this.state;
+    return Object.values(Explorer[selectedCategory].sections).map(({ key, title, queries, queryTemplate }, sectionIndex) => (
         <Collapsible
           key={`section-${sectionIndex}`}
+          dataKey={key}
           title={title}
           index={sectionIndex}
-          isOpen={sectionIndex === openSectionIndex }
-          onSectionOpen={this.onSectionOpen}
+          isOpen={key === selectedSection }
+          onSelect={this.selectSection}
+          onEdit={this.toggleModal}
         >
+          {
+            queryTemplate && (
+              <div className={css(styles.customize)}>
+                <Button onClick={this.toggleModal}>Customize</Button>
+              </div>
+            )
+          }
           {
             queries.map((query, queryIndex) => (
               <CollapsibleItem
@@ -175,7 +238,7 @@ class ConversationExplorer extends Component {
   };
 
   render() {
-    const { isOpen, selectCategoryOpen } = this.state;
+    const { isOpen, selectCategoryOpen, selectedCategory } = this.state;
     const desktop = isDesktop();
     const menuStyleOverrides = desktop || isOpen ? (
       { ...menuStyles, bmBurgerButton: { display: 'none' }
@@ -189,11 +252,14 @@ class ConversationExplorer extends Component {
         onStateChange={this.setMenuOpen}
         customCrossIcon={false}
         styles={menuStyleOverrides}
+        listenForClose={() => {}}
       >
-        <div onClick={this.toggleCategoryOpen} className={style(styles.menuTitle, 'hvr-fade')}>
+        <div onClick={this.toggleCategoryOpen} className={style(styles.categorySelector, 'hvr-fade')}>
+          <img className={css(styles.categoryIcon)} src={CategoryIcons[selectedCategory]} alt='logo' />
           Conversation Explorer
         </div>
         <div className={css(styles.menuContent)}>
+          {this.renderModal()}
           {selectCategoryOpen ? this.renderCategoryOptions() : this.renderCategorySections()}
         </div>
         {

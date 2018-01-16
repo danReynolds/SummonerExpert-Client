@@ -1,34 +1,52 @@
+import _ from 'lodash';
+
 const championJSON = require('./champions.json');
 
+export const CHAMPION_NAMES = Object.keys(championJSON.data);
 export const championQueries = [
-  {
-    id: 'Jayce',
-    query: 'How is Jayce doing?',
-  },
-  {
-    id: 'Akali',
-    query: "What is Akali's win rate in gold?"
-  },
-  {
-    id: 'Riven',
-    query: 'Top 3 counters for Riven.',
-  },
+  (() => {
+    const champion = _.sample(CHAMPION_NAMES);
+    return {
+      id: champion,
+      query: `How is ${champion} doing?`,
+    };
+  })(),
+  (() => {
+    const champion = _.sample(CHAMPION_NAMES);
+    return {
+      id: champion,
+      query: `Win rate for ${champion} in gold?`,
+    };
+  })(),
+  (() => {
+    const champion = _.sample(CHAMPION_NAMES);
+    return {
+      id: champion,
+      query: `Top 3 counters for ${champion}?`,
+    };
+  })(),
   {
     id: 'Bard',
     query: 'Who does Bard synergize with?',
   },
-  {
-    id: 'Caitlyn',
-    query: 'Highest win rate ability order for Caitlyn.',
-  },
+  (() => {
+    const champion = _.sample(CHAMPION_NAMES);
+    return {
+      id: champion,
+      query: `Highest win rate ability order for ${champion}?`,
+    };
+  })(),
   {
     id: "Cho'Gath",
     query: "How many kills does Cho'gath get Top.",
   },
-  {
-    id: 'Sona',
-    query: 'Does Sona get a lot of assists?',
-  },
+  (() => {
+    const champion = _.sample(CHAMPION_NAMES);
+    return {
+      id: champion,
+      query: `Does {champion} get a lot of assists?`,
+    };
+  })(),
   {
     id: 'Garen',
     id2: 'Darius',

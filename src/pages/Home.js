@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import SearchBar from '../components/SearchBar';
-import CommonStyles, { desktop, breakpoints } from '../assets/styles/Common';
+import CommonStyles, { desktop, breakpoints, CategoryIcons } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
 import Tab from '../components/Tab';
 import Items from '../static/items';
 import Champions from '../static/champions';
 import Summoners from '../static/summoners';
+import Explorer from '../static/explorer';
 
 const styles = StyleSheet.create({
   homePage: {
@@ -51,21 +52,24 @@ const styles = StyleSheet.create({
 
 const RECOMMENDATIONS = [
   {
-    title: 'champions',
+    category: Explorer.champion.key,
     items: Champions.championQueries,
     getItemImage: Champions.getChampionImage,
+    icon: CategoryIcons.champion,
   },
   {
-    title: 'summoners',
+    category: Explorer.summoner.key,
     items: Summoners.summonerQueries,
     getItemImage: Champions.getChampionImage,
+    icon: CategoryIcons.summoner,
   },
   {
-    title: 'items',
+    category: Explorer.item.key,
     items: Items.itemQueries,
     getItemImage: (image) => {
       return Items.getItemImage(image) || Champions.getChampionImage(image);
     },
+    icon: CategoryIcons.item,
   },
 ];
 
@@ -84,19 +88,20 @@ class Home extends Component {
 
   renderTabs = () => {
     const { selectedTab } = this.state;
-    const { items, getItemImage } = RECOMMENDATIONS[selectedTab];
+    const recommendation = RECOMMENDATIONS[selectedTab];
 
     return (
       <div className={css(styles.tabContainer)}>
         <div className={css(styles.tabHeader)}>
           {RECOMMENDATIONS.map((recommendation, index) => {
-            const { title } = recommendation;
+            const { title, icon } = recommendation;
             return (
               <Tab
                 key={`tab-${index}`}
                 index={index}
                 onClick={this.handleSelectTab}
                 title={title}
+                icon={icon}
                 selected={selectedTab === index}
               />
             );
@@ -105,8 +110,7 @@ class Home extends Component {
         <div className={css(styles.tabContent)}>
           <RecommendationList
             limit={5}
-            items={items}
-            getItemImage={getItemImage}
+            {...recommendation}
           />
         </div>
       </div>

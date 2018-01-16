@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import PropTypes from 'prop-types';
 
-import { colors } from '../assets/styles/Common';
+import { colors, breakpoints } from '../assets/styles/Common';
 
 const styles = StyleSheet.create({
   title: {
@@ -10,12 +10,24 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   selected: {
-    paddingBottom: '0.5rem',
-    borderBottom: '1px solid',
-    borderBottomColor: colors.blue,
+    color: colors.gold,
   },
   container: {
     marginRight: '1rem',
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  icon: {
+    height: '1.8rem',
+    marginRight: '1rem',
+
+    [breakpoints.mobile]: {
+      height: '1.25rem',
+      marginRight: '0.5rem',
+      fontSize: '0.75rem',
+    },
   },
 });
 
@@ -33,15 +45,15 @@ class Tab extends Component {
   }
 
   render() {
-    const { selected, title } = this.props;
+    const { selected, title, icon } = this.props;
 
     return (
       <div className={css(styles.container)}>
-        <div
-          onClick={this.handleClick}
-          className={css(styles.title, selected ? styles.selected : null)}
-        >
-          {title}
+        <div onClick={this.handleClick}>
+          <div className={css(styles.header)}>
+            <img className={css(styles.icon)} src={icon} alt={title} />
+            <div className={css(styles.title, selected ? styles.selected : null)}>{title}</div>
+          </div>
         </div>
       </div>
     )

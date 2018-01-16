@@ -19,12 +19,15 @@ const styles = StyleSheet.create({
     color: colors.gold,
     cursor: 'pointer',
   },
+  iconWrapper: {
+    marginLeft: 'auto',
+  },
 });
 
 class Collapsible extends Component {
   toggleOpen = () => {
-    const { onSectionOpen, index } = this.props;
-    onSectionOpen(index);
+    const { onSelect, dataKey } = this.props;
+    onSelect(dataKey);
   }
 
   renderTitle = () => {

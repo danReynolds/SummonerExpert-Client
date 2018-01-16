@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import qs from 'query-string';
 
 import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
 import CommonStyles, { colors } from '../assets/styles/Common';
 import BannerImage from '../assets/images/banner.jpg';
+import Explorer from '../static/explorer';
 
 const styles = StyleSheet.create({
   conversationPage: {
@@ -47,9 +49,12 @@ class Conversation extends Component {
   }
 
   render() {
+    const { location: { search } } = this.props;
+    const category = qs.parse(search).category || Explorer.champion.key;
+
     return (
       <div className={css(styles.conversationPage)}>
-        <ConversationExplorer />
+        <ConversationExplorer category={category} />
         <div className={css(styles.conversationContent)}>
           <div className={css(styles.container, CommonStyles.container)}>
             <MessageListView messageListRef={list => this.messageListView = list} />
