@@ -83,7 +83,18 @@ const styles = StyleSheet.create({
     paddingRight: '1rem',
     color: colors.white,
     marginLeft: 'auto',
-  }
+  },
+  beta: {
+    color: colors.white,
+    padding: '0 0.5rem',
+    height: '2rem',
+    lineHeight: '2',
+    borderRadius: 2,
+    background: colors.blue,
+    position: 'absolute',
+    top: 0,
+    right: '-2rem',
+  },
 });
 
 class Navbar extends Component {
@@ -123,6 +134,7 @@ class Navbar extends Component {
         }
         <a className={css(styles.logoContainer)} href="/">
           <img className={css(styles.logo)} src={LogoImage} alt='logo' />
+          <div className={css(styles.beta)}>Beta</div>
         </a>
         {
           isDesktop() && (
