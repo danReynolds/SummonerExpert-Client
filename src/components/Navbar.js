@@ -145,9 +145,9 @@ class Navbar extends Component {
         {
           isDesktop() && (
             <div className={css(styles.navbarItems)}>
-              <a className={style(styles.link, 'hvr-underline-reveal')} href="/">Home</a>
-              <a className={style(styles.link, 'hvr-underline-reveal')} href="/conversation">Chat</a>
-              <a className={style(styles.link, 'hvr-underline-reveal')} href="/about">About</a>
+              <a className={css(styles.link)} href="/">Home</a>
+              <a className={css(styles.link)} href="/conversation">Chat</a>
+              <a className={css(styles.link)} href="/about">About</a>
             </div>
           )
         }
