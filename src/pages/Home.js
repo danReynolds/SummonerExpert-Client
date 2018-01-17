@@ -52,18 +52,21 @@ const styles = StyleSheet.create({
 
 const RECOMMENDATIONS = [
   {
+    title: 'Champions',
     category: Explorer.champion.key,
     items: Champions.championQueries,
     getItemImage: Champions.getChampionImage,
     icon: CategoryIcons.champion,
   },
   {
+    title: 'Summoners',
     category: Explorer.summoner.key,
     items: Summoners.summonerQueries,
     getItemImage: Champions.getChampionImage,
     icon: CategoryIcons.summoner,
   },
   {
+    title: 'Items',
     category: Explorer.item.key,
     items: Items.itemQueries,
     getItemImage: (image) => {

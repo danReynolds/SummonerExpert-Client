@@ -457,7 +457,7 @@ export default {
     }
   },
   summoner: {
-    title: 'Summoner',
+    title: 'Summoner (NA Only)',
     key: 'summoner',
     sections: {
       rank: {

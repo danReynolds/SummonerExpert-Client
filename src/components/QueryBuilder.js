@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   queryTemplate: {
     display: 'flex',
     alignItems: 'flex-start',
-    marginTop: '10vh',
+    marginTop: '8rem',
     color: colors.white,
     fontSize: '2rem',
     fontFamily: 'Roboto Mono, monospace',

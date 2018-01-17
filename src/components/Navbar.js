@@ -94,6 +94,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: '-2rem',
+
+    [breakpoints.mobile]: {
+      right: '-2.5rem',
+      height: '1.5rem',
+      lineHeight: '1.5',
+    }
   },
 });
 
