@@ -6,8 +6,7 @@ import { colors } from '../assets/styles/Common';
 const styles = {
   modal: {
     height: '100%',
-    maxWidth: '94vw',
-    width: '94vw',
+    minWidth: '100%',
     opacity: 0.95,
     background: colors.nightBlue,
     padding: '3vh 3vw',

@@ -8,7 +8,7 @@ export const summonerQueries = [
     query: 'How is mvsh doing on Draven?',
   },
   {
-    id: 'JarvanIV',
+    id: 'Jarvan IV',
     query: 'KDA for CLG Reign0ver playing Jarvan',
   },
   {

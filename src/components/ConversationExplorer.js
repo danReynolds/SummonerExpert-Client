@@ -167,7 +167,9 @@ class ConversationExplorer extends Component {
 
   submitQuery = () => {
     this.toggleModal();
-    this.setMenuOpen({ isOpen: false });
+    if (!isDesktop()) {
+      this.setMenuOpen({ isOpen: false });
+    }
   }
 
   renderModal = () => {
