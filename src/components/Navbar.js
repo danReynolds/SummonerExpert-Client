@@ -7,11 +7,11 @@ import { google } from 'react-icons-kit/fa/google';
 
 import { colors, fonts, isDesktop, breakpoints } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
-import { style } from '../lib/utils';
 
 const styles = StyleSheet.create({
   navbar: {
     alignItems: 'center',
+    zIndex: 1,
     position: 'fixed',
     width: '100%',
     height: '5rem',
