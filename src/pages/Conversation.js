@@ -5,7 +5,7 @@ import qs from 'query-string';
 import MessageListView from '../components/MessageListView';
 import ConversationInput from '../components/ConversationInput';
 import ConversationExplorer from '../components/ConversationExplorer';
-import CommonStyles, { colors } from '../assets/styles/Common';
+import CommonStyles, { colors, breakpoints } from '../assets/styles/Common';
 import BannerImage from '../assets/images/banner.jpg';
 import Explorer from '../static/explorer';
 
@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    margin: '7rem 350px 0 350px',
+
+    [breakpoints.desktop]: {
+      width: 'calc(100% - 700px)',
+    },
   },
   conversationInput: {
     marginTop: 'auto',
@@ -56,7 +61,7 @@ class Conversation extends Component {
       <div className={css(styles.conversationPage)}>
         <ConversationExplorer category={category} />
         <div className={css(styles.conversationContent)}>
-          <div className={css(styles.container, CommonStyles.container)}>
+          <div className={css(CommonStyles.container, styles.container)}>
             <MessageListView messageListRef={list => this.messageListView = list} />
             <div className={css(styles.conversationInput)}>
               <ConversationInput />
