@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import ordinal from 'ordinal';
 import _ from 'lodash';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import { colors } from '../assets/styles/Common';
 
 export const INPUT_TYPES = {
@@ -10,7 +13,10 @@ export const INPUT_TYPES = {
   NUMERIC: 'NUMERIC',
   TEXT: 'TEXT',
   RAW: 'RAW',
+  TIME: 'TIME',
 };
+
+const TIME_FORMAT = 'MM/DD/YYYY HH:mm:ss';
 
 const MINIMUM_INPUT_LENGTH = 2;
 
@@ -58,10 +64,28 @@ class Input extends Component {
     onChange(onChangeFormat(this.formatValue(value)));
   }
 
+  handleDateChange = (e) => {
+    const { onChange, onChangeFormat } = this.props;
+    onChange(onChangeFormat(this.formatMomentToTime(e)));
+  }
+
+  formatMomentToTime = (momentObject) =>
+    momentObject ? momentObject.format(TIME_FORMAT) : moment().format(TIME_FORMAT);
+
+  formatTimeToMoment = (time) => {
+    return time ? moment(time, TIME_FORMAT) : moment(TIME_FORMAT);
+  }
+
   formatValue = (value) => {
     const { type } = this.props;
     const { active } = this.state;
-    return !active && type === INPUT_TYPES.ORDINAL && value.length ? ordinal(parseInt(value, 10)) : value;
+    if (!active && type === INPUT_TYPES.ORDINAL && value.length) {
+      return ordinal(parseInt(value, 10));
+    } else if (type === INPUT_TYPES.TIME) {
+      return value || this.formatMomentToTime();
+    } else {
+      return value;
+    }
   }
 
   toggleActive = () => {
@@ -85,27 +109,41 @@ class Input extends Component {
       inputLength = placeholder.length;
     }
 
-    if (type === INPUT_TYPES.RAW) {
-      return (
-        <div
-          className={css(styles(false, inputLength).input, styles(false, inputLength).raw)}
-        >
-          {value}
-        </div>
-      );
+    switch (type) {
+      case INPUT_TYPES.RAW:
+        return (
+          <div
+            className={css(styles(false, inputLength).input, styles(false, inputLength).raw)}
+          >
+            {value}
+          </div>
+        );
+      case INPUT_TYPES.TIME:
+        return (
+          <DatePicker
+            showTimeSelect
+            timeFormat='HH:mm'
+            timeIntervals={30}
+            dateFormat={TIME_FORMAT}
+            calendarClassName={css(styles().time)}
+            onChange={this.handleDateChange}
+            className={css(styles(validation && !formattedLength, inputLength).input)}
+            selected={this.formatTimeToMoment(formattedValue)}
+          />
+        )
+      default:
+        return (
+          <input
+            type={active && type !== INPUT_TYPES.TEXT ? 'number' : undefined}
+            onFocus={this.toggleActive}
+            onBlur={this.toggleActive}
+            onChange={this.handleChange}
+            className={css(styles(validation && !formattedLength, inputLength).input)}
+            placeholder={placeholder}
+            value={formattedValue}
+          />
+        );
     }
-
-    return (
-      <input
-        type={active && type !== INPUT_TYPES.TEXT ? 'number' : undefined}
-        onFocus={this.toggleActive}
-        onBlur={this.toggleActive}
-        onChange={this.handleChange}
-        className={css(styles(validation && !formattedLength, inputLength).input)}
-        placeholder={placeholder}
-        value={formattedValue}
-      />
-    );
   }
 }
 

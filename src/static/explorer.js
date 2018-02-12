@@ -169,11 +169,17 @@ export const Entities = {
     ],
     defaultValue: 'win rate',
   },
-  recency: {
-    key: 'recency',
-    title: 'Recency',
-    defaultValue: 'recently',
-    type: INPUT_TYPES.RAW,
+  startTime: {
+    key: 'startTime',
+    title: 'Start time',
+    type: INPUT_TYPES.TIME,
+    template: 'from ',
+  },
+  endTime: {
+    key: 'endTime',
+    title: 'End time',
+    type: INPUT_TYPES.TIME,
+    template: 'to ',
   },
 };
 
@@ -477,16 +483,17 @@ export default {
         title: 'Champion Ranking',
         entities: [
           Entities.summoner.key, Entities.list_order.key, Entities.list_size.key, Entities.list_position.key,
-          Entities.summoner_role.key, Entities.summoner_metric_and_details.key, Entities.recency.key,
+          Entities.summoner_role.key, Entities.summoner_metric_and_details.key, Entities.startTime.key,
+          Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return '{list_size} champions with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+            return '{list_size} champions with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {startTime} {endTime}';
           } else {
-            return '{list_size} champion with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {recency}';
+            return '{list_size} champion with the {list_position} {list_order} {summoner_metric_and_details} played by {summoner} {summoner_role} {elo} {startTime} {endTime}';
           }
         },
         queries: [
@@ -499,10 +506,11 @@ export default {
         key: 'championPerformance',
         title: 'Champion Performance',
         entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.recency.key,
+          Entities.summoner.key, Entities.champion.key, Entities.startTime.key,
+          Entities.endTime.key,
         ],
         requiredEntities: [Entities.summoner.key, Entities.champion.key],
-        queryTemplate: () => 'How is {summoner} playing {champion} {summoner_role} {elo} {recency}',
+        queryTemplate: () => 'How is {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: 'Does Doublelift play Xayah?' },
           { text: 'LL Stylish playing Zed' },
@@ -514,12 +522,12 @@ export default {
         key: 'championStats',
         entities: [
           Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
-          Entities.summoner_role.key, Entities.recency.key
+          Entities.summoner_role.key, Entities.startTime.key, Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
         ],
-        queryTemplate: () => '{summoner_metric_and_details} for {summoner} playing {champion} {summoner_role} {elo} {recency}',
+        queryTemplate: () => '{summoner_metric_and_details} for {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: 'How many kills does Rikara get playing Ezreal?' },
           { text: 'How many wards does Pants are Dragon place as Xin Zhao jg?' },
@@ -529,13 +537,13 @@ export default {
       championBuild: {
         entities: [
           Entities.summoner.key, Entities.champion.key, Entities.summoner_role.key, Entities.list_order.key,
-          Entities.summoner_metric_and_details.key, Entities.recency.key,
+          Entities.summoner_metric_and_details.key, Entities.startTime.key, Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
           Entities.list_order.key,
         ],
-        queryTemplate: () => '{list_order} {summoner_metric_and_details} build for {summoner} playing {champion} {summoner_role} {elo} {recency}',
+        queryTemplate: () => '{list_order} {summoner_metric_and_details} build for {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
         key: 'championBuild',
         title: 'Champion Builds',
         queries: [
@@ -550,16 +558,16 @@ export default {
         entities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_size.key, Entities.list_position.key,
           Entities.list_order.key, Entities.summoner_role.key, Entities.summoner_metric_and_details.key,
-          Entities.recency.key,
+          Entities.startTime.key, Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return 'Which {list_size} champions have the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {recency}';
+            return 'Which {list_size} champions have the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           } else {
-            return 'Which {list_size} champion has the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {recency}';
+            return 'Which {list_size} champion has the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           }
         },
         queries: [
@@ -572,14 +580,14 @@ export default {
         key: 'championMatchups',
         title: 'Champion Matchups',
         entities: [
-          Entities.champion1.key, Entities.champion2.key, Entities.summoner.key,
-          Entities.summoner_role.key, Entities.recency.key, Entities.summoner_metric_and_details.key,
+          Entities.champion1.key, Entities.champion2.key, Entities.summoner.key, Entities.endTime.key,
+          Entities.summoner_role.key, Entities.startTime.key, Entities.summoner_metric_and_details.key,
         ],
         requiredEntities: [
           Entities.champion1.key, Entities.champion2.key, Entities.summoner.key,
           Entities.summoner_metric_and_details.key,
         ],
-        queryTemplate: () => '{summoner_metric_and_details} comparison for {summoner} playing {champion1} against {champion2} {summoner_role} {elo} {recency}',
+        queryTemplate: () => '{summoner_metric_and_details} comparison for {summoner} playing {champion1} against {champion2} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: "How does Pants are Dragon do playing Xin Xhao against Kha'Zix jg?" },
           { text: 'How many times has Dyrus played Rumble Top against Jayce?' },
@@ -590,8 +598,8 @@ export default {
         key: 'teammates',
         entities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key, Entities.list_size.key,
-          Entities.summoner_metric_and_details.key, Entities.list_position.key, Entities.recency.key,
-          Entities.summoner_role.key,
+          Entities.summoner_metric_and_details.key, Entities.list_position.key, Entities.startTime.key,
+          Entities.summoner_role.key, Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
@@ -599,9 +607,9 @@ export default {
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return '{list_position} {list_size} teammates who help {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_position} {list_size} teammates who help {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           } else {
-            return '{list_position} {list_size} teammate who helps {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_position} {list_size} teammate who helps {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           }
         },
         title: 'Teammates',
@@ -617,7 +625,8 @@ export default {
         entities: [
           Entities.summoner.key, Entities.list_order.key, Entities.champion.key,
           Entities.summoner_metric_and_details.key, Entities.list_size.key,
-          Entities.list_position.key, Entities.recency.key, Entities.summoner_role.key,
+          Entities.list_position.key, Entities.startTime.key, Entities.summoner_role.key,
+          Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
@@ -625,9 +634,9 @@ export default {
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
-            return '{list_size} bans that give {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_size} bans that give {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           } else {
-            return '{list_size} ban that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}';
+            return '{list_size} ban that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
           }
         },
         queries: [
@@ -642,13 +651,13 @@ export default {
         entities: [
           Entities.summoner.key, Entities.list_order.key, Entities.champion.key,
           Entities.summoner_metric_and_details.key, Entities.list_position.key,
-          Entities.recency.key, Entities.summoner_role.key,
+          Entities.startTime.key, Entities.summoner_role.key, Entities.endTime.key,
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
           Entities.summoner_metric_and_details.key,
         ],
-        queryTemplate: () => 'spell combination that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {recency}',
+        queryTemplate: () => 'spell combination that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
           { text: 'Which spells does Pobelter get the best KDA on playing Azir Mid?' },
