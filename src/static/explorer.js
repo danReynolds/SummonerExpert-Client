@@ -76,6 +76,12 @@ export const Entities = {
     title: 'Champion',
     values: CHAMPION_NAMES,
   },
+  summoner_champion: {
+    key: 'summoner_champion',
+    title: 'Champion',
+    values: CHAMPION_NAMES,
+    template: 'playing '
+  },
   ability: {
     key: 'ability',
     title: 'Ability',
@@ -481,8 +487,135 @@ export default {
           { text: 'What rank is Pobelter?' },
         ],
       },
-      champions: {
-        key: 'champions',
+      stats: {
+        title: 'Summoner Stats',
+        key: 'stats',
+        entities: [
+          Entities.summoner.key, Entities.summoner_champion.key, Entities.summoner_metric_and_details.key,
+          Entities.summoner_role.key, Entities.startTime.key, Entities.endTime.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: () => '{summoner_metric_and_details} for {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}',
+        queries: [
+          { text: 'How many kills does Rikara get?' },
+          { text: 'How many wards does Pants are Dragon place as Xin Zhao jg?' },
+          { text: 'Gold earned by CLG Reign0ver playing Jarvan' }
+        ]
+      },
+      counters: {
+        key: 'counters',
+        title: 'Counters',
+        entities: [
+          Entities.summoner.key, Entities.summoner_champion.key, Entities.list_size.key, Entities.list_position.key,
+          Entities.list_order.key, Entities.summoner_role.key, Entities.summoner_metric_and_details.key,
+          Entities.startTime.key, Entities.endTime.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: ({ list_size }) => {
+          if (parseInt(list_size, 10) > 1) {
+            return 'Which {list_size} champions have the {list_position} {list_order} {summoner_metric_and_details} against {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          } else {
+            return 'Which {list_size} champion has the {list_position} {list_order} {summoner_metric_and_details} against {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          }
+        },
+        queries: [
+          { text: 'Who counters TheOddOne playing Ezreal?' },
+          { text: 'Who has the highest KDA against Dyrus Top?' },
+          { text: "Who gets the most assists against pokimane's Lulu?" },
+        ]
+      },
+      matchups: {
+        key: 'matchups',
+        title: 'Matchups',
+        entities: [
+          Entities.summoner_champion.key, Entities.champion2.key, Entities.summoner.key, Entities.endTime.key,
+          Entities.summoner_role.key, Entities.startTime.key, Entities.summoner_metric_and_details.key,
+        ],
+        requiredEntities: [
+          Entities.champion2.key, Entities.summoner.key,
+          Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: () => '{summoner_metric_and_details} comparison for {summoner} {summoner_champion} against {champion2} {summoner_role} {elo} {startTime} {endTime}',
+        queries: [
+          { text: "How does Pants are Dragon do playing against Kha'Zix jg?" },
+          { text: 'How many times has Dyrus played Rumble Top against Jayce?' },
+          { text: "What is pokimane's KDA playing Lulu against Bard?" },
+        ],
+      },
+      teammates: {
+        key: 'teammates',
+        entities: [
+          Entities.summoner.key, Entities.summoner_champion.key, Entities.list_order.key, Entities.list_size.key,
+          Entities.summoner_metric_and_details.key, Entities.list_position.key, Entities.startTime.key,
+          Entities.summoner_role.key, Entities.endTime.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.list_order.key,
+          Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: ({ list_size }) => {
+          if (parseInt(list_size, 10) > 1) {
+            return '{list_position} {list_size} teammates who help {summoner} get the {list_order} {summoner_metric_and_details} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          } else {
+            return '{list_position} {list_size} teammate who helps {summoner} get the {list_order} {summoner_metric_and_details} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          }
+        },
+        title: 'Teammates',
+        queries: [
+          { text: 'Who helps Pants are Dragon win the most games as Warwick?' },
+          { text: 'Which teammate does Dyrus get the best KDA with playing playing ADC?' },
+          { text: '5 people pokimane plays with the most as Lulu' },
+        ],
+      },
+      bans: {
+        key: 'bans',
+        title: 'Bans',
+        entities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_champion.key,
+          Entities.summoner_metric_and_details.key, Entities.list_size.key,
+          Entities.list_position.key, Entities.startTime.key, Entities.summoner_role.key,
+          Entities.endTime.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: ({ list_size }) => {
+          if (parseInt(list_size, 10) > 1) {
+            return '{list_size} bans that give {summoner} the {list_position} {list_order} {summoner_metric_and_details} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          } else {
+            return '{list_size} ban that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}';
+          }
+        },
+        queries: [
+          { text: 'Who does Dyrus ban to get the best KDA playing Top?' },
+          { text: "Who does Saaantorin ban most often playing Kha'Zix" },
+          { text: 'Top 3 bans by Rikara playing Lucian ADC' },
+        ]
+      },
+      spells: {
+        key: 'spells',
+        title: 'Spells',
+        entities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_champion.key,
+          Entities.summoner_metric_and_details.key, Entities.list_position.key,
+          Entities.startTime.key, Entities.summoner_role.key, Entities.endTime.key,
+        ],
+        requiredEntities: [
+          Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
+        ],
+        queryTemplate: () => 'spell combination that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}',
+        queries: [
+          { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
+          { text: 'Which spells does Pobelter get the best KDA on playing Azir Mid?' },
+          { text: 'Spells fulano takes the most towers with playing Gangplank' },
+        ],
+      },
+      championRanking: {
+        key: 'championRanking',
         title: 'Champion Ranking',
         entities: [
           Entities.summoner.key, Entities.list_order.key, Entities.list_size.key, Entities.list_position.key,
@@ -509,44 +642,27 @@ export default {
         key: 'championPerformance',
         title: 'Champion Performance',
         entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.startTime.key,
+          Entities.summoner.key, Entities.summoner_champion.key, Entities.startTime.key,
           Entities.endTime.key,
         ],
         requiredEntities: [Entities.summoner.key, Entities.champion.key],
-        queryTemplate: () => 'How is {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
+        queryTemplate: () => 'How is {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: 'Does Doublelift play Xayah?' },
           { text: 'LL Stylish playing Zed' },
           { text: 'How is mvsh doing on Draven?' },
         ]
       },
-      championStats: {
-        title: 'Champion Stats',
-        key: 'championStats',
-        entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
-          Entities.summoner_role.key, Entities.startTime.key, Entities.endTime.key,
-        ],
-        requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: () => '{summoner_metric_and_details} for {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
-        queries: [
-          { text: 'How many kills does Rikara get playing Ezreal?' },
-          { text: 'How many wards does Pants are Dragon place as Xin Zhao jg?' },
-          { text: 'Gold earned by CLG Reign0ver playing Jarvan' }
-        ]
-      },
       championBuild: {
         entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.summoner_role.key, Entities.list_order.key,
+          Entities.summoner.key, Entities.summoner_champion.key, Entities.summoner_role.key, Entities.list_order.key,
           Entities.summoner_metric_and_details.key, Entities.startTime.key, Entities.endTime.key,
         ],
         requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.summoner_metric_and_details.key,
+          Entities.summoner.key, Entities.summoner_metric_and_details.key,
           Entities.list_order.key,
         ],
-        queryTemplate: () => '{list_order} {summoner_metric_and_details} build for {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
+        queryTemplate: () => '{list_order} {summoner_metric_and_details} build for {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}',
         key: 'championBuild',
         title: 'Champion Builds',
         queries: [
@@ -555,118 +671,6 @@ export default {
           { text: 'What does Annie Bot build on Annie Bot?' },
         ]
       },
-      championCounters: {
-        key: 'championCounters',
-        title: 'Champion Counters',
-        entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_size.key, Entities.list_position.key,
-          Entities.list_order.key, Entities.summoner_role.key, Entities.summoner_metric_and_details.key,
-          Entities.startTime.key, Entities.endTime.key,
-        ],
-        requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: ({ list_size }) => {
-          if (parseInt(list_size, 10) > 1) {
-            return 'Which {list_size} champions have the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          } else {
-            return 'Which {list_size} champion has the {list_position} {list_order} {summoner_metric_and_details} against {summoner} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          }
-        },
-        queries: [
-          { text: 'Who counters TheOddOne playing Ezreal?' },
-          { text: 'Who has the highest KDA against Dyrus as Camille?' },
-          { text: "Who gets the most assists against pokimane's Lulu?" },
-        ]
-      },
-      championMatchups: {
-        key: 'championMatchups',
-        title: 'Champion Matchups',
-        entities: [
-          Entities.champion1.key, Entities.champion2.key, Entities.summoner.key, Entities.endTime.key,
-          Entities.summoner_role.key, Entities.startTime.key, Entities.summoner_metric_and_details.key,
-        ],
-        requiredEntities: [
-          Entities.champion1.key, Entities.champion2.key, Entities.summoner.key,
-          Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: () => '{summoner_metric_and_details} comparison for {summoner} playing {champion1} against {champion2} {summoner_role} {elo} {startTime} {endTime}',
-        queries: [
-          { text: "How does Pants are Dragon do playing Xin Xhao against Kha'Zix jg?" },
-          { text: 'How many times has Dyrus played Rumble Top against Jayce?' },
-          { text: "What is pokimane's KDA playing Lulu against Bard?" },
-        ],
-      },
-      teammates: {
-        key: 'teammates',
-        entities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_order.key, Entities.list_size.key,
-          Entities.summoner_metric_and_details.key, Entities.list_position.key, Entities.startTime.key,
-          Entities.summoner_role.key, Entities.endTime.key,
-        ],
-        requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
-          Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: ({ list_size }) => {
-          if (parseInt(list_size, 10) > 1) {
-            return '{list_position} {list_size} teammates who help {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          } else {
-            return '{list_position} {list_size} teammate who helps {summoner} get the {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          }
-        },
-        title: 'Teammates',
-        queries: [
-          { text: 'Who helps Pants are Dragon win the most games as Warwick?' },
-          { text: 'Which teammate does Dyrus get the best KDA with playing Rumble Top?' },
-          { text: '5 people pokimane plays with the most as Lulu' },
-        ],
-      },
-      bans: {
-        key: 'bans',
-        title: 'Bans',
-        entities: [
-          Entities.summoner.key, Entities.list_order.key, Entities.champion.key,
-          Entities.summoner_metric_and_details.key, Entities.list_size.key,
-          Entities.list_position.key, Entities.startTime.key, Entities.summoner_role.key,
-          Entities.endTime.key,
-        ],
-        requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
-          Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: ({ list_size }) => {
-          if (parseInt(list_size, 10) > 1) {
-            return '{list_size} bans that give {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          } else {
-            return '{list_size} ban that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}';
-          }
-        },
-        queries: [
-          { text: 'Who does Dyrus ban to get the best KDA playing Rumble Top?' },
-          { text: "Who does Saaantorin ban most often playing Kha'Zix" },
-          { text: 'Top 3 bans by Rikara playing Lucian ADC' },
-        ]
-      },
-      spells: {
-        key: 'spells',
-        title: 'Spells',
-        entities: [
-          Entities.summoner.key, Entities.list_order.key, Entities.champion.key,
-          Entities.summoner_metric_and_details.key, Entities.list_position.key,
-          Entities.startTime.key, Entities.summoner_role.key, Entities.endTime.key,
-        ],
-        requiredEntities: [
-          Entities.summoner.key, Entities.champion.key, Entities.list_order.key,
-          Entities.summoner_metric_and_details.key,
-        ],
-        queryTemplate: () => 'spell combination that gives {summoner} the {list_position} {list_order} {summoner_metric_and_details} playing {champion} {summoner_role} {elo} {startTime} {endTime}',
-        queries: [
-          { text: 'Which summoner spells does Rikara take most often on Lucian ADC?' },
-          { text: 'Which spells does Pobelter get the best KDA on playing Azir Mid?' },
-          { text: 'Spells fulano takes the most towers with playing Gangplank' },
-        ],
-      }
     }
   },
 };
