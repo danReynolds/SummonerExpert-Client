@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 
 import { INPUT_TYPES } from '../components/Input';
 import { CHAMPION_NAMES } from './champions';
@@ -174,12 +175,14 @@ export const Entities = {
     title: 'Start time',
     type: INPUT_TYPES.TIME,
     template: 'from ',
+    defaultValue: moment().format('MMMM Do YYYY H:mm:ss'),
   },
   endTime: {
     key: 'endTime',
     title: 'End time',
     type: INPUT_TYPES.TIME,
     template: 'to ',
+    defaultValue: moment().format('MMMM Do YYYY H:mm:ss'),
   },
 };
 

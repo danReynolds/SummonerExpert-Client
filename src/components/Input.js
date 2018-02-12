@@ -16,7 +16,7 @@ export const INPUT_TYPES = {
   TIME: 'TIME',
 };
 
-const TIME_FORMAT = 'MM/DD/YYYY HH:mm:ss';
+const TIME_FORMAT = 'MMMM Do YYYY H:mm:ss';
 
 const MINIMUM_INPUT_LENGTH = 2;
 
@@ -66,11 +66,8 @@ class Input extends Component {
 
   handleDateChange = (e) => {
     const { onChange, onChangeFormat } = this.props;
-    onChange(onChangeFormat(this.formatMomentToTime(e)));
+    onChange(onChangeFormat(e.format(TIME_FORMAT)));
   }
-
-  formatMomentToTime = (momentObject) =>
-    momentObject ? momentObject.format(TIME_FORMAT) : moment().format(TIME_FORMAT);
 
   formatTimeToMoment = (time) => {
     return time ? moment(time, TIME_FORMAT) : moment(TIME_FORMAT);
@@ -81,8 +78,6 @@ class Input extends Component {
     const { active } = this.state;
     if (!active && type === INPUT_TYPES.ORDINAL && value.length) {
       return ordinal(parseInt(value, 10));
-    } else if (type === INPUT_TYPES.TIME) {
-      return value || this.formatMomentToTime();
     } else {
       return value;
     }
