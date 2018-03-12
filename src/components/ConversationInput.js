@@ -42,17 +42,12 @@ const styles = StyleSheet.create({
 });
 
 class ConversationInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: '' }
-  }
-
   clearText = () => {
-    this.setState({ text: '' });
+    this.props.onChange('');
   }
 
   handleChange = (e) => {
-    this.setState({ text: e.target.value });
+    this.props.onChange(e.target.value);
   }
 
   handleSubmit = (e) => {
@@ -61,7 +56,7 @@ class ConversationInput extends Component {
   }
 
   submitMessage = () => {
-    const { text } = this.state;
+    const { text } = this.props;
     if (text) {
       this.clearText();
       sendMessage(text);
@@ -69,11 +64,12 @@ class ConversationInput extends Component {
   }
 
   render() {
-    const { text } = this.state;
+    const { text } = this.props;
 
     return (
       <form className={css(styles.conversationForm)} onSubmit={this.handleSubmit}>
         <input
+          ref={input => input && input.focus()}
           autoFocus={isDesktop()}
           placeholder={'Type a message.'}
           className={css(styles.input)}

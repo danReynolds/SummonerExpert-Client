@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React , { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import { observer } from 'mobx-react'
@@ -7,7 +8,14 @@ import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { MESSAGE_TYPES } from '../stores/MessageStore';
 import LogoImage from '../assets/images/summoner-expert.svg';
 
-const styles = StyleSheet.create({
+const loadingMessages = [
+  '...Loading',
+  '...Thinking',
+  '...Hmm',
+  '...Give me a second',
+];
+
+const styles = (messageType) => StyleSheet.create({
   messageContainer: {
     animationName: fadeInLeftBig,
     animationDuration: '0.3s',
@@ -27,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: '2px',
     position: 'relative',
     wordWrap: 'break-word',
+    cursor: messageType === MESSAGE_TYPES.user ? 'pointer' : 'initial',
 
     [breakpoints.mobile]: {
       maxWidth: '100%',
@@ -95,33 +104,43 @@ class MessageView extends Component {
     this.message.scrollIntoView();
   }
 
+  handleClick = () => {
+    const { onMessageChange, message: { text, type } } = this.props;
+    if (type === MESSAGE_TYPES.user){
+      onMessageChange(text);
+    }
+  }
+
   render() {
     const { message: { text, type }, avatar } = this.props;
     let messageStyle, messageContainerStyle, messageAvatar;
+    debugger
+    const currentStyles = styles(type);
 
     if (type === MESSAGE_TYPES.user) {
-      messageContainerStyle = styles.userMessageContainer;
-      messageStyle = styles.userMessage;
+      messageContainerStyle = currentStyles.userMessageContainer;
+      messageStyle = currentStyles.userMessage;
       messageAvatar = StyleSheet.create({
         avatar: {
           backgroundImage: `url(${avatar})`
         }
       })
     } else {
-      messageStyle = styles.botMessage;
+      messageStyle = currentStyles.botMessage;
       messageAvatar = StyleSheet.create({
         avatar: { backgroundImage: `url(${LogoImage})` }
       });
     }
 
     return (
-      <div className={css(styles.messageContainer, messageContainerStyle)}>
-        <div className={css(styles.image, messageAvatar.avatar)} />
+      <div className={css(currentStyles.messageContainer, messageContainerStyle)}>
+        <div className={css(currentStyles.image, messageAvatar.avatar)} />
         <div
+          onClick={this.handleClick}
           ref={(message) => this.message = message }
-          className={css(styles.message, messageStyle)}
+          className={css(currentStyles.message, messageStyle)}
         >
-          {text || 'Loading...'}
+          {text || _.sample(loadingMessages)}
         </div>
       </div>
 

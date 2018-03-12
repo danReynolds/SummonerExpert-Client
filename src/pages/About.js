@@ -33,17 +33,11 @@ const About = () => (
     <div className={css(CommonStyles.container, styles.container)}>
       <div className={css(styles.column)}>
         <div className={css(styles.header)}>Summoner Expert</div>
-        <div className={css(styles.body)}>
-          Summoner Expert is a conversational assistant for League of Legends. Players
-          can use Summoner Expert to look up stats for champions, items, and other players.
-        </div>
-      </div>
-      <div className={css(styles.column)}>
-        <div className={css(styles.header)}>What it can do</div>
         <div className={css(styles.body)}>{
-          "It has information on all the champions in the current patch across different elos and roles and \
-          stores every match played in NA for in depth summoner information. You can go into chat and use \
-          the conversation explorer to delve into the available commands."
+          "Summoner Expert is a conversational assistant for League of Legends. It has information on all \
+          the champions in the current patch across different elos and roles and stores every match played \
+          in NA for in depth summoner information. You can go into chat and use \
+          the conversation explorer to discover all the available commands."
         }</div>
       </div>
       <div className={css(styles.column)}>
@@ -52,6 +46,20 @@ const About = () => (
           "There are a number of great LoL sites that also have the same information on champions and summoners. \
           The goal of SE is to make getting the information you need fast and intuitive. If you want to know who counters \
           a particular champ the fastest way is to just ask and that's where SE comes in."
+        }</div>
+      </div>
+      <div className={css(styles.column)}>
+        <div className={css(styles.header)}>Is it accurate?</div>
+        <div className={css(styles.body)}>{
+          "For champion information, SE currently uses the great API provided by Champion.gg. Summoner information \
+          comes from our own system which is updated every hour and tracks all matches from the start of the current season."
+        }</div>
+      </div>
+      <div className={css(styles.column)}>
+        <div className={css(styles.header)}>Why did it not understand me?</div>
+        <div className={css(styles.body)}>{
+          "Summoner Expert uses machine learning to expand its understanding of how players ask about different information. \
+          It will continue to be trained based on the questions people ask and get better all the time. Try again soon!"
         }</div>
       </div>
       <div className={css(styles.column)}>
@@ -65,7 +73,7 @@ const About = () => (
         <div className={css(styles.header)}>Get involved</div>
         <div className={css(styles.body)}>{
           "There are many great features we have planned and we would welcome a helping hand! If the project interests you and \
-          you have experience in web development, design, machine learning, copy writing or social media management reach out to dan@summonerexpert.com"
+          you have experience in web development, design, machine learning, copy writing, social media management or just want to give feedback reach out to dan@summonerexpert.com"
         }</div>
       </div>
     </div>

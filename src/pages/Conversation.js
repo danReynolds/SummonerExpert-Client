@@ -43,6 +43,12 @@ class Conversation extends Component {
     this.scrollMessageListView = () => {
       this.messageListView.scrollTop = this.messageListView.scrollHeight;
     }
+
+    this.state = { text: '' };
+  }
+
+  handleChange = (text) => {
+    this.setState({ text })
   }
 
   componentDidMount() {
@@ -62,9 +68,12 @@ class Conversation extends Component {
         <ConversationExplorer category={category} />
         <div className={css(styles.conversationContent)}>
           <div className={css(CommonStyles.container, styles.container)}>
-            <MessageListView messageListRef={list => this.messageListView = list} />
+            <MessageListView
+              onMessageChange={this.handleChange}
+              messageListRef={list => this.messageListView = list}
+            />
             <div className={css(styles.conversationInput)}>
-              <ConversationInput />
+              <ConversationInput onChange={this.handleChange} text={this.state.text} />
             </div>
           </div>
         </div>

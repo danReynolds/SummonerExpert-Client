@@ -37,6 +37,7 @@ class MessageListView extends Component {
     messageListStore: PropTypes.object,
     avatar: PropTypes.string,
     messageListRef: PropTypes.func,
+    onMessageChange: PropTypes.func,
   }
 
   render() {
@@ -49,6 +50,7 @@ class MessageListView extends Component {
       messageListContent = (
         messages.map((message, index) => (
           <MessageView
+            onMessageChange={this.props.onMessageChange}
             key={`message-${index}`}
             message={message}
             avatar={avatar}

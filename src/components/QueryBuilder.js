@@ -261,13 +261,17 @@ class QueryBuilder extends Component {
               value={selectedSection.title}
             />
           </div>
-          <div className={css(styles.dropdown)}>
-            <MultiSelectDropDown
-              placeholder={'Choose filters'}
-              onChange={this.handleChangeEntity}
-              items={selectableEntities}
-            />
-          </div>
+          {
+            selectableEntities.length > 0 && (
+              <div className={css(styles.dropdown)}>
+                <MultiSelectDropDown
+                  placeholder={'Choose filters'}
+                  onChange={this.handleChangeEntity}
+                  items={selectableEntities}
+                />
+              </div>
+            )
+          }
         </div>
         <div className={css(styles.queryTemplate)}>
           {this.renderQueryTemplate(selectedSection.queryTemplate(entityValues))}

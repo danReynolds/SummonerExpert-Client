@@ -514,6 +514,7 @@ export default {
         ],
         requiredEntities: [
           Entities.summoner.key, Entities.list_order.key, Entities.summoner_metric_and_details.key,
+          Entities.summoner_role.key,
         ],
         queryTemplate: ({ list_size }) => {
           if (parseInt(list_size, 10) > 1) {
@@ -645,7 +646,7 @@ export default {
           Entities.summoner.key, Entities.summoner_champion.key, Entities.startTime.key,
           Entities.endTime.key,
         ],
-        requiredEntities: [Entities.summoner.key, Entities.champion.key],
+        requiredEntities: [Entities.summoner.key, Entities.summoner_champion.key],
         queryTemplate: () => 'How is {summoner} {summoner_champion} {summoner_role} {elo} {startTime} {endTime}',
         queries: [
           { text: 'Does Doublelift play Xayah?' },
