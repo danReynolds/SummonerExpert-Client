@@ -77,7 +77,7 @@ export const fonts = {
     color: colors.darkGrey,
   },
   header: {
-    fontSize: '2.5rem',
+    fontSize: '2rem',
     color: colors.white,
   },
   link: {
