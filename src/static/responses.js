@@ -6,7 +6,7 @@ export default {
     '...Give me a second',
   ],
   cache_pending: [
-    'By the way, I do not believe we have met. Do you want me to remember your summoner name?',
-    'Also, can I have your summoner name? It will make it easier to ask questions about yourself.',
+    name => `Also, is ${name} your summoner name? I can remember it for you. Then you will be able to ask summoner questions like "how am I doing?".`,
+    name => `By the way, is ${name} your summoner name? I can remember it for you. Then you will be able to ask summoner questions like "how am I doing?".`,
   ],
 };

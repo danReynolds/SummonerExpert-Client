@@ -475,6 +475,17 @@ export default {
     title: 'Summoner (NA Only)',
     key: 'summoner',
     sections: {
+      currentGame: {
+        key: 'currentGame',
+        title: 'Current game',
+        entities: [Entities.summoner.key],
+        requiredEntities: [Entities.summoner.key],
+        queryTemplate: () => 'Is {summoner} going to win his lane',
+        queries: [
+          { text: 'Is Dyrus going to win his lane?' },
+          { text: 'Does Pobelter have an easy lane?' },
+        ],
+      },
       rank: {
         key: 'rank',
         title: 'Rank',

@@ -7,7 +7,7 @@ import { MESSAGE_TYPES } from '../stores/MessageStore';
 import Responses from '../static/responses';
 
 const apiAiClient = new ApiAiClient({ accessToken: '2c82b4dc20f4427a9263c4d0fbb7050a' });
-const MESSAGES_BEFORE_PROMPT = 1;
+let contexts = [];
 
 const CACHE_PERMISSIONS = {
   PENDING: 'cache_pending',
@@ -15,18 +15,24 @@ const CACHE_PERMISSIONS = {
   REJECTED: 'cache_rejected',
 };
 
+const getSummonerName = () => {
+  const summonerContext = _.find(contexts, context => context.name === 'summoner');
+  return _.get(summonerContext, 'parameters.name');
+}
+
 export const sendMessage = (text, options = {}) => {
   messageListStore.add(text, MESSAGE_TYPES.user);
   const botMessage = messageListStore.add('', MESSAGE_TYPES.bot);
 
   const updatedOptions = { contexts: [], ...options };
-  const summonerName = Cookies.get('cacheSummonerName');
-  if (summonerName) {
+  const cacheSummonerName = Cookies.get('cacheSummonerName');
+  const summonerName = getSummonerName(contexts);
+  if (cacheSummonerName && !summonerName) {
     updatedOptions.contexts = [{
       name: 'summoner',
       lifespan: 1,
       parameters: {
-        name: summonerName,
+        name: cacheSummonerName,
       },
     }];
   }
@@ -42,13 +48,14 @@ export const sendMessage = (text, options = {}) => {
   }
 
   apiAiClient.textRequest(text, updatedOptions).then((response) => {
-    const { result: { action, fulfillment, contexts } } = response;
+    const { result: { action, fulfillment, contexts: currentContexts } } = response;
+    contexts = currentContexts;
     messageListStore.updateMessage(botMessage.id, fulfillment.speech);
+    const summonerName = getSummonerName(contexts);
 
-    if (!Cookies.get('cachePermission')
-      && messageListStore.messagesByType(MESSAGE_TYPES.user).length === MESSAGES_BEFORE_PROMPT) {
+    if (!Cookies.get('cachePermission') && summonerName) {
       const permission = CACHE_PERMISSIONS.PENDING;
-      const response = _.sample(Responses[permission]);
+      const response = _.sample(Responses[permission])(summonerName);
       Cookies.set('cachePermission', permission);
       messageListStore.add(response, MESSAGE_TYPES.bot);
     } else if (action === CACHE_PERMISSIONS.ACCEPTED) {
