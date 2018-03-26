@@ -48,11 +48,14 @@ export const sendMessage = (text, options = {}) => {
   }
 
   apiAiClient.textRequest(text, updatedOptions).then((response) => {
-    const { result: { action, fulfillment, contexts: currentContexts } } = response;
+    const { result: { action, fulfillment: { messages }, contexts: currentContexts } } = response;
     contexts = currentContexts;
-    messageListStore.updateMessage(botMessage.id, fulfillment.speech);
-    const summonerName = getSummonerName(contexts);
 
+    const [quickResponse, ...fullResponse] = messages;
+    messageListStore.updateMessage(botMessage.id, quickResponse.speech);
+    fullResponse.forEach(response => messageListStore.add(response.speech, MESSAGE_TYPES.bot));
+
+    const summonerName = getSummonerName(contexts);
     if (!Cookies.get('cachePermission') && summonerName) {
       const permission = CACHE_PERMISSIONS.PENDING;
       const response = _.sample(Responses[permission])(summonerName);
