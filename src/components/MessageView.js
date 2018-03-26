@@ -7,13 +7,7 @@ import { fadeInLeftBig, fadeInRightBig } from 'react-animations';
 import { colors, fonts, breakpoints } from '../assets/styles/Common';
 import { MESSAGE_TYPES } from '../stores/MessageStore';
 import LogoImage from '../assets/images/summoner-expert.svg';
-
-const loadingMessages = [
-  '...Loading',
-  '...Thinking',
-  '...Hmm',
-  '...Give me a second',
-];
+import Responses from '../static/responses';
 
 const styles = (messageType) => StyleSheet.create({
   messageContainer: {
@@ -114,7 +108,6 @@ class MessageView extends Component {
   render() {
     const { message: { text, type }, avatar } = this.props;
     let messageStyle, messageContainerStyle, messageAvatar;
-    debugger
     const currentStyles = styles(type);
 
     if (type === MESSAGE_TYPES.user) {
@@ -140,7 +133,7 @@ class MessageView extends Component {
           ref={(message) => this.message = message }
           className={css(currentStyles.message, messageStyle)}
         >
-          {text || _.sample(loadingMessages)}
+          {text || _.sample(Responses.loading)}
         </div>
       </div>
 

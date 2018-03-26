@@ -17,6 +17,10 @@ class MessageListStore {
     const message = this.messages[id];
     message.update(text);
   }
+
+  messagesByType(type) {
+    return this.messages.filter(message => message.type === type);
+  }
 };
 
 const messageListStore = new MessageListStore();
