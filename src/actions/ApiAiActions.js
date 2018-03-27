@@ -65,8 +65,8 @@ export const sendMessage = (text, options = {}) => {
       const pendingContext = _.find(contexts, context => context.name === CACHE_PERMISSIONS.PENDING);
       const name = _.get(pendingContext, ['parameters', 'name']);
       if (name) {
-        Cookies.set('cachePermission', CACHE_PERMISSIONS.ACCEPTED);
-        Cookies.set('cacheSummonerName', name);
+        Cookies.set('cachePermission', CACHE_PERMISSIONS.ACCEPTED, { expires: 365 });
+        Cookies.set('cacheSummonerName', name, { expires: 365 });
       }
     } else if (action === CACHE_PERMISSIONS.REJECTED) {
       Cookies.set('cachePermission', CACHE_PERMISSIONS.REJECTED);
