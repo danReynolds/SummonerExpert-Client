@@ -25,7 +25,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-  }
+  },
+  link: {
+    color: colors.blue,
+    textDecoration: 'none',
+  },
 });
 
 const About = () => (
@@ -71,10 +75,11 @@ const About = () => (
       </div>
       <div className={css(styles.column)}>
         <div className={css(styles.header)}>Get involved</div>
-        <div className={css(styles.body)}>{
+        <span className={css(styles.body)}>{
           "There are many great features we have planned and we would welcome a helping hand! If the project interests you and \
-          you have experience in web development, design, machine learning, copy writing, social media management or just want to give feedback reach out to dan@summonerexpert.com"
-        }</div>
+          you have experience in web development, design, machine learning, copy writing, social media management or just want to give feedback reach out to "
+        }</span>
+        <a className={css(styles.link)} href="mailto:dan@summonerexpert.com">dan@summonerexpert.com</a>
       </div>
     </div>
   </div>
