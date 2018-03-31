@@ -28,10 +28,10 @@ export const sendMessage = (text, options = {}) => {
   const cacheSummonerName = Cookies.get('cacheSummonerName');
   if (cacheSummonerName) {
     updatedOptions.contexts = [{
-      name: 'summoner',
+      name: 'self',
       lifespan: 1,
       parameters: {
-        self: cacheSummonerName,
+        name: cacheSummonerName,
       },
     }];
   }
