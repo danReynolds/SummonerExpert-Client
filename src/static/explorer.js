@@ -199,8 +199,34 @@ export default {
     sections: [
       {
         title: 'Patch',
+        key: 'patch',
         queries: [
           { text: 'What patch are you on?' },
+        ],
+      },
+      {
+        title: 'Remember me',
+        key: 'remember',
+        queries: [
+          { text: 'Remember me' },
+          { text: 'Remember my summoner name' },
+        ],
+      },
+      {
+        title: 'Feature request',
+        key: 'feature',
+        queries: [
+          { text: 'I want to request a feature' },
+          { text: 'You guys are missing an awesome feature' },
+          { text: 'I know how to make you better' },
+        ],
+      },
+      {
+        title: 'Bug report',
+        key: 'bug',
+        queries: [
+          { text: 'I found a bug' },
+          { text: 'Something went terribly wrong!' },
         ],
       },
     ],

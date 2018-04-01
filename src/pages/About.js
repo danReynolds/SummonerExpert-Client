@@ -56,7 +56,7 @@ const About = () => (
         <div className={css(styles.header)}>Is it accurate?</div>
         <div className={css(styles.body)}>{
           "For champion information, SE currently uses the great API provided by Champion.gg. Summoner information \
-          comes from our own system which is updated every hour and tracks all matches from the start of the current season."
+          comes from our own system which is updated every hour and tracks all ranked solo matches in NA from the start of the current season."
         }</div>
       </div>
       <div className={css(styles.column)}>
