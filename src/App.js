@@ -3,8 +3,10 @@ import DevTools from 'mobx-react-devtools';
 import 'normalize.css';
 import { StyleSheet, css } from 'aphrodite';
 import { Provider } from 'mobx-react';
+import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import BannerImage from './assets/images/banner.jpg';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -32,6 +34,7 @@ class App extends Component {
       <Provider messageListStore={messageListStore} avatar={this.avatar}>
         <Router>
           <div className={css(styles.rootContainer)}>
+            <ToastContainer />
             {process.env.NODE_ENV === 'development' ? <DevTools /> : null}
             <Navbar />
             <Route exact path="/" component={Home} />

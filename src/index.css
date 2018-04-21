@@ -25,3 +25,13 @@ html, body, #root, [data-reactroot] {
 ul {
   padding: 0 !important;
 }
+
+.toast {
+  padding: 1rem !important;
+  width: fit-content;
+  background: #0a0a0a8f !important;
+}
+
+.toastify-progress-bar {
+  background: linear-gradient(to right, #55baea, #142c85) !important;
+}

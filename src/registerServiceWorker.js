@@ -1,3 +1,10 @@
+import _ from 'lodash';
+import React from 'react';
+import { toast } from 'react-toastify';
+import Toast from './components/Toast';
+import Cookies from 'js-cookie';
+import ChangeLog from './changelog';
+
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -56,8 +63,36 @@ function registerValidSW(swUrl) {
               // the fresh content will have been added to the cache.
               // It's the perfect time to display a "New content is
               // available; please refresh." message in your web app.
-              console.log('New content is available; please refresh.');
+              Cookies.set('updated', true);
+              toast(
+                <Toast
+                  text='An update is complete, click to refresh.'
+                  action='Dismiss'
+                  onClick={() => window.location.reload()}
+                />, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: false,
+                className: 'toast',
+                closeButton: false,
+              });
+              console.log('An update is complete, click to refresh.');
             } else {
+              if (Cookies.get('updated')) {
+                Cookies.set('updated', false);
+                toast(
+                  <Toast
+                    text={_.last(ChangeLog)}
+                    pauseOnHover
+                    action='Dismiss'
+                    onClick={() => window.location.reload()}
+                  />, {
+                  position: toast.POSITION.BOTTOM_RIGHT,
+                  className: 'toast',
+                  closeButton: false,
+                  autoClose: 6000,
+                  progressClassName: 'toastify-progress-bar'
+                });
+              }
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
