@@ -54,21 +54,34 @@ function registerValidSW(swUrl) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      if (Cookies.get('updated')) {
+        Cookies.set('updated', false);
+        toast(
+          <Toast
+            text={_.last(ChangeLog)}
+            pauseOnHover
+          />, {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          className: 'toast',
+          closeButton: false,
+          autoClose: 6000,
+          progressClassName: 'toastify-progress-bar'
+        });
+      }
+
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // At this point, the old content will have been purged and
-              // the fresh content will have been added to the cache.
-              // It's the perfect time to display a "New content is
-              // available; please refresh." message in your web app.
-              Cookies.set('updated', true);
               toast(
                 <Toast
                   text='An update is complete, click to refresh.'
                   action='Dismiss'
-                  onClick={() => window.location.reload()}
+                  onClick={() => {
+                    Cookies.set('updated', true);
+                    window.location.reload();
+                  }}
                 />, {
                 position: toast.POSITION.BOTTOM_RIGHT,
                 autoClose: false,
@@ -77,22 +90,6 @@ function registerValidSW(swUrl) {
               });
               console.log('An update is complete, click to refresh.');
             } else {
-              if (Cookies.get('updated')) {
-                Cookies.set('updated', false);
-                toast(
-                  <Toast
-                    text={_.last(ChangeLog)}
-                    pauseOnHover
-                    action='Dismiss'
-                    onClick={() => window.location.reload()}
-                  />, {
-                  position: toast.POSITION.BOTTOM_RIGHT,
-                  className: 'toast',
-                  closeButton: false,
-                  autoClose: 6000,
-                  progressClassName: 'toastify-progress-bar'
-                });
-              }
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
