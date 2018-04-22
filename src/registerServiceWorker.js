@@ -54,7 +54,8 @@ function registerValidSW(swUrl) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
-      if (Cookies.get('updated')) {
+      const updated = Cookies.get('updated');
+      if (updated && JSON.parse(updated)) {
         Cookies.set('updated', false);
         toast(
           <Toast
