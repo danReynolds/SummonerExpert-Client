@@ -561,7 +561,7 @@ export default {
           }
         },
         queries: [
-          { text: 'Who counters TheOddOne playing Ezreal?' },
+          { text: 'Who counters Imaqtpie playing Twitch?' },
           { text: 'Who has the highest KDA against Dyrus Top?' },
           { text: "Who gets the most assists against pokimane's Lulu?" },
         ]
@@ -672,7 +672,7 @@ export default {
         },
         queries: [
           { text: '3 most played champions by Rallemus' },
-          { text: "Who is TheOddOne's highest KDA champion?" },
+          { text: "who does Imaqtpie play most often bot?" },
           { text: 'Which champion does Doublelift get the most kills with?' },
         ],
       },
