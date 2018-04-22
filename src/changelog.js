@@ -1,4 +1,4 @@
 export default [
   'Support for toasts on updates added.',
-  'Support for moving up/down in the chat box added.'
+  'Added support for scrolling through your previous messages by hitting up/down in the chat box.'
 ]
