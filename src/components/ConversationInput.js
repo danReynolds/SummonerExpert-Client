@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 });
 
 class ConversationInput extends Component {
+
   clearText = () => {
     this.props.onChange('');
   }
@@ -53,6 +54,21 @@ class ConversationInput extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.submitMessage();
+  }
+
+  handleKeyUp = (e) => {
+    switch (e.keyCode) {
+      // Up arrow
+      case 38:
+        this.props.onChangeMessageHistory(-1);
+        break;
+      // Down arrow
+      case 40:
+        this.props.onChangeMessageHistory(1);
+        break;
+      default:
+        break;
+    }
   }
 
   submitMessage = () => {
@@ -69,6 +85,7 @@ class ConversationInput extends Component {
     return (
       <form className={css(styles.conversationForm)} onSubmit={this.handleSubmit}>
         <input
+          onKeyUp={this.handleKeyUp}
           ref={input => input && input.focus()}
           autoFocus={isDesktop()}
           placeholder={'Type a message.'}
