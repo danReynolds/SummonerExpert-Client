@@ -40,7 +40,7 @@ const About = () => (
         <div className={css(styles.body)}>{
           "Summoner Expert is a conversational assistant for League of Legends. It has information on all \
           the champions in the current patch across different elos and roles and stores every match played \
-          in NA for in depth summoner information. You can go into chat and use \
+          in NA ranked solo queue for in depth summoner information. You can go into chat and use \
           the conversation explorer to discover all the available commands."
         }</div>
       </div>
