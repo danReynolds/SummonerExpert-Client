@@ -311,6 +311,17 @@ export default {
           { text: 'How to win vs Vayne' },
         ],
       },
+      roles: {
+        key: 'roles',
+        title: 'Roles',
+        entities: [Entities.champion.key, Entities.elo.key],
+        requiredEntities: [Entities.champion.key],
+        queryTemplate: () => 'What roles does {champion} play {elo}',
+        queries: [
+          { text: 'What roles does Irelia play?' },
+          { text: 'Miss Fortune roles in Gold division' },
+        ],
+      },
       lore: {
         key: 'lore',
         title: 'Lore',
@@ -324,7 +335,7 @@ export default {
       },
       matchupRankings: {
         key: 'matchupRankings',
-        title: 'Matchup rankings',
+        title: 'Counters',
         entities: [
           Entities.champion.key, Entities.role1.key, Entities.matchup_position.key, Entities.role2.key,
           Entities.elo.key, Entities.list_position.key, Entities.list_size.key, Entities.list_order.key,
