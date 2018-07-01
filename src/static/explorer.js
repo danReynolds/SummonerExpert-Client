@@ -235,6 +235,25 @@ export default {
     title: 'Champion',
     key: 'champion',
     sections: {
+      similarity: {
+        key: 'similarity',
+        title: 'Similarity',
+        entities: [Entities.champion.key, Entities.list_order.key, Entities.list_size.key, Entities.list_position.key],
+        requiredEntities: [Entities.champion.key, Entities.list_order.key],
+        queryTemplate: (values) => {
+          const { list_size } = values;
+          if (list_size && parseInt(list_size, 10)  > 1) {
+            return 'The {list_size} champions with the {list_position} {list_order} similarity to {champion}';
+          } else {
+            return 'The {list_size} champion with the {list_position} {list_order} similarity to {champion}';
+          }
+        },
+        queries: [
+          { text: 'Which champion is most similar to Master Yi?' },
+          { text: 'Who is most like Caitlyn?' },
+          { text: 'What 3 champions do Jax players also like?' },
+        ]
+      },
       abilityOrder: {
         key: 'abilityOrder',
         title: 'Ability order',
