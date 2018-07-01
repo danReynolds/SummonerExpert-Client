@@ -89,9 +89,6 @@ class SearchBar extends Component {
           placeholder='Talk to Summoner Expert'
           value={text}
         />
-        <div onClick={this.submitMessage} className={css(styles.searchIconWrapper)}>
-          <Icon size={isDesktop() ? 100 : 40} icon={ic_search} />
-        </div>
       </form>
     )
   }

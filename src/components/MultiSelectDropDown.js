@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     padding: '1rem',
     border: `2px solid ${colors.blue}`,
     borderRadius: '2px',
-    color: colors.white,
+    color: colors.darkGrey,
     opacity: 0.95,
     fontFamily: 'Lato',
     fontSize: '1.25rem',
@@ -23,10 +23,12 @@ const styles = StyleSheet.create({
 
     ':hover': {
       background: colors.blue,
+      color: colors.white,
     },
 
     ':focus': {
       background: colors.blue,
+      color: colors.white,
     },
   },
   option: {

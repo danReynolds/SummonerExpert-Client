@@ -25,8 +25,23 @@ export const breakpoints = {
 };
 
 export default StyleSheet.create({
+  titleContainer: {
+    margin: '3rem auto 0 auto',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+
+    [breakpoints.desktop]: {
+      width: 1200,
+    },
+
+    [breakpoints.mobile]: {
+      width: '90%',
+      marginTop: '5rem',
+    },
+  },
   container: {
-    margin: '7rem auto 0 auto',
+    margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
@@ -79,6 +94,10 @@ export const fonts = {
   header: {
     fontSize: '2rem',
     color: colors.white,
+  },
+  headerDark: {
+    fontSize: '2rem',
+    color: colors.nightBlue,
   },
   link: {
     color: colors.white,

@@ -14,7 +14,7 @@ const styles = (isOpen) => StyleSheet.create({
     border: `2px solid ${colors.blue}`,
     borderBottom: `${isOpen ? 'none' : `2px solid ${colors.blue}`}`,
     borderRadius: '2px',
-    color: colors.white,
+    color: colors.darkGrey,
     opacity: 0.95,
     fontSize: '1.25rem',
     outline: 'none',
@@ -25,10 +25,12 @@ const styles = (isOpen) => StyleSheet.create({
 
     ':hover': {
       background: colors.blue,
+      color: colors.white,
     },
 
     ':focus': {
       background: colors.blue,
+      color: colors.white,
     },
   },
   option: {
@@ -53,9 +55,7 @@ const styles = (isOpen) => StyleSheet.create({
 });
 
 const typeStyles = {
-  default: () => StyleSheet.create({
-
-  }),
+  default: () => StyleSheet.create({}),
   inline: (inputLength, isOpen, validation = false) => StyleSheet.create({
     input: {
       border: 'none',
@@ -64,7 +64,7 @@ const typeStyles = {
       fontSize: '2rem',
       width: `${inputLength}ch`,
       transition: 'borderBottomColor .3s',
-      borderBottomColor: `${validation ? colors.red : colors.white}`,
+      borderBottomColor: `${validation ? colors.red : colors.darkGrey}`,
 
       [breakpoints.mobile]: {
         fontSize: '1.5rem',
@@ -77,7 +77,6 @@ const typeStyles = {
 
       ':focus': {
         background: 'none',
-        color: colors.blue,
       },
     },
     optionContainer: {

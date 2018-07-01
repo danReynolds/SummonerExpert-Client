@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
   navbar: {
     alignItems: 'center',
     zIndex: 1,
-    position: 'fixed',
     width: '100%',
     height: '5rem',
     justifyContent: 'center',

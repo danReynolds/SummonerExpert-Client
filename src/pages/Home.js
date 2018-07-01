@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
 import SearchBar from '../components/SearchBar';
-import CommonStyles, { desktop, breakpoints, CategoryIcons } from '../assets/styles/Common';
+import CommonStyles, { desktop, CategoryIcons, colors, fonts } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
+import QueryBuilder from '../components/QueryBuilder';
+import Button from '../components/Button';
 import Tab from '../components/Tab';
+import Modal from '../components/Modal';
 import Items from '../static/items';
 import Champions from '../static/champions';
 import Summoners from '../static/summoners';
@@ -12,11 +15,7 @@ import Explorer from '../static/explorer';
 
 const styles = StyleSheet.create({
   homePage: {
-    flex: 1,
-    display: 'flex',
-    [breakpoints.mobile]: {
-      width: '100%',
-    },
+    width: '100%',
   },
   header: {
     paddingTop: '2rem',
@@ -47,6 +46,35 @@ const styles = StyleSheet.create({
   },
   recommendationTab: {
     width: '100%',
+  },
+  searchSection: {
+    height: '100vh',
+  },
+  section: {
+    padding: '5rem',
+    display: 'flex',
+    alignItems: 'center',
+    background: 'white',
+    width: '100%',
+    position: 'relative',
+    zIndex: 0,
+    ':before': {
+      top: 0,
+      transform: 'skewY(-1.5deg)',
+      transformOrigin: '0 0',
+      content: "''",
+      display: 'block',
+      height: '50%',
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      zIndex: -1,
+      background: 'inherit',
+    },
+  },
+  sectionTitle: {
+    ...fonts.headerDark,
+    marginBottom: '2rem',
   }
 });
 
@@ -87,6 +115,11 @@ class Home extends Component {
 
   handleSelectTab = (index) => {
     this.setState({ selectedTab: index });
+  }
+
+  handleSubmit = () => {
+    const { history } = this.props;
+    history.push(`/conversation`);
   }
 
   renderTabs = () => {
@@ -138,11 +171,21 @@ class Home extends Component {
   render() {
     return (
       <div className={css(styles.homePage)}>
-        <div className={css(CommonStyles.container)}>
+        <div className={css([CommonStyles.titleContainer, styles.searchSection])}>
           <div className={css(styles.header)}>
             <SearchBar />
           </div>
           {window.innerWidth >= desktop ? this.renderLists() : this.renderTabs()}
+        </div>
+        <div className={css(styles.section)}>
+          <div className={css(CommonStyles.container)}>
+            <div className={css(styles.sectionTitle)}>Build your question</div>
+            <QueryBuilder
+              submit={this.handleSubmit}
+              selectedCategory={Explorer.champion.key}
+              selectedSection={Explorer.champion.sections.abilityOrder.key}
+            />
+          </div>
         </div>
       </div>
     );

@@ -12,15 +12,17 @@ const styles = (type = BUTTON_TYPES.CONFIRM) => StyleSheet.create({
   container: {
     border: `2px solid ${type === BUTTON_TYPES.CONFIRM ? colors.gold : colors.red}`,
     padding: '0.8rem 2rem',
-    color: colors.white,
+    color: `${type === BUTTON_TYPES.CONFIRM ? colors.gold : colors.red}`,
     display: 'inline-block',
     transition: 'background, .3s',
     cursor: 'pointer',
     borderRadius: '2px',
     fontSize: '1.2rem',
+    width: 'fit-content',
 
     ':hover': {
       background: `${type === BUTTON_TYPES.CONFIRM ? colors.gold : colors.red}`,
+      color: colors.white,
     }
   }
 });

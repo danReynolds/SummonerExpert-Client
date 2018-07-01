@@ -7,19 +7,14 @@ import DropDown from './DropDown';
 import Input, { INPUT_TYPES } from './Input';
 import MultiSelectDropDown from './MultiSelectDropDown';
 import Explorer, { Entities } from '../static/explorer';
-import CommonStyles, { colors, breakpoints } from '../assets/styles/Common';
+import { colors, breakpoints } from '../assets/styles/Common';
 import Button, { BUTTON_TYPES } from './Button';
 import { sendMessage } from '../actions/ApiAiActions';
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: '5rem',
-    color: 'white',
-    paddingBottom: '3vh',
-
-    [breakpoints.mobile]: {
-      fontSize: '2rem',
-    },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   dropdowns: {
     display: 'flex',
@@ -38,8 +33,8 @@ const styles = StyleSheet.create({
   queryTemplate: {
     display: 'flex',
     alignItems: 'flex-start',
-    marginTop: '8rem',
-    color: colors.white,
+    margin: '3rem 0',
+    color: colors.darkGrey,
     fontSize: '2rem',
     fontFamily: 'Roboto Mono, monospace',
     flexWrap: 'wrap',
@@ -58,12 +53,7 @@ const styles = StyleSheet.create({
     marginLeft: '1rem',
   },
   footer: {
-    position: 'absolute',
-    right: 0,
-    bottom: '0',
-  },
-  container: {
-    height: '80vh',
+    marginLeft: 'auto',
   },
   footerButton: {
     marginLeft: '1rem',
@@ -74,6 +64,10 @@ const ENTITY_TEMPLATE_PATTERN = /(\{\w+\})/;
 const CAPTURE_ENTITY_TEMPLATE_PATTERN = /\{(\w+)\}/;
 
 class QueryBuilder extends Component {
+  static defaultProps = {
+    submit: () => {},
+  }
+  
   constructor(props) {
     super(props);
     const category = Explorer[props.selectedCategory];
@@ -250,8 +244,7 @@ class QueryBuilder extends Component {
       .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
     );
     return (
-      <div className={css(CommonStyles.container, styles.container)}>
-        <div className={css(styles.title)}>Build your Question</div>
+      <div className={css(styles.container)}>
         <div className={css(styles.dropdowns)}>
           <div className={css(styles.dropdown)}>
             <DropDown
@@ -278,7 +271,7 @@ class QueryBuilder extends Component {
         </div>
         <div className={css(styles.footer)}>
           <Button type={BUTTON_TYPES.CANCEL} onClick={close}>Cancel</Button>
-          <Button style={styles.footerButton} onClick={this.submitQuery}>Send</Button>
+          <Button style={styles.footerButton} onClick={this.submitQuery}>Ask</Button>
         </div>
       </div>
     )

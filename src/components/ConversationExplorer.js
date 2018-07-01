@@ -89,6 +89,7 @@ const menuStyles = {
   },
   bmMenuWrap: {
     left: 0,
+    top: 0,
     background: colors.darkBlue,
   },
   bmBurgerBars: {
