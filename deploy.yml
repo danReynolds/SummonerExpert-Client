@@ -2,8 +2,6 @@ hub_account: danreynolds
 app_name: summonerexpert_client
 remote_path: /home/deploy/docker/SummonerExpert-Client
 dockerfile: Dockerfile.prod
-pre:
-  - rm /app/static/js/*.map
 remote_files:
   - docker-compose.yml
   - docker-compose.production.yml

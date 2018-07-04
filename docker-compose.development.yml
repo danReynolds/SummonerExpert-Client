@@ -1,6 +1,8 @@
 version: '3'
 services:
   app:
+    env_file:
+      - .env
     container_name: 'client'
     command: 'npm run start'
     volumes:
