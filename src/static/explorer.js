@@ -531,6 +531,17 @@ export default {
     title: 'Summoner (NA Only)',
     key: 'summoner',
     sections: {
+      recommendation: {
+        key: 'recommendation',
+        title: 'Who to play',
+        entities: [Entities.summoner.key, Entities.summoner_role.key],
+        requiredEntities: [Entities.summoner.key],
+        queryTemplate: () => 'Who should {summoner} play {role} in this meta?',
+        queries: [
+          { text: 'Who should I play?' },
+          { text: 'Who should Dyrus play top?' },
+        ],
+      },
       currentGame: {
         key: 'currentGame',
         title: 'Current game',
