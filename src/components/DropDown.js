@@ -73,6 +73,7 @@ const typeStyles = {
       ':hover': {
         background: 'none',
         borderBottomColor: colors.blue,
+        color: colors.darkGrey,
       },
 
       ':focus': {

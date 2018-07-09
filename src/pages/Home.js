@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import Icon from 'react-icons-kit';
+import { bubbles } from 'react-icons-kit/icomoon/bubbles';
 
 import SearchBar from '../components/SearchBar';
 import CommonStyles, { desktop, CategoryIcons, colors, fonts } from '../assets/styles/Common';
@@ -12,6 +14,7 @@ import Items from '../static/items';
 import Champions from '../static/champions';
 import Summoners from '../static/summoners';
 import Explorer from '../static/explorer';
+
 
 const styles = StyleSheet.create({
   homePage: {
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     background: 'white',
-    width: '100%',
     position: 'relative',
     zIndex: 0,
     ':before': {
@@ -73,9 +75,16 @@ const styles = StyleSheet.create({
     },
   },
   sectionTitle: {
-    ...fonts.headerDark,
-    marginBottom: '2rem',
-  }
+    fontSize: '3rem',
+    marginLeft: '1rem',
+    fontFamily: 'Roboto Condensed, sans-serif',
+  },
+  sectionTitleWrapper: {
+    color: colors.blue,
+    alignItems: 'center',
+    marginBottom: '3rem',
+    display: 'flex',
+  },
 });
 
 const RECOMMENDATIONS = [
@@ -179,7 +188,10 @@ class Home extends Component {
         </div>
         <div className={css(styles.section)}>
           <div className={css(CommonStyles.container)}>
-            <div className={css(styles.sectionTitle)}>Build your question</div>
+            <div className={css(styles.sectionTitleWrapper)}>
+              <Icon icon={bubbles} size={48} />
+              <div className={css(styles.sectionTitle)}>Customize your question</div>
+            </div>
             <QueryBuilder
               submit={this.handleSubmit}
               selectedCategory={Explorer.champion.key}

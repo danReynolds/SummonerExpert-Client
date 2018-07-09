@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   queryTemplate: {
     display: 'flex',
     alignItems: 'flex-start',
-    margin: '3rem 0',
+    margin: '2rem 0',
     color: colors.darkGrey,
     fontSize: '2rem',
     fontFamily: 'Roboto Mono, monospace',
@@ -67,7 +67,7 @@ class QueryBuilder extends Component {
   static defaultProps = {
     submit: () => {},
   }
-  
+
   constructor(props) {
     super(props);
     const category = Explorer[props.selectedCategory];
@@ -238,7 +238,7 @@ class QueryBuilder extends Component {
 
   render() {
     const { selectedCategory, selectedSection, entityValues } = this.state;
-    const { close } = this.props;
+    const { cancel } = this.props;
     const selectableEntities = Object.values(
       _.pick(Entities, selectedSection.entities))
       .filter(entity => !selectedSection.requiredEntities.includes(entity.key)
@@ -270,7 +270,7 @@ class QueryBuilder extends Component {
           {this.renderQueryTemplate(selectedSection.queryTemplate(entityValues))}
         </div>
         <div className={css(styles.footer)}>
-          <Button type={BUTTON_TYPES.CANCEL} onClick={close}>Cancel</Button>
+          { cancel && <Button type={BUTTON_TYPES.CANCEL} onClick={cancel}>Cancel</Button> }
           <Button style={styles.footerButton} onClick={this.submitQuery}>Ask</Button>
         </div>
       </div>
