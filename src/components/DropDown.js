@@ -78,6 +78,7 @@ const typeStyles = {
 
       ':focus': {
         background: 'none',
+        color: colors.darkGrey,
       },
     },
     optionContainer: {
