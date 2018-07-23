@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Icon from 'react-icons-kit';
 import { bubbles } from 'react-icons-kit/icomoon/bubbles';
+import echarts from 'echarts';
 
+import { getSimilarity } from '../lib/endpoints';
 import SearchBar from '../components/SearchBar';
 import CommonStyles, { desktop, CategoryIcons, colors, fonts } from '../assets/styles/Common';
 import RecommendationList from '../components/RecommendationList';
@@ -14,6 +16,8 @@ import Items from '../static/items';
 import Champions from '../static/champions';
 import Summoners from '../static/summoners';
 import Explorer from '../static/explorer';
+import { sendMessage } from '../actions/ApiAiActions';
+import { fadeIn } from 'react-animations';
 
 
 const styles = StyleSheet.create({
@@ -76,7 +80,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: '3rem',
-    marginLeft: '1rem',
     fontFamily: 'Roboto Condensed, sans-serif',
   },
   sectionTitleWrapper: {
@@ -84,6 +87,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: '3rem',
     display: 'flex',
+  },
+  similarityDescription: {
+    flex: 4,
+    marginRight: '2rem',
+  },
+  similarityContainer: {
+    width: '100%',
+    height: '40rem',
+    border: `4px solid ${colors.blue}`,
+    animationName: fadeIn,
+    animationDuration: '15s',
+    borderRadius: '2px',
+    flex: 6,
+  },
+  darkSection: {
+    background: colors.darkBlue,
+  },
+  lightTitle: {
+    color: colors.white,
+  },
+  sectionBody: {
+    marginTop: '2rem',
+    color: colors.white,
+    fontSize: '1.6rem',
   },
 });
 
@@ -119,6 +146,21 @@ class Home extends Component {
 
     this.state = {
       selectedTab: 0,
+      similarities: null,
+    };
+
+    this.similarityChart = null;
+  }
+
+  componentDidMount() {
+    getSimilarity().then(({ data: similarities }) => {
+      this.setState({ similarities });
+    });
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.state.similarities !== prevState.similarities) {
+      this.renderSimilarities();
     }
   }
 
@@ -129,6 +171,11 @@ class Home extends Component {
   handleSubmit = () => {
     const { history } = this.props;
     history.push(`/conversation`);
+  }
+
+  handleSimilarityLink = ({ target: { text }}) => {
+    sendMessage(text);
+    this.props.history.push(`/conversation`);
   }
 
   renderTabs = () => {
@@ -177,6 +224,60 @@ class Home extends Component {
     );
   }
 
+  renderSimilarities = () => {
+    const { similarities } = this.state;
+    if (similarities) {
+      this.similarityChart = echarts.init(document.getElementById('similarity'));
+      const similarityIds = Object.keys(similarities);
+      const nodes = similarityIds.map(similarityId => ({ name: similarityId, symbolSize: 1 }));
+      const edges = similarityIds.reduce((acc, similarityId) => {
+        return [
+          ...acc,
+          ...similarities[similarityId].map(targetSimilarityId => {
+            const targetSimilarityIdString = targetSimilarityId.toString();
+            nodes.find(node => node.name === targetSimilarityIdString).symbolSize += 1;
+            return { source: similarityId, target: targetSimilarityIdString };
+          }),
+        ];
+      }, []);
+      this.similarityChart.setOption({
+       series: [
+         {
+           label: {
+                    emphasis: {
+                        position: 'right',
+                        show: true
+                    }
+                },
+           name: 'Champion similarities',
+           animation: true,
+           animationDurationUpdate: 1500,
+           animationEasingUpdate: 'quinticInOut',
+           layout: 'force',
+           type: 'graph',
+           roam: true,
+           lineStyle: {
+                    normal: {
+                        width: 0.5,
+                        curveness: 0.3,
+                        opacity: 0.7
+                    }
+                },
+           hoverAnimation: true,
+           focusNodeAdjacency: true,
+           force: {
+             repulsion: 200,
+             edgeLength: 5,
+             gravity: 0.2,
+           },
+           data: nodes,
+           links: edges,
+         }
+       ]
+      });
+    }
+  }
+
   render() {
     return (
       <div className={css(styles.homePage)}>
@@ -198,6 +299,21 @@ class Home extends Component {
               selectedSection={Explorer.champion.sections.abilityOrder.key}
             />
           </div>
+        </div>
+        <div className={css([styles.section, styles.darkSection])}>
+          <div className={css(styles.similarityDescription)}>
+            <div className={css([styles.sectionTitle, styles.lightTitle])}>Gain Insights into the Meta</div>
+            <div className={css(styles.sectionBody)}>
+              Try asking
+              <a className={css(CommonStyles.darkLink)} onClick={this.handleSimilarityLink}> who should I play? </a>
+              or
+              <a className={css(CommonStyles.darkLink)} onClick={this.handleSimilarityLink}> who is similar to my favorite champion? </a>
+              <br />
+              <br />
+              Recommendations are based on which champions summoners find similar to each other from the past 10,000,000 games in NA solo queue.
+            </div>
+          </div>
+          <div className={css(styles.similarityContainer)} id='similarity' />
         </div>
       </div>
     );

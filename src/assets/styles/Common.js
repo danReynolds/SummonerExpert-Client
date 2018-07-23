@@ -24,6 +24,39 @@ export const breakpoints = {
   mobile: `@media (max-width: ${mobile}px)`,
 };
 
+export const colors = {
+  header: '#909090',
+  grey: '#e4e4e4',
+  midGrey: '#cecece',
+  darkGrey: '#565656',
+  blue: '#55baea',
+  midBlue: '#2098D1',
+  darkBlue: '#12264e',
+  white: '#f5f5f5',
+  red: '#d44b4b',
+  facebook: '#3b5998',
+  twitter: '#1da1f2',
+  google: '#ea4335',
+  brightBlue: '#142c85',
+  nightBlue: 'rgba(17, 37, 66, 0.95)',
+  gold: '#dad09a',
+};
+
+export const fonts = {
+  body: {
+    fontFamily: 'Lato',
+    color: colors.darkGrey,
+  },
+  header: {
+    fontSize: '2rem',
+    color: colors.white,
+  },
+  headerDark: {
+    fontSize: '2rem',
+    color: colors.nightBlue,
+  },
+};
+
 export default StyleSheet.create({
   titleContainer: {
     margin: '3rem auto 0 auto',
@@ -65,41 +98,9 @@ export default StyleSheet.create({
       width: '90%',
       marginTop: '5rem',
     },
-  }
-});
-
-export const colors = {
-  header: '#909090',
-  grey: '#e4e4e4',
-  midGrey: '#cecece',
-  darkGrey: '#565656',
-  blue: '#55baea',
-  midBlue: '#2098D1',
-  darkBlue: '#12264e',
-  white: '#f5f5f5',
-  red: '#d44b4b',
-  facebook: '#3b5998',
-  twitter: '#1da1f2',
-  google: '#ea4335',
-  brightBlue: '#142c85',
-  nightBlue: 'rgba(17, 37, 66, 0.95)',
-  gold: '#dad09a',
-};
-
-export const fonts = {
-  body: {
-    fontFamily: 'Lato',
-    color: colors.darkGrey,
-  },
-  header: {
-    fontSize: '2rem',
-    color: colors.white,
-  },
-  headerDark: {
-    fontSize: '2rem',
-    color: colors.nightBlue,
   },
   link: {
+    cursor: 'pointer',
     color: colors.white,
     textDecoration: 'none',
 
@@ -107,4 +108,13 @@ export const fonts = {
       color: colors.blue,
     }
   },
-};
+  darkLink: {
+    cursor: 'pointer',
+    color: colors.blue,
+    textDecoration: 'none',
+
+    ':hover': {
+      color: colors.white,
+    }
+  },
+});
