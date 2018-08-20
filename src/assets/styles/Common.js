@@ -58,7 +58,7 @@ export const fonts = {
 };
 
 export default StyleSheet.create({
-  titleContainer: {
+  contentSection: {
     margin: '3rem auto 0 auto',
     display: 'flex',
     flexDirection: 'column',

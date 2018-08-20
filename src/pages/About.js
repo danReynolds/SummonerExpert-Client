@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   header: {
     ...fonts.header,
     margin: '1rem 0',
+    color: colors.gold,
   },
   body: {
     margin: '1rem 0',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
 
 const About = () => (
   <div className={css(styles.aboutPage)}>
-    <div className={css(CommonStyles.titleContainer, styles.container)}>
+    <div className={css(CommonStyles.contentSection, styles.container)}>
       <div className={css(styles.column)}>
         <div className={css(styles.header)}>Summoner Expert</div>
         <div className={css(styles.body)}>{

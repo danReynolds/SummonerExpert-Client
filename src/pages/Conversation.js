@@ -90,7 +90,7 @@ class Conversation extends Component {
       <div className={css(styles.conversationPage)}>
         <ConversationExplorer category={category} />
         <div className={css(styles.conversationContent)}>
-          <div className={css(CommonStyles.titleContainer, styles.container)}>
+          <div className={css(CommonStyles.contentSection, styles.container)}>
             <MessageListView
               onMessageChange={this.handleChange}
               messageListRef={list => this.messageListView = list}

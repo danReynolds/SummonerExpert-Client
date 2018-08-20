@@ -5,7 +5,7 @@ import { facebookF } from 'react-icons-kit/fa/facebookF';
 import { twitter } from 'react-icons-kit/fa/twitter';
 import { google } from 'react-icons-kit/fa/google';
 
-import { colors, fonts, isDesktop, breakpoints } from '../assets/styles/Common';
+import CommonStyles, { colors, fonts, isDesktop, breakpoints } from '../assets/styles/Common';
 import LogoImage from '../assets/images/summoner-expert.svg';
 
 const styles = StyleSheet.create({
@@ -144,9 +144,9 @@ class Navbar extends Component {
         {
           isDesktop() && (
             <div className={css(styles.navbarItems)}>
-              <a className={css(styles.link)} href="/">Home</a>
-              <a className={css(styles.link)} href="/conversation">Chat</a>
-              <a className={css(styles.link)} href="/about">About</a>
+              <a className={css([styles.link, CommonStyles.link])} href="/">Home</a>
+              <a className={css([styles.link, CommonStyles.link])} href="/conversation">Chat</a>
+              <a className={css([styles.link, CommonStyles.link])} href="/about">About</a>
             </div>
           )
         }

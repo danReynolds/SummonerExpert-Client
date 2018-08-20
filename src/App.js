@@ -19,7 +19,7 @@ import { colors } from './assets/styles/Common';
 const styles = StyleSheet.create({
   rootContainer: {
     backgroundImage: `linear-gradient(${colors.brightBlue}, ${colors.nightBlue}), url(${BannerImage})`,
-    backgroundSize: 'cover',
+    backgroundSize: '100% 120vh',
   },
 });
 
